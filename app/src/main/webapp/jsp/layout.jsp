@@ -40,7 +40,7 @@
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="${pageContext.request.contextPath}/category">${}</a>
+                                    <a href="${pageContext.request.contextPath}/category">Téléphones</a>
                                 </li>
                                 <li>
                                     <a href="${pageContext.request.contextPath}/category">Ordinateurs</a>

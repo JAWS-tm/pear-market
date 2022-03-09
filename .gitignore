@@ -3,6 +3,5 @@
 
 .DS_Store
 
-.idea/
 /app/target/
-/out/
+/app/out/
