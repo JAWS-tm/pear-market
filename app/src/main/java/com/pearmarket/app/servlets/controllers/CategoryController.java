@@ -33,6 +33,8 @@ public class CategoryController extends Controller {
         if (categoryId != 0 && !(products = productDAO.getProductsByCategory(categoryId)).isEmpty())
         {
             request.setAttribute("products", products);
+            request.setAttribute("categoryName", products.get(1).getCategory().getName());
+
         }
         else
         {

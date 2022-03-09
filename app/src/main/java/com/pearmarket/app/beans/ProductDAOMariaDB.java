@@ -59,10 +59,13 @@ public class ProductDAOMariaDB implements ProductDAO {
             while (result.next()) {
                 Product product = new Product();
                 product.setId(result.getInt("id"));
+                product.setName(result.getString("name"));
                 product.setCategory(new Category(result.getInt("category_id"), result.getString("catName")));
                 product.setPrice(result.getInt("price"));
                 product.setImageSrc(result.getString("image"));
                 product.setAttributes(result.getString("attributes"));
+
+
 
                 products.add(product);
             }

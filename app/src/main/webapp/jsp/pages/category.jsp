@@ -3,13 +3,13 @@
 
 <section class="content-area">
 	<nav class="breadcrumb-links">
-		<a href="">Home</a>
-		/ Téléphones
+		<a href="${pageContext.request.contextPath}">Home</a>
+		/ ${categoryName}
 	</nav>
-	<h1>Téléphones</h1>
+	<h1>${categoryName}</h1>
 
 	<div class="filter-bar">
-		<p>Affichage de 8 résultats</p>
+		<p>Affichage de ${products.size()} résultats</p>
 		<form action="" method="get">
 			<select name="orderBy" class="order-by">
 				<option value="default">Tri par défaut</option>
@@ -23,98 +23,27 @@
 	</div>
 
 	<div class="products-container">
-		<div class="item-container">
-			<span class="on-sale">20%</span>
 
-			<a href="">
-				<div class="img-item-container">
-					<img src="assets/img/phone.png" alt="" />
-				</div>
-			</a>
+		<c:forEach var="product" items="${products}">
+			<div class="item-container">
+				<!--<span class="on-sale">20%</span>-->
+				<a href="${pageContext.request.contextPath}/product/${product.id}">
+					<div class="square-div img-card">
+						<div class="square-content">
+							<img src="${pageContext.request.contextPath}/assets/img/uploaded/products/${product.imageSrc}" alt="" />
+						</div>
+					</div>
+				</a>
 
-			<span class="categorie-item">Téléphone</span>
-			<a href="">
-				<span class="name-item">Iphone 12</span>
-			</a>
-			<span class="price-item">55€</span>
-		</div>
-		<div class="item-container">
-			<a href="">
-				<div class="img-item-container">
-					<img src="assets/img/phone.png" alt="" />
-				</div>
-			</a>
+				<a href="${pageContext.request.contextPath}/category/${product.category.id}">
+					<span class="categorie-item">${product.category.name}</span>
+				</a>
+				<a href="${pageContext.request.contextPath}/product/${product.id}">
+					<span class="name-item">${product.name}</span>
+				</a>
+				<span class="price-item">${product.getFormattedPrice()}€</span>
+			</div>
+		</c:forEach>
 
-			<span class="categorie-item">Téléphone</span>
-			<a href="">
-				<span class="name-item">Iphone 12</span>
-			</a>
-			<span class="price-item">55€</span>
-		</div>
-		<div class="item-container">
-			<a href="">
-				<div class="img-item-container">
-					<img src="assets/img/phone.png" alt="" />
-				</div>
-			</a>
-
-			<span class="categorie-item">Téléphone</span>
-			<a href="">
-				<span class="name-item">Iphone 12</span>
-			</a>
-			<span class="price-item">55€</span>
-		</div>
-		<div class="item-container">
-			<a href="">
-				<div class="img-item-container">
-					<img src="assets/img/phone.png" alt="" />
-				</div>
-			</a>
-
-			<span class="categorie-item">Téléphone</span>
-			<a href="">
-				<span class="name-item">Iphone 12</span>
-			</a>
-			<span class="price-item">55€</span>
-		</div>
-		<div class="item-container">
-			<a href="">
-				<div class="img-item-container">
-					<img src="assets/img/phone.png" alt="" />
-				</div>
-			</a>
-
-			<span class="categorie-item">Téléphone</span>
-			<a href="">
-				<span class="name-item">Iphone 12</span>
-			</a>
-			<span class="price-item">55€</span>
-		</div>
-		<div class="item-container">
-			<a href="">
-				<div class="img-item-container">
-					<img src="assets/img/phone.png" alt="" />
-				</div>
-			</a>
-
-			<span class="categorie-item">Téléphone</span>
-			<a href="">
-				<span class="name-item">Iphone 12</span>
-			</a>
-			<span class="price-item">55€</span>
-		</div>
-		<div class="item-container">
-			<a href="">
-				<div class="img-item-container">
-					<img src="assets/img/phone.png" alt="" />
-				</div>
-			</a>
-
-			<span class="categorie-item">Téléphone</span>
-			<a href="">
-				<span class="name-item">Iphone 12</span>
-			</a>
-			<span class="price-item">55€</span>
-		</div>
 	</div>
 </section>
