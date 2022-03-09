@@ -1,0 +1,148 @@
+/**************** Responsive **************/
+
+/******* Generals ******/
+@media (max-width: 1200px) {
+	.container {
+		max-width: 90%;
+	}
+}
+
+@media (max-width: 990px) {
+	.container {
+		max-width: 95%;
+	}
+}
+
+/****** Home ******/
+@media (max-width: 800px) {
+	.grid-about-products {
+		margin: 0;
+	}
+
+	.about-products {
+		width: 100%;
+		flex-direction: column;
+		align-items: center;
+		margin: 0 0 40px;
+	}
+
+	.about-products .content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.about-products .content p, .about-products .content h3 {
+		text-align: center;
+	}
+
+	.about-products i {
+		margin: 0 0 15px;
+	}
+
+	.card-categories-container {
+		flex-direction: column;
+		align-items: center;
+	}
+	.card-categories {
+		max-width: 75vw;
+		width: 75vw;
+		height: 100%;
+		margin: 20px 0;
+	}
+}
+
+/******* Product list ********/
+@media (min-width: 850px) {
+	.item-container:nth-child(4n) {
+		margin-right: 0;
+	}
+}
+
+@media (max-width: 850px) and (min-width: 550px) {
+	.item-container {
+		border-radius: 10px;
+		width: calc(33.33% - 10px);
+
+		display: flex;
+		flex-direction: column;
+
+		margin: 0 15px 35px 0;
+	}
+
+	.item-container:nth-child(3n) {
+		margin-right: 0;
+	}
+}
+
+@media (max-width: 550px) {
+	.item-container {
+		border-radius: 10px;
+		width: calc(50% - 10px);
+
+		display: flex;
+		flex-direction: column;
+
+		margin: 0 0 35px 0;
+	}
+
+	.item-container:nth-child(2n + 1) {
+		margin-right: 20px;
+	}
+}
+
+/****** Cart ******/
+@media (max-width: 800px) {
+	.cart-totals-price {
+		margin-left: 0;
+		width: 100%;
+	}
+}
+
+/****** Checkout ******/
+@media (max-width: 900px) {
+	.paiement-checkout{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.delivery-details{
+		width: 100%;
+		max-width: 550px;
+		}
+	.your-order{
+		max-width: 550px;
+		width: 100%;
+		margin: 0;
+	}
+}
+
+
+/**** Forms *****/
+@media (max-width: 550px) {
+	.name-row {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.name-elem {
+		width: 100%;
+	}
+}
+
+/****** Content area *******/
+@media (max-width: 850px) {
+	.content-area {
+		margin: 50px 0;
+		padding: 60px 40px;
+	}
+}
+
+/******** Product page *******/
+@media (max-width: 950px) {
+	.product-flex {
+		grid-template-columns: 1fr;
+		column-gap: 0;
+		row-gap: 30px;
+	}
+}

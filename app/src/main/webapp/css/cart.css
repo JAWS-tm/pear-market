@@ -1,0 +1,116 @@
+@import url(style.css);
+@import url(form.css);
+/*************************************** Cart ************************************************/
+
+.cart-container {
+	position: relative;
+}
+
+table {
+	border-collapse: collapse;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+}
+th {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	background-color: rgb(251, 251, 251);
+	padding: 15px;
+	font-size: 1rem;
+	font-weight: 600;
+	color: var(--colorLightDarkText);
+}
+#cart-product-thead {
+	width: 50vw;
+}
+#cart-price-thead {
+	width: 15vw;
+}
+#cart-quantity-thead {
+	width: 15vw;
+}
+#cart-subtotal-thead {
+	width: 20vw;
+}
+
+td {
+	text-align: center;
+}
+td h3 {
+	font-size: 1rem;
+	font-weight: 500;
+}
+
+.cart-product-container {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+.cart-product-container img {
+	height: 10vh;
+}
+.cart-product-container i {
+	border: 1px solid rgba(0, 0, 0, 0.4);
+	color: rgba(0, 0, 0, 0.4);
+	padding: 2px 5px;
+	margin: 4px;
+	border-radius: 100px;
+	cursor: pointer;
+	transition: 0.2s;
+}
+.cart-product-container i:hover {
+	border: 1px solid rgba(0, 0, 0, 0.7);
+	color: rgba(0, 0, 0, 0.7);
+}
+
+.cart-coupon {
+	margin: 10px 0;
+}
+.cart-coupon a {
+	margin: 0 10px;
+	padding: 10px;
+	font-size: 0.7rem;
+}
+.cart-coupon input {
+	width: 20vw;
+	max-width: 200px;
+	min-width: 150px;
+}
+.cart-coupon input::placeholder {
+	font-size: 0.8rem;
+}
+
+.cart-totals-price {
+	border: 1px solid var(--separator-light);
+	width: 50%;
+	margin-left: 50%;
+}
+
+.cart-totals-text-container {
+	background-color: rgb(251, 251, 251);
+}
+
+.cart-totals-price h2 {
+	font-size: 1.1rem;
+	font-weight: 500;
+	padding: 10px;
+}
+
+.cart-total-flex-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.cart-total-flex-container h3 {
+	margin: 10px;
+}
+.cart-subtotals,
+.cart-total {
+	display: flex;
+	justify-content: space-between;
+	margin: 10px 30px;
+	font-size: 0.9rem;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+.cart-total-flex-container a {
+	margin: 20px auto;
+	width: auto;
+}

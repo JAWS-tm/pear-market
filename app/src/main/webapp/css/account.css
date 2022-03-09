@@ -1,0 +1,95 @@
+@import url(style.css);
+@import url(form.css);
+@import url(product.css);
+
+/*********************************** My account *************************/
+
+.content-area h2{
+    margin-bottom: 10px;
+    font-size: 1rem;
+    font-weight: 300;
+}
+/**************** account *************/
+.customer-info-container{
+    display: flex;
+    align-items: center;
+}
+
+.customer-info-container span{
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 10px;
+    width: 80px;
+}
+span.text-modif{
+    width: 300px;
+    font-weight: 200;
+}
+
+.tabs-content-list a{
+    font-size: 0.8rem;
+    font-weight: 300;
+    display: block;
+    text-align: center;
+    transition: all 0.2s;
+}
+.tabs-content-list a:hover{
+    font-weight: 500;
+    color: var(--secondary-color);
+}
+
+/**************** orders *************/
+
+table{
+    width: 100%;
+}
+.tr-head{
+    border: none;
+}
+.tr-head:hover{
+    border: none;
+    cursor: default;
+}
+table tr{
+    display: grid;
+    grid-template-columns: 20% 20% 30% 15% 15%;
+    border: 1px solid rgba(39, 39, 39, 0.164);
+    border-radius: 5px;
+    margin: 10px 0;
+}
+table tr:hover{
+    border: 1px solid rgba(39, 39, 39, 0.712);
+    cursor: pointer;
+}
+
+table th, td{
+    font-size: 0.8rem;
+    text-align: left;
+    padding: 10px;
+}
+
+
+/**************** product *************/
+input[type="number"]{
+    width: 50px;
+}
+
+.gestion-products-container td{
+    display: flex;
+    align-items: center;
+}
+
+.gestion-products-container tr{
+    grid-template-columns: 25% 20% 20% 15% 20%;
+}
+
+
+/**************** black list *************/
+
+.black-list-container tr{
+    grid-template-columns: 25% 25% 25% 25%;
+}
+
+.black-list-container a{
+    text-align: left;
+}

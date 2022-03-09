@@ -1,0 +1,123 @@
+@import url(style.css);
+@import url(form.css);
+@import url(cart.css);
+@import url(responsive.css);
+/*************************************** chekcout ************************************************/
+
+.forget-coupon {
+	background: rgb(247, 246, 247);
+	display: flex;
+	padding: 15px;
+	position: relative;
+	border-top: 2px solid black;
+}
+
+.forget-coupon i,
+.forget-coupon p,
+.forget-coupon a {
+	margin: 0 2px;
+	font-size: 0.8rem;
+	transition: 0.2s;
+}
+.forget-coupon i {
+	color: rgba(0, 0, 0, 0.5);
+	margin: 0 8px;
+	display: flex;
+	align-items: center;
+}
+.forget-coupon a:hover{
+	color: var(--primary-color);
+}
+
+#window-coupon{
+	margin: 15px 0;
+	font-size: 2rem;
+	max-height: 0;
+	transition: all 0.4s;
+	overflow: hidden;
+}
+#window-coupon p{
+	font-size: 0.8rem;
+}
+#window-coupon.active{
+	max-height: 100px;
+}
+
+.paiement-checkout{
+	display: flex;
+	gap: 40px;
+	align-items: flex-end;
+}
+.delivery-details{
+	display: flex;
+	flex-direction: column;
+	width: 60%;
+}
+
+.paiement-checkout h2{
+	border-bottom: 1px solid rgba(0, 0, 0, 0.192);
+	padding: 10px 0;
+	margin: 20px 0;
+	font-size: 1.2rem;
+	font-weight: 500;
+}
+
+
+
+.your-order{
+	display: flex;
+	flex-direction: column;
+	border: 2px solid rgba(0, 0, 0, 0.219);
+	padding: 20px;
+	height: fit-content;
+}
+.your-order h2{
+	margin: 0;
+}
+
+.checkout-paiement-recap{
+	display: grid;
+	grid-template-columns: 70% 30%;
+	border-bottom: 1px solid rgba(97, 96, 96, 0.192);
+}
+.checkout-paiement-recap span{
+	font-size: 1rem;
+	margin: 15px 0;
+	font-weight: 600;
+	color: rgba(31, 30, 30, 0.719);
+}
+
+#text-nom-produit span{
+	font-weight: 200;
+	color: rgba(0, 0, 0, 0.795);
+}
+#wrap-product-nb{
+	display: flex;
+	align-items: center;
+}
+#wrap-product-nb span{
+	margin-right: 10px;
+}
+
+.mode-paiement-container{
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+.mode-paiement{
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 10px;
+}
+.mode-paiement i{
+	font-size: 2.5rem;
+	color: var(--text-color);
+}
+
+.your-order a{
+	margin: 20px auto;
+	font-size: 0.8rem;
+
+}

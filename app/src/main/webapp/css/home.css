@@ -1,0 +1,103 @@
+@import url(style.css);
+@import url(products-list.css);
+
+/************ About brand ************/
+.grid-about-products {
+	/* display: grid;
+	grid-template-columns: 33% 33% 33%; */
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	margin: 0 0 100px;
+	position: relative;
+	flex-wrap: wrap;
+}
+
+.about-products {
+	display: flex;
+	width: 30%;
+}
+
+.about-products .content {
+	width: 90%;
+}
+
+.about-products i {
+	display: flex;
+	align-items: center;
+	margin-right: 30px;
+
+	color: var(--primary-color);
+	font-size: 1.5rem;
+}
+.about-products h3 {
+	color: var(--text-color);
+}
+.about-products p {
+	color: var(--text-light);
+	max-width: 90%;
+}
+
+/************* Categories ************/
+
+.home-categories {
+	background-color: rgb(249, 249, 249);
+}
+
+.card-categories-container {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.card-categories {
+	display: flex;
+	flex-direction: column;
+
+	border: 1px solid transparent;
+	border-radius: 20px;
+
+	padding: 15px;
+
+	width: calc(33.33% - 10px);
+
+	margin-right: 15px;
+
+	background: linear-gradient(0deg, rgb(238, 237, 243), rgb(233, 230, 250));
+	transition: box-shadow 0.3s;
+}
+
+.card-categories:last-child {
+	margin-right: 0;
+}
+
+.card-categories:hover {
+	box-shadow: 0 64px 120px -40px rgb(0 0 0 / 16%);
+}
+
+.category-image img {
+	/*width: 90%;*/
+	height: 90%;
+	object-fit: cover;
+}
+
+.card-categories-container h2,
+.card-categories-container p,
+.view-more-btn {
+	margin: 10px 0;
+}
+
+.view-more-btn {
+	border: 1px solid rgba(0, 0, 0, 0.404);
+	padding: 4px 10px;
+	margin-top: 100px;
+	border-radius: 20px;
+	font-size: 0.8rem;
+	color: rgb(85, 84, 84);
+	cursor: pointer;
+}
+
+.view-more-btn:hover {
+	color: var(--secondary-color);
+	border: 1px solid var(--secondary-color);
+	transition: 0.2s;
+}

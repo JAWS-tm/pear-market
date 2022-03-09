@@ -1,0 +1,29 @@
+@import url(style.css);
+@import url(products-list.css);
+
+.filter-bar {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+
+	align-items: center;
+	color: var(--text-light);
+	margin: 25px 0;
+}
+.filter-bar p {
+	margin: 10px 0;
+}
+
+.order-by {
+	padding: 0.5rem;
+	border: 1px solid #ddd;
+	background-color: #fafafa;
+	font-size: 0.95rem;
+	font-family: inherit;
+	color: var(--text-light);
+	outline: none;
+}
+
+.order-by:focus {
+	border-color: rgb(179, 179, 179);
+}
