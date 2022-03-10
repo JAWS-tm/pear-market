@@ -1,3 +1,4 @@
+<jsp:useBean id="product" scope="request" type="com.pearmarket.app.beans.elements.Product"/>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -16,7 +17,7 @@
 				/ Iphone 12
 			</nav>
 			<h1>${product.name}</h1>
-			<span class="price">${product.getFormattedPrice()}€</span>
+			<span class="price">${product.formattedPrice}€</span>
 			<p>
 				${product.description}
 			</p>

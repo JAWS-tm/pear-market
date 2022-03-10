@@ -6,7 +6,7 @@
 		<h1>Mon compte</h1>
 		<h2>S'inscrire</h2>
 
-		<form action="" method="get" class="form-account">
+		<form action="" method="POST" class="form-account">
 			<div class="name-row">
 				<div class="name-elem">
 					<label for="last-name">Nom</label>
@@ -20,7 +20,7 @@
 			</div>
 
 			<label for="email">Nom d'utilisateur ou adresse email</label>
-			<input type="text" name="email" id="email" placeholder="exemple: monemail@gmail.com" required />
+			<input type="email" name="email" id="email" placeholder="exemple: monemail@gmail.com" required />
 
 			<label for="password">Mot de passe</label>
 			<input type="password" name="password" id="password" required />
@@ -29,8 +29,8 @@
 			<input type="password" name="password_check" id="password_check" required />
 
 			<div class="checkbox-container">
-				<input type="checkbox" id="remember-account" name="remember-account" required />
-				<label for="remember-account">Accepter les CGU</label>
+				<input type="checkbox" id="agree-cgu" name="remember-account" required />
+				<label for="agree-cgu">Accepter les CGU</label>
 			</div>
 
 			<input type="submit" class="red-button" value="S'inscrire" />

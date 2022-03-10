@@ -26,7 +26,7 @@ for (let i = 0; i < stars.length; i++) {
 	star.addEventListener("click", (e) => {
 		e.preventDefault();
 
-		if (lastActive == star) {
+		if (lastActive === star) {
 			lastActive.classList.remove("active");
 			lastActive = null;
 			selectRating(0);

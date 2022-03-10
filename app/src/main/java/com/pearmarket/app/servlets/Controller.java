@@ -15,9 +15,9 @@ public abstract class Controller {
 
     private Boolean isRendered = false;
 
-    protected HttpServletRequest request;
-    protected HttpServletResponse response;
-    protected DAOFactory daoFactory;
+    protected final HttpServletRequest request;
+    protected final HttpServletResponse response;
+    protected final DAOFactory daoFactory;
 
     public Controller(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;

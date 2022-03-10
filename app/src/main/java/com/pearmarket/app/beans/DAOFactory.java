@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DAOFactory {
-    private static DAOFactory instance = null;
+    private static volatile DAOFactory instance = null;
     private String url;
     private String user;
     private String password;
@@ -57,6 +57,16 @@ public class DAOFactory {
             case MariaDB:
                 setParamsMariaDB("jdbc:mariadb://localhost:3306/projet_shop", "root", "");
                 return new CategoryDAOMariaDB(this);
+            default:
+                return null;
+        }
+    }
+
+    public UserDAO getUserDAO(DBType type) {
+        switch (type) {
+            case MariaDB:
+                setParamsMariaDB("jdbc:mariadb://localhost:3306/projet_shop", "root", "");
+                return new UserDAOMariaDB(this);
             default:
                 return null;
         }

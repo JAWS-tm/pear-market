@@ -1,3 +1,5 @@
+<jsp:useBean id="title" scope="request" type="java.lang.String"/>
+<jsp:useBean id="whiteNavBar" scope="request" type="java.lang.Boolean"/>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -50,9 +52,21 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="link">
-                            <a href="${pageContext.request.contextPath}/sign-in" class="${pageId == "account" ? "selected" : null}">Mon compte</a>
-                        </li>
+                        
+                        <c:choose>
+                            <c:when test="${sessionScope.loggedUser == null}">
+                                <li class="link">
+                                    <a href="${pageContext.request.contextPath}/sign-in" class="${pageId == "sign-in" ? "selected" : null}">Connexion</a>
+                                </li>
+<%--                                <li class="link">--%>
+<%--                                    <a href="${pageContext.request.contextPath}/sign-up" class="${pageId == "sign-up" ? "selected" : null}">S'inscrire</a>--%>
+<%--                                </li>--%>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="${pageContext.request.contextPath}/account" class="${pageId == "account" ? "selected" : null}">Mon compte</a>
+                            </c:otherwise>
+                        </c:choose>
+
                         <li class="link">
                             <a href="${pageContext.request.contextPath}/cart" class="cart-link ${pageId == "cart" ? "selected" : null}">
                                 <i class="fa-solid fa-cart-shopping"></i>

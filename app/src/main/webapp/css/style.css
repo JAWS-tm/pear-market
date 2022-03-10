@@ -236,7 +236,7 @@ a {
 	width: 100%;
 	height: var(--landing-height);
 	object-fit: cover;
-	object-position: 100% 0%;
+	object-position: 100% 0;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -346,4 +346,32 @@ footer ul {
 
 .error-image {
 	width: 25%;
+}
+
+
+/************ info tab ************/
+
+.forget-coupon {
+	background: rgb(247, 246, 247);
+	display: flex;
+	padding: 15px;
+	position: relative;
+	border-top: 2px solid black;
+}
+
+.forget-coupon i,
+.forget-coupon p,
+.forget-coupon a {
+	margin: 0 2px;
+	font-size: 0.8rem;
+	transition: 0.2s;
+}
+.forget-coupon i {
+	color: rgba(0, 0, 0, 0.5);
+	margin: 0 8px;
+	display: flex;
+	align-items: center;
+}
+.forget-coupon a:hover{
+	color: var(--primary-color);
 }

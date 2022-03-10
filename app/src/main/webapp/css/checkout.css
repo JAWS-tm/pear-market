@@ -4,30 +4,6 @@
 @import url(responsive.css);
 /*************************************** chekcout ************************************************/
 
-.forget-coupon {
-	background: rgb(247, 246, 247);
-	display: flex;
-	padding: 15px;
-	position: relative;
-	border-top: 2px solid black;
-}
-
-.forget-coupon i,
-.forget-coupon p,
-.forget-coupon a {
-	margin: 0 2px;
-	font-size: 0.8rem;
-	transition: 0.2s;
-}
-.forget-coupon i {
-	color: rgba(0, 0, 0, 0.5);
-	margin: 0 8px;
-	display: flex;
-	align-items: center;
-}
-.forget-coupon a:hover{
-	color: var(--primary-color);
-}
 
 #window-coupon{
 	margin: 15px 0;

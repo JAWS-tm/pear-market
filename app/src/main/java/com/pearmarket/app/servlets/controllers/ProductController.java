@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ProductController extends Controller {
-    private ProductDAO productDAO;
+    private final ProductDAO productDAO;
 
     public ProductController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
@@ -27,8 +27,8 @@ public class ProductController extends Controller {
     }
 
     @Override
-    public void process() throws ServletException, IOException, ErrorManager {
-        int id = 0;
+    public void process() throws ErrorManager {
+        int id;
         try {
             id = Integer.parseInt(request.getParameter("id"));
         } catch (NumberFormatException e) {

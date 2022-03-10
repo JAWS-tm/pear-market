@@ -20,7 +20,7 @@ public class AccountController extends Controller {
     }
 
     @Override
-    public void process() throws ServletException, IOException {
+    public void process() {
 
 
 

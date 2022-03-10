@@ -19,7 +19,7 @@ public class SignInController extends Controller {
     }
 
     @Override
-    public void process() throws ServletException, IOException {
+    public void process() {
 
     }
 }

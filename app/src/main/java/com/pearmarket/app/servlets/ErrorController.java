@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ErrorController extends Controller {
-    ErrorManager errorManager;
+    final ErrorManager errorManager;
 
     public ErrorController(HttpServletRequest request, HttpServletResponse response, ErrorManager eManager) {
         super(request, response);
@@ -22,5 +22,7 @@ public class ErrorController extends Controller {
     public void process() throws ServletException, IOException {
         request.setAttribute("errorTitle", errorManager.getTitle());
         request.setAttribute("errorMessage", errorManager.getDescription());
+
+        render();
     }
 }

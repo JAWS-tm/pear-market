@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class CategoryDAOMariaDB implements CategoryDAO{
-    private DAOFactory daoFactory;
+    private final DAOFactory daoFactory;
 
     public CategoryDAOMariaDB(DAOFactory daoFactory) {
         this.daoFactory = daoFactory;
@@ -19,7 +19,7 @@ public class CategoryDAOMariaDB implements CategoryDAO{
         try (
             Connection connection = daoFactory.getConnection();
             Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM categories;");
+            ResultSet result = statement.executeQuery("SELECT * FROM categories;")
         ) {
             while (result.next())
             {

@@ -4,7 +4,6 @@ import com.pearmarket.app.beans.CategoryDAO;
 import com.pearmarket.app.beans.DAOFactory;
 import com.pearmarket.app.beans.ProductDAO;
 import com.pearmarket.app.beans.elements.Category;
-import com.pearmarket.app.beans.elements.Product;
 import com.pearmarket.app.servlets.Controller;
 import com.pearmarket.app.servlets.ErrorManager;
 
@@ -12,11 +11,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class CategoryController extends Controller {
-    ProductDAO productDAO;
-    CategoryDAO categoryDAO;
+    final ProductDAO productDAO;
+    final CategoryDAO categoryDAO;
 
     public CategoryController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
@@ -31,8 +29,8 @@ public class CategoryController extends Controller {
     }
 
     @Override
-    public void process() throws ServletException, IOException, ErrorManager {
-        int categoryId = 0;
+    public void process() throws ErrorManager {
+        int categoryId;
         try {
             categoryId = Integer.parseInt(request.getParameter("id")); // check if id exist
         } catch (NumberFormatException e) {

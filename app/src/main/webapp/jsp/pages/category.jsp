@@ -1,3 +1,5 @@
+<jsp:useBean id="category" scope="request" type="com.pearmarket.app.beans.elements.Category"/>
+<jsp:useBean id="products" scope="request" type="java.util.ArrayList"/>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 

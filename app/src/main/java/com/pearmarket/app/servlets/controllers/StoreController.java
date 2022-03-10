@@ -18,7 +18,7 @@ public class StoreController extends Controller {
     }
 
     @Override
-    public void process() throws ServletException, IOException {
+    public void process() {
 
     }
 }

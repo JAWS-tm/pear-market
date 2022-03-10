@@ -1,6 +1,5 @@
 package com.pearmarket.app.servlets;
 
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -22,39 +21,37 @@ public class ServletDispatcher extends HttpServlet {
 
         String id = request.getParameter("link");
 
-        if (id == null || id == "")
+        if (id == null || id.equals(""))
             id = "home";
         request.setAttribute("pageId", id);
 
 
         try {
-            Controller controller = null;
+            Controller controller;
             try {
-                Constructor c = Class.forName(getController(id)).getConstructor(HttpServletRequest.class, HttpServletResponse.class);
+                Constructor<?> c = Class.forName(getController(id)).getConstructor(HttpServletRequest.class, HttpServletResponse.class);
                 controller = (Controller) c.newInstance(request, response);
             } catch (Exception e) {
                 throw new ErrorManager(ErrorManager.ErrorTypes.ERROR_404);
             }
 
             System.out.println(id);
-            System.out.println(controller.toString());
+            System.out.println(controller);
 
             controller.process();
             controller.render();
         } catch (ErrorManager e) {
             ErrorController errorPage = new ErrorController(request, response, e);
+
             errorPage.process();
-
-            errorPage.render();
         }
-
     }
 
     static String getController(String s){
         String[] parts = s.split("-");
-        String camelCaseString = "";
+        StringBuilder camelCaseString = new StringBuilder();
         for (String part : parts){
-            camelCaseString = camelCaseString + toProperCase(part);
+            camelCaseString.append(toProperCase(part));
         }
         return "com.pearmarket.app.servlets.controllers." + camelCaseString + "Controller";
     }

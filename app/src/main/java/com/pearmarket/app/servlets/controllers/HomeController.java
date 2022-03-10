@@ -12,8 +12,8 @@ import java.io.IOException;
 
 public class HomeController extends Controller {
 
-    private ProductDAO productDAO;
-    private CategoryDAO categoryDAO;
+    private final ProductDAO productDAO;
+    private final CategoryDAO categoryDAO;
 
     public HomeController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
@@ -26,7 +26,7 @@ public class HomeController extends Controller {
     }
 
     @Override
-    public void process() throws ServletException, IOException {
+    public void process() {
 
 
 

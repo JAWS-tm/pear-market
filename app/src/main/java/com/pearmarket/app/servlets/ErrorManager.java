@@ -8,9 +8,9 @@ public class ErrorManager extends Exception{
         ERROR_404
     }
 
-    private ErrorTypes type = ErrorTypes.INVALID_PARAMETER;
-    private String title = "";
-    private String description = "";
+    private ErrorTypes type;
+    private String title;
+    private String description;
     public ErrorManager(ErrorTypes type) {
         this.type = type;
 

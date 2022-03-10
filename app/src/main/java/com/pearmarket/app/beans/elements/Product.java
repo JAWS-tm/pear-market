@@ -94,6 +94,7 @@ public class Product implements Serializable {
     public void setAttributes(String attributes) {
         this.attributes = attributes;
     }
+
 }
 
 

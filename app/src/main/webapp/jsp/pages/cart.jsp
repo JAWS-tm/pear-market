@@ -47,7 +47,7 @@
 					<h3>90.00€</h3>
 				</div>
 
-				<a href="/checkout.html" id="paiement-btn" class="red-button">Proceder au paiement</a>
+				<a href="${pageContext.request.contextPath}/checkout" id="paiement-btn" class="red-button">Proceder au paiement</a>
 			</div>
 		</div>
 	</section>

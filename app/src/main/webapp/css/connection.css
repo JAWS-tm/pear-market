@@ -20,3 +20,7 @@
 .form-account a:hover {
 	text-decoration: underline;
 }
+
+#go-sign-up{
+	margin: 20px 0;
+}

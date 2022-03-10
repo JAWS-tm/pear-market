@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class ProductDAOMariaDB implements ProductDAO {
-    private DAOFactory daoFactory;
+    private final DAOFactory daoFactory;
 
     public ProductDAOMariaDB(DAOFactory daoFactory) {
         this.daoFactory = daoFactory;
@@ -20,7 +20,7 @@ public class ProductDAOMariaDB implements ProductDAO {
         try (
             Connection connection = daoFactory.getConnection();
             Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT products.id, products.category_id, products.name, products.price, products.image, products.attributes, categories.name as catName FROM products, categories WHERE products.category_id = categories.id;");
+            ResultSet result = statement.executeQuery("SELECT products.id, products.category_id, products.name, products.price, products.image, products.attributes, categories.name as catName FROM products, categories WHERE products.category_id = categories.id;")
         ) {
             while (result.next()) {
                 Product product = new Product();
