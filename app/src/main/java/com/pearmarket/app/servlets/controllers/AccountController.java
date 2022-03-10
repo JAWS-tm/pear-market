@@ -11,18 +11,19 @@ public class AccountController extends Controller {
 
     public AccountController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
-    }
 
-    @Override
-    public void process() throws ServletException, IOException {
         this.setJspLink("/jsp/pages/account.jsp");
 
         this.setTitle("Mon Compte");
         this.setStyleFiles(new String[] {"account", "responsive"});
         this.setWhiteNavBar(true);
+    }
+
+    @Override
+    public void process() throws ServletException, IOException {
 
 
 
-        render();
+
     }
 }

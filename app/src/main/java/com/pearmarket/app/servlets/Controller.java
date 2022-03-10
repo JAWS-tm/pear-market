@@ -13,6 +13,8 @@ public abstract class Controller {
     private String[] styleFiles;
     private Boolean whiteNavBar = false;
 
+    private Boolean isRendered = false;
+
     protected HttpServletRequest request;
     protected HttpServletResponse response;
     protected DAOFactory daoFactory;
@@ -24,10 +26,10 @@ public abstract class Controller {
         this.daoFactory = DAOFactory.getInstance();
     }
 
-    public abstract void process() throws ServletException, IOException;
+    public abstract void process() throws ServletException, IOException, ErrorManager;
 
     protected void render() throws IOException, ServletException {
-        if (!jspLink.isEmpty())
+        if (!jspLink.isEmpty() && !isRendered)
         {
             request.setCharacterEncoding("UTF-8");
 
@@ -37,6 +39,8 @@ public abstract class Controller {
 
             request.setAttribute("pageContent", jspLink);
             request.getRequestDispatcher("/jsp/layout.jsp").forward(request, response);
+
+            isRendered = true;
         }
     }
 

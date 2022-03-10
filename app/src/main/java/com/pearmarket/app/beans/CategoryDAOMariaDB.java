@@ -2,10 +2,7 @@ package com.pearmarket.app.beans;
 
 import com.pearmarket.app.beans.elements.Category;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class CategoryDAOMariaDB implements CategoryDAO{
@@ -37,6 +34,27 @@ public class CategoryDAOMariaDB implements CategoryDAO{
 
     @Override
     public Category getCategory(int id) {
-        return null;
+        Category category = null;
+
+        try (Connection connection = daoFactory.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(
+                    "SELECT * FROM categories WHERE id = ?"
+            );
+            stmt.setInt(1, id);
+            ResultSet result = stmt.executeQuery();
+
+            if (result.first()){
+                category = new Category(
+                        result.getInt("id"),
+                        result.getString("name"),
+                        result.getString("description"),
+                        result.getString("image")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return category;
     }
 }

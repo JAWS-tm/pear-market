@@ -1,9 +1,12 @@
 package com.pearmarket.app.servlets.controllers;
 
+import com.pearmarket.app.beans.CategoryDAO;
 import com.pearmarket.app.beans.DAOFactory;
 import com.pearmarket.app.beans.ProductDAO;
+import com.pearmarket.app.beans.elements.Category;
 import com.pearmarket.app.beans.elements.Product;
 import com.pearmarket.app.servlets.Controller;
+import com.pearmarket.app.servlets.ErrorManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,34 +16,38 @@ import java.util.ArrayList;
 
 public class CategoryController extends Controller {
     ProductDAO productDAO;
+    CategoryDAO categoryDAO;
+
     public CategoryController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
-        productDAO = daoFactory.getProductDAO(DAOFactory.DBType.MariaDB);
-    }
 
-    @Override
-    public void process() throws ServletException, IOException {
         this.setJspLink("/jsp/pages/category.jsp");
-
         this.setTitle("Catégorie");
         this.setStyleFiles(new String[] {"category","responsive"});
         this.setWhiteNavBar(true);
 
+        productDAO = daoFactory.getProductDAO(DAOFactory.DBType.MariaDB);
+        categoryDAO = daoFactory.getCategoryDAO(DAOFactory.DBType.MariaDB);
+    }
 
-        int categoryId = Integer.parseInt(request.getParameter("id")); // check if id exist
-
-        ArrayList<Product> products;
-        if (categoryId != 0 && !(products = productDAO.getProductsByCategory(categoryId)).isEmpty())
-        {
-            request.setAttribute("products", products);
-            request.setAttribute("categoryName", products.get(1).getCategory().getName());
-
-        }
-        else
-        {
-            // erreur ou pas de products
+    @Override
+    public void process() throws ServletException, IOException, ErrorManager {
+        int categoryId = 0;
+        try {
+            categoryId = Integer.parseInt(request.getParameter("id")); // check if id exist
+        } catch (NumberFormatException e) {
+            throw new ErrorManager(ErrorManager.ErrorTypes.INVALID_PARAMETER);
         }
 
-        render();
+
+        Category cat = categoryDAO.getCategory(categoryId);
+        if (cat == null)
+            throw new ErrorManager(ErrorManager.ErrorTypes.NULL_OBJECT);
+
+        request.setAttribute("category", cat);
+        this.setTitle(cat.getName());
+
+        request.setAttribute("products", productDAO.getProductsByCategory(categoryId));
+
     }
 }

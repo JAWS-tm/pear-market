@@ -4,9 +4,9 @@
 <section class="content-area">
 	<nav class="breadcrumb-links">
 		<a href="${pageContext.request.contextPath}">Home</a>
-		/ ${categoryName}
+		/ ${category.name}
 	</nav>
-	<h1>${categoryName}</h1>
+	<h1>${category.name}</h1>
 
 	<div class="filter-bar">
 		<p>Affichage de ${products.size()} résultats</p>

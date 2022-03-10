@@ -51,7 +51,17 @@ public class ServletDispatcher extends HttpServlet {
 
         System.out.println(id);
         System.out.println(controller.toString());
-        controller.process();
+
+        try {
+            controller.process();
+
+            controller.render();
+        } catch (ErrorManager e) {
+            // Afficher Page d'erreur
+            System.out.println(e.getType() + " - " + e.getMessage());
+        }
+
+
     }
 
     static String getController(String s){

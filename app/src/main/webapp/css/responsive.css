@@ -50,6 +50,15 @@
 		height: 100%;
 		margin: 20px 0;
 	}
+
+	.error-container {
+		flex-direction: column-reverse;
+	}
+
+	.error-image {
+		width: 50%;
+		margin-bottom: 50px;
+	}
 }
 
 /******* Product list ********/

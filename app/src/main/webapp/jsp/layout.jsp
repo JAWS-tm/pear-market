@@ -40,13 +40,13 @@
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="${pageContext.request.contextPath}/category">Téléphones</a>
+                                    <a href="${pageContext.request.contextPath}/category/1">Téléphones</a>
                                 </li>
                                 <li>
-                                    <a href="${pageContext.request.contextPath}/category">Ordinateurs</a>
+                                    <a href="${pageContext.request.contextPath}/category/2">Ordinateurs</a>
                                 </li>
                                 <li>
-                                    <a href="${pageContext.request.contextPath}/category">Télévisions</a>
+                                    <a href="${pageContext.request.contextPath}/category/3">Télévisions</a>
                                 </li>
                             </ul>
                         </li>

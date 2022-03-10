@@ -338,27 +338,12 @@ footer ul {
 
 /************** error 404*****************/
 
-.error-404{
-	display: grid;
-	grid-template-columns: 50% 50%;
-	text-align: center;
-
-	margin: 50px 0;
-}
-.error-message span{
-	display: block;
-	text-align: center;
-	padding: 50px 0;
-	font-size: 1.5rem;
-	font-weight: 200;
-	font-style: italic;
-}
-.error-img{
+.error-container {
 	display: flex;
-	justify-content: center;
 	align-items: center;
+	justify-content: space-around;
 }
-.error-img img{
-	object-fit: cover;
-	width: 100%;
+
+.error-image {
+	width: 25%;
 }

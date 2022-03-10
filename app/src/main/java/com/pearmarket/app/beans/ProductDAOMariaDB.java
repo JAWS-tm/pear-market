@@ -65,8 +65,6 @@ public class ProductDAOMariaDB implements ProductDAO {
                 product.setImageSrc(result.getString("image"));
                 product.setAttributes(result.getString("attributes"));
 
-
-
                 products.add(product);
             }
 

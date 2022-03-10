@@ -18,19 +18,20 @@ public class HomeController extends Controller {
     public HomeController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
 
+        this.setJspLink("/jsp/pages/index.jsp");
+        this.setStyleFiles(new String[] {"home","responsive"});
+
         productDAO = daoFactory.getProductDAO(DAOFactory.DBType.MariaDB);
         categoryDAO = daoFactory.getCategoryDAO(DAOFactory.DBType.MariaDB);
     }
 
     @Override
     public void process() throws ServletException, IOException {
-        this.setJspLink("/jsp/pages/index.jsp");
-        this.setStyleFiles(new String[] {"home","responsive"});
+
 
 
         request.setAttribute("productsList", productDAO.getProducts());
         request.setAttribute("categories", categoryDAO.getCategories());
 
-        render();
     }
 }
