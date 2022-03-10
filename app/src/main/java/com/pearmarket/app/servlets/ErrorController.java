@@ -8,16 +8,19 @@ import java.io.IOException;
 public class ErrorController extends Controller {
     ErrorManager errorManager;
 
-    public ErrorController(HttpServletRequest request, HttpServletResponse response) {
+    public ErrorController(HttpServletRequest request, HttpServletResponse response, ErrorManager eManager) {
         super(request, response);
 
-        this.setJspLink();
+        this.errorManager = eManager;
+
+        this.setJspLink("/jsp/pages/error.jsp");
         this.setTitle(errorManager.getTitle());
-        this
+        this.setStyleFiles(new String[] {"style", "responsive"});
     }
 
     @Override
-    public void process() throws ServletException, IOException, ErrorManager {
-
+    public void process() throws ServletException, IOException {
+        request.setAttribute("errorTitle", errorManager.getTitle());
+        request.setAttribute("errorMessage", errorManager.getDescription());
     }
 }

@@ -27,40 +27,26 @@ public class ServletDispatcher extends HttpServlet {
         request.setAttribute("pageId", id);
 
 
-
-        Controller controller = null;
         try {
-            Constructor c = Class.forName(getController(id)).getConstructor(HttpServletRequest.class, HttpServletResponse.class);
-            controller = (Controller) c.newInstance(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
+            Controller controller = null;
+            try {
+                Constructor c = Class.forName(getController(id)).getConstructor(HttpServletRequest.class, HttpServletResponse.class);
+                controller = (Controller) c.newInstance(request, response);
+            } catch (Exception e) {
+                throw new ErrorManager(ErrorManager.ErrorTypes.ERROR_404);
+            }
 
-            //request.setCharacterEncoding("UTF-8");
-            /*request.setAttribute("pageContent", "/jsp/pages/404.jsp");
-           // 404 ou erreur logicielle request.setAttribute("errorMessage", "Une erreur s'est produite lors du traitement de votre demande. \nSi l'erreur persiste veuillez contacter un administrateur.");
-            request.getRequestDispatcher("/jsp/layout.jsp").forward(request, response);*/
+            System.out.println(id);
+            System.out.println(controller.toString());
 
-            /// Creer un controlleur erreur
-
-            request.setAttribute("hasError", true);
-            request.setAttribute("title", "Pear Market - Erreur 404");
-            request.setAttribute("styleFiles", new String[] {"style","responsive"});
-            request.setAttribute("errorMessage", "Une erreur s'est produite lors du traitement de votre demande. \nSi l'erreur persiste veuillez contacter un administrateur.");
-            request.getRequestDispatcher("/jsp/layout.jsp").forward(request, response);
-        }
-
-        System.out.println(id);
-        System.out.println(controller.toString());
-
-        try {
             controller.process();
-
             controller.render();
         } catch (ErrorManager e) {
-            // Afficher Page d'erreur
-            System.out.println(e.getType() + " - " + e.getMessage());
-        }
+            ErrorController errorPage = new ErrorController(request, response, e);
+            errorPage.process();
 
+            errorPage.render();
+        }
 
     }
 
