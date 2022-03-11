@@ -52,20 +52,31 @@
                                 </li>
                             </ul>
                         </li>
-                        
+
                         <c:choose>
                             <c:when test="${sessionScope.loggedUser == null}">
                                 <li class="link">
                                     <a href="${pageContext.request.contextPath}/sign-in" class="${pageId == "sign-in" ? "selected" : null}">Connexion</a>
                                 </li>
-<%--                                <li class="link">--%>
-<%--                                    <a href="${pageContext.request.contextPath}/sign-up" class="${pageId == "sign-up" ? "selected" : null}">S'inscrire</a>--%>
-<%--                                </li>--%>
                             </c:when>
                             <c:otherwise>
-                                <a href="${pageContext.request.contextPath}/account" class="${pageId == "account" ? "selected" : null}">Mon compte</a>
+                                <li class="link sub-menu-parent">
+                                    <a href="${pageContext.request.contextPath}/account" class="store-link ${pageId == "account" ? "selected" : null}">
+                                        Mon Compte
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="${pageContext.request.contextPath}/account">Gestion du compte</a>
+                                        </li>
+                                        <li>
+                                            <a href="${pageContext.request.contextPath}/disconnect" class="selected">Déconnexion</a>
+                                        </li>
+                                    </ul>
+                                </li>
                             </c:otherwise>
                         </c:choose>
+
 
                         <li class="link">
                             <a href="${pageContext.request.contextPath}/cart" class="cart-link ${pageId == "cart" ? "selected" : null}">

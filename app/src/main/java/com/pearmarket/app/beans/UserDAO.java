@@ -6,5 +6,5 @@ public interface UserDAO {
     User getUser(int id);
     User tryConnect(String email, String password);
 
-    Boolean createAccount(User user);
+    User createAccount(String email, String password, String name, String firstname);
 }

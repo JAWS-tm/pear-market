@@ -6,6 +6,10 @@ form {
 	padding: 30px;
 }
 
+.input-fail {
+	border-color: rgba(255,20,0,0.77) !important;
+}
+
 input[type="text"],
 input[type="password"],
 input[type="email"],

@@ -25,8 +25,8 @@ public class UserDAOMariaDB implements UserDAO {
     }
 
     @Override
-    public Boolean createAccount(User user) {
-        boolean userCreated = false;
+    public User createAccount(String email, String password, String name, String firstname) {
+        User newUser = null;
 
         try (
             Connection connection = daoFactory.getConnection();
@@ -35,18 +35,21 @@ public class UserDAOMariaDB implements UserDAO {
                             "VALUES (?, ?, ?, ?)"
             )
         ) {
-            stmt.setString(1, user.getEmail());
-            stmt.setString(2, user.getPassword());
-            stmt.setString(3, user.getName());
-            stmt.setString(4, user.getFirstname());
-            if (stmt.executeUpdate() != 0)
-                userCreated = true;
+            stmt.setString(1, email);
+            stmt.setString(2, password);
+            stmt.setString(3, name);
+            stmt.setString(4, firstname);
+            if (stmt.executeUpdate() != 0){
+                newUser = new User();
+                newUser.setEmail(email);
+                newUser.setName(name);
+                newUser.setFirstname(firstname);
+            }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // error code 1062 si duplicate entry
         }
 
-
-        return userCreated;
+        return newUser;
     }
 }

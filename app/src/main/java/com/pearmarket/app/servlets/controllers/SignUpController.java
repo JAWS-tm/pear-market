@@ -29,46 +29,56 @@ public class SignUpController extends Controller {
     }
 
     @Override
-    public void process() {
+    public void process() throws IOException {
 
         if (request.getMethod().equals("POST"))
             processSignUp();
 
     }
 
-    private void processSignUp() {
+    private void processSignUp() throws IOException {
         String email, password, password_check, name, firstname, address;
         email = request.getParameter("email");
         password = request.getParameter("password");
         password_check = request.getParameter("password_check");
-        name = request.getParameter("last-name");
-        firstname = request.getParameter("first-name");
+        name = request.getParameter("lastname");
+        firstname = request.getParameter("firstname");
+
+        // For keep input filled
+        //request.setAttribute("formFilled", true);
+        request.setAttribute("email", email);
+        request.setAttribute("password", password);
+        request.setAttribute("password_check", password_check);
+        request.setAttribute("lastname", name);
+        request.setAttribute("firstname", firstname);
+
 
         if (email == null || password == null || password_check == null || name == null || firstname == null)
         {
-            // champ manquant -> afficher un message sur le site
-            System.out.println("champ manquant");
+            System.out.println("champ manquant" + email + " " +password+ " "+password_check+ " "+name+ " "+firstname);
             return;
         }
 
         if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"))
         {
-            System.out.println("email invalide");
+            request.setAttribute("emailMatchesFail", true);
             return;
         }
 
         if (!password.equals(password_check)) {
-            System.out.println("mots de passe correspondent pas");
+            request.setAttribute("pwdCheckFailed", true);
             return;
         }
 
-        User newUser = new User();
-        newUser.setEmail(email);
-        newUser.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
-        newUser.setName(name);
-        newUser.setFirstname(firstname);
 
-        userDAO.createAccount(newUser);
+        User user = userDAO.createAccount(email, BCrypt.hashpw(password, BCrypt.gensalt()), name, firstname);
+        if(user != null){
+            System.out.println("gg t'as crée un compte");
+            request.getSession().setAttribute("loggedUser", user);
+            response.sendRedirect( request.getContextPath() );
+        }
+        else
+            request.setAttribute("alreadyCreated", true);
 
 
     }

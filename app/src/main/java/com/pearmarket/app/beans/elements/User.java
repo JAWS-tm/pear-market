@@ -6,7 +6,6 @@ public class User implements Serializable {
     private String name;
     private String firstname;
     private String email;
-    private String password;
     private String address;
     private Boolean isAdmin;
 
@@ -33,14 +32,6 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getAddress() {
