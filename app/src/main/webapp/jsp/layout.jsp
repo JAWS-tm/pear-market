@@ -26,7 +26,7 @@
                 <div class="background"></div>
                 <div class="shop-logo">
                     <a href="${pageContext.request.contextPath}/">
-                        <img src="${pageContext.request.contextPath}/assets/img/logo2.svg" alt="logo marque" />
+                        <img src="${pageContext.request.contextPath}/assets/img/logo.png" alt="logo marque" />
                         <h1>Pear Market</h1>
                     </a>
                 </div>

@@ -22,12 +22,12 @@ public class ErrorManager extends Exception{
 
             case NULL_OBJECT:
                 title = "L'élement recherché est introuvable";
-                description = "Aucun élément ne correspond à votre recherche, il a soit été supprimé ou n'exite pas.";
+                description = "Aucun élément ne correspond à votre recherche, il a soit été supprimé ou n'existe pas.";
                 break;
 
             case ERROR_404:
-                title = "La page que vous cherchez n'existe pas";
-                description = "Aucune page correspondante n'a été trouvé, réessayez votre requête ou vérifier l'URL.";
+                title = "La page que vous recherchez n'existe pas";
+                description = "Aucune page correspondante n'a été trouvée, réessayez votre requête ou vérifiez l'URL.";
                 break;
 
             default:

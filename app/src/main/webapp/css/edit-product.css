@@ -1,0 +1,18 @@
+@import url(style.css);
+@import url(form.css);
+
+
+.edit-product{
+
+    display: flex;
+    justify-content: center;
+}
+
+.edit-product-form{
+    width: 60vw;
+    max-width: 600px;
+    min-width: 400px;
+}
+
+
+

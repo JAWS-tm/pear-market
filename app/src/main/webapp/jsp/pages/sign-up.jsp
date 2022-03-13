@@ -6,7 +6,7 @@
 		<h1>Mon compte</h1>
 		<h2>S'inscrire</h2>
 
-		<form action="" method="POST" class="form-account">
+		<form class="form" action="" method="POST" class="form-account">
 			<c:if test="${alreadyCreated}">
 				<p class="error-message">Cette adresse mail a déjà un compte associé veuillez vous connecter. </p>
 			</c:if>

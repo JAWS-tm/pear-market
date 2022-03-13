@@ -22,7 +22,7 @@
 		</div>
 
 		<div class="paiement-checkout">
-				<form action="" class="delivery-details">
+				<form class="form" action="" class="delivery-details">
 					<h2>Informations de livraison</h2>
 					<div class="name-row">
 						<div class="name-elem">

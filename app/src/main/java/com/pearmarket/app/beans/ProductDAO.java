@@ -8,5 +8,7 @@ public interface ProductDAO {
     ArrayList<Product> getProducts();
     ArrayList<Product> getProductsByCategory(int categoryId);
     Product getProductById(int id);
+    void updateQuantity(int newQuantity, int productId);
+    void deleteProduct(int productId);
     // Get bestsellers
 }

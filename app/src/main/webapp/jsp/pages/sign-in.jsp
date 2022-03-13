@@ -12,7 +12,7 @@
 			<a href="${pageContext.request.contextPath}/sign-up" id="coupon-toggle">S'inscrire</a>
 		</div>
 
-		<form action="" method="get" class="form-account">
+		<form class="form" action="" method="get" class="form-account">
 			<label for="id">Adresse email</label>
 			<input type="email" name="id" id="id" placeholder="exemple: mon-email@gmail.com" required />
 

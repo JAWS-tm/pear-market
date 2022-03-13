@@ -59,7 +59,7 @@ table tr{
 }
 table tr:hover{
     border: 1px solid rgba(39, 39, 39, 0.712);
-    cursor: pointer;
+
 }
 
 table th, td{
@@ -80,8 +80,36 @@ input[type="number"]{
 }
 
 .gestion-products-container tr{
-    grid-template-columns: 25% 20% 20% 15% 20%;
+    grid-template-columns: 15% 30% 20% 20% 15%;
 }
+.applyChange-container{
+    position: relative;
+    height: 100%;
+    margin: 11px 0px 0px 10px;
+    display: none;
+}
+.applyChange{
+    width: 20px;
+    height: 100%;
+    border: none;
+    background: transparent;
+}
+.applyChange:hover{
+    cursor: pointer;
+}
+
+.applyChange-container i{
+    position: absolute;
+    font-size: 1.2rem;
+    color: rgba(0,0,0,0.7);
+    left: 0;
+    top: 0;
+    z-index: -100;
+}
+.isVisible{
+    display: inline-block;
+}
+
 
 
 /**************** black list *************/

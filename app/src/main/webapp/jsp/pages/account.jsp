@@ -70,28 +70,38 @@
                     <h2>Produits en ligne :</h2>
                     <table>
                         <tr class="tr-head">
-                            <th id="gestion-product-id-thead">Identifiant produit</th>
+                            <th id="gestion-product-id-thead">Identifiant</th>
                             <th id="gestion-product-product-thead">Produit</th>
                             <th id="gestion-product-category-thead">Catégorie</th>
                             <th id="gestion-product-stock-thead">Stock</th>
                             <th id="gestion-product-action-thead">Action</th>
                         </tr>
 
+                        <c:forEach var="product" items="${products}">
                         <tr>
-                            <td>7845920</td>
-                            <td>Iphone 12</td>
-                            <td>Smartphone</td>
-                            <td><input type="number" value="2" min="0"></td>
-                            <td><div><a href="#">Supprimer</a>  <a href="#">Modifier</a></div></td>
+                            <td>${product.id}</td>
+                            <td>${product.name}</td>
+                            <td>${product.category.name}</td>
+                            <td>
+                                <form method="POST" action="${pageContext.request.contextPath}/account/changeQuantity">
+                                    <input type="hidden" name="productId" value="${product.id}">
+                                    <input type="number" name="newQuantity" value="${product.quantity}" min="0">
+                                    <div class="applyChange-container">
+                                        <input class="applyChange" type="submit" name="applyChange" value="">
+                                        <i class="fa-solid fa-check"></i>
+                                    </div>
+                                </form>
+                            </td>
+                            <td><div><a href="${pageContext.request.contextPath}/account/delete/${product.id}">Supprimer</a>  <a href="#">Modifier</a></div></td>
                         </tr>
-
-                        <tr>
+                        </c:forEach>
+                        <%--<tr>
                             <td>89259</td>
                             <td>Iphone 14</td>
                             <td>Smartphone</td>
                             <td><input type="number" value="2" min="0"></td>
                             <td><div><a href="#">Supprimer</a>  <a href="#">Modifier</a></div></td>
-                        </tr>
+                        </tr>--%>
                     </table>
 
                     <a href="#" class="red-button">Ajouter un produit</a>
@@ -133,3 +143,4 @@
 </section>
 
 <script src="${pageContext.request.contextPath}/js/product.js"></script>
+<script src="${pageContext.request.contextPath}/js/account.js"></script>

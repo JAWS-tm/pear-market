@@ -5,3 +5,6 @@
 
 /app/target/
 /app/out/
+/app/.idea
+/.idea
+/out

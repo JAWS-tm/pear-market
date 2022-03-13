@@ -18,9 +18,9 @@ public class ProductDAOMariaDB implements ProductDAO {
         ArrayList<Product> productsList = new ArrayList<>();
 
         try (
-            Connection connection = daoFactory.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT products.id, products.category_id, products.name, products.price, products.image, products.attributes, categories.name as catName FROM products, categories WHERE products.category_id = categories.id;")
+                Connection connection = daoFactory.getConnection();
+                Statement statement = connection.createStatement();
+                ResultSet result = statement.executeQuery("SELECT products.*, categories.name as catName FROM products, categories WHERE products.category_id = categories.id;")
         ) {
             while (result.next()) {
                 Product product = new Product();
@@ -28,6 +28,7 @@ public class ProductDAOMariaDB implements ProductDAO {
                 product.setName(result.getString("name"));
                 product.setImageSrc(result.getString("image"));
                 product.setPrice(result.getInt("price"));
+                product.setQuantity(result.getInt("quantity"));
                 product.setAttributes(result.getString("attributes"));
 
                 Category cat = new Category();
@@ -47,7 +48,7 @@ public class ProductDAOMariaDB implements ProductDAO {
     public ArrayList<Product> getProductsByCategory(int categoryId) {
         ArrayList<Product> products = new ArrayList<>();
 
-        try (Connection connection = daoFactory.getConnection()){
+        try (Connection connection = daoFactory.getConnection()) {
             PreparedStatement stmt = connection.prepareStatement(
                     "SELECT products.id, products.category_id, products.name, products.price, products.image, products.attributes, categories.name as catName " +
                             "FROM products, categories " +
@@ -88,8 +89,7 @@ public class ProductDAOMariaDB implements ProductDAO {
             statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
 
-            if (result.first())
-            {
+            if (result.first()) {
                 Category cat = new Category(result.getInt("category_id"), result.getString("catName"));
 
                 product = new Product(result.getInt("id"), cat, result.getString("name"), result.getString("description"), result.getString("image"), result.getInt("price"), result.getInt("quantity"), result.getString("attributes"));
@@ -100,5 +100,32 @@ public class ProductDAOMariaDB implements ProductDAO {
         }
 
         return product;
+    }
+
+    @Override
+    public void updateQuantity(int newQuantity, int productId) {
+        try (Connection connection = daoFactory.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(
+                    "UPDATE products SET quantity=? WHERE id=?;"
+            );
+            stmt.setInt(1, newQuantity);
+            stmt.setInt(2, productId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteProduct(int productId) {
+        try (Connection connection = daoFactory.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(
+                    "DELETE FROM products WHERE id = ?;"
+            );
+            stmt.setInt(1, productId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
