@@ -12,9 +12,13 @@
 			<a href="${pageContext.request.contextPath}/sign-up" id="coupon-toggle">S'inscrire</a>
 		</div>
 
-		<form class="form" action="" method="get" class="form-account">
+		<form action="" method="post" class="form-account">
+			<c:if test="${loginError != null}">
+				<p class="error-message">${loginError}</p>
+			</c:if>
+
 			<label for="id">Adresse email</label>
-			<input type="email" name="id" id="id" placeholder="exemple: mon-email@gmail.com" required />
+			<input type="email" name="email" id="id" placeholder="exemple: mon-email@gmail.com" class="${emailMatchesFail ? "input-fail" : null}" required />
 
 			<label for="password">Mot de passe</label>
 			<input type="password" name="password" id="password" required />

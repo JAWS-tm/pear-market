@@ -2,6 +2,7 @@ package com.pearmarket.app.servlets.controllers;
 
 import com.pearmarket.app.beans.DAOFactory;
 import com.pearmarket.app.beans.ProductDAO;
+import com.pearmarket.app.beans.elements.Cart;
 import com.pearmarket.app.beans.elements.Product;
 import com.pearmarket.app.servlets.Controller;
 import com.pearmarket.app.servlets.ErrorManager;
@@ -28,18 +29,23 @@ public class ProductController extends Controller {
 
     @Override
     public void process() throws ErrorManager {
-        int id;
-        try {
-            id = Integer.parseInt(request.getParameter("id"));
-        } catch (NumberFormatException e) {
-            throw new ErrorManager(ErrorManager.ErrorTypes.INVALID_PARAMETER);
-        }
-
+        int id = parseInt(request.getParameter("id"));
 
         Product product = productDAO.getProductById(id);
         if (product == null)
             throw new ErrorManager(ErrorManager.ErrorTypes.NULL_OBJECT);
 
         request.setAttribute("product", product);
+
+
+        if (request.getMethod().equals("POST") && request.getParameter("add-product") != null) {
+            System.out.println("receive");
+            int quantity = parseInt(request.getParameter("quantity"));
+
+            Cart cart = (Cart) request.getSession().getAttribute("cart");
+            cart.addProduct(id, quantity);
+
+            System.out.println(cart.getComputedProducts());
+        }
     }
 }

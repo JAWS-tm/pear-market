@@ -7,6 +7,7 @@ public class User implements Serializable {
     private String firstname;
     private String email;
     private String address;
+    private String phone;
     private Boolean isAdmin;
 
 
@@ -48,5 +49,13 @@ public class User implements Serializable {
 
     public void setAdmin(Boolean admin) {
         isAdmin = admin;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

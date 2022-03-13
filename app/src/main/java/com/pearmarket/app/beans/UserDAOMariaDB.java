@@ -1,9 +1,11 @@
 package com.pearmarket.app.beans;
 
 import com.pearmarket.app.beans.elements.User;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDAOMariaDB implements UserDAO {
@@ -21,7 +23,29 @@ public class UserDAOMariaDB implements UserDAO {
 
     @Override
     public User tryConnect(String email, String password) {
-        return null;
+        User user = null;
+
+        try (
+                Connection connection = daoFactory.getConnection();
+                PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE email = ?")
+        ) {
+            stmt.setString(1, email);
+            ResultSet result = stmt.executeQuery();
+
+            if (result.first() && BCrypt.checkpw(password, result.getString("password"))) {
+                user = new User();
+                user.setEmail(result.getString("email"));
+                user.setName(result.getString("name"));
+                user.setFirstname(result.getString("firstname"));
+                user.setAddress(result.getString("address"));
+                user.setAdmin(result.getBoolean("is_admin"));
+                user.setPhone(result.getString("phone"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
     }
 
     @Override
@@ -36,9 +60,10 @@ public class UserDAOMariaDB implements UserDAO {
             )
         ) {
             stmt.setString(1, email);
-            stmt.setString(2, password);
+            stmt.setString(2, BCrypt.hashpw(password, BCrypt.gensalt()));
             stmt.setString(3, name);
             stmt.setString(4, firstname);
+
             if (stmt.executeUpdate() != 0){
                 newUser = new User();
                 newUser.setEmail(email);

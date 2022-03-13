@@ -19,10 +19,19 @@
 
 
     <rule>
+        <from>^\/disconnect\/?$</from>
+        <to last="true">/app?link=home&amp;id=disconnect</to>
+    </rule>
+
+    <rule>
         <from>^\/(?!app)([a-z0-9-]+)\/([a-zA-Z0-9]+)\/?$</from>
         <to last="true">/app?link=$1&amp;id=$2</to>
     </rule>
 
+    <rule>
+        <from>^\/(?!app)([a-z0-9-]+)\/([a-zA-Z0-9]+)\/([a-zA-Z0-9]+)\/?$</from>
+        <to last="true">/app?link=$1&amp;id=$2&amp;data=$3</to>
+    </rule>
 
     <rule>
         <from>^\/(?!app)([a-z0-9-]*)\/?$</from>

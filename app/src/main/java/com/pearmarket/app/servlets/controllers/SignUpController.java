@@ -4,6 +4,7 @@ import com.pearmarket.app.beans.DAOFactory;
 import com.pearmarket.app.beans.UserDAO;
 import com.pearmarket.app.beans.elements.User;
 import com.pearmarket.app.servlets.Controller;
+import com.pearmarket.app.servlets.ErrorManager;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.servlet.ServletException;
@@ -29,14 +30,16 @@ public class SignUpController extends Controller {
     }
 
     @Override
-    public void process() throws IOException {
+    public void process() throws IOException, ServletException, ErrorManager {
+        if (request.getSession().getAttribute("loggedUser") != null)
+            this.redirect("/");
 
         if (request.getMethod().equals("POST"))
             processSignUp();
 
     }
 
-    private void processSignUp() throws IOException {
+    private void processSignUp() throws IOException, ServletException, ErrorManager {
         String email, password, password_check, name, firstname, address;
         email = request.getParameter("email");
         password = request.getParameter("password");
@@ -55,30 +58,31 @@ public class SignUpController extends Controller {
 
         if (email == null || password == null || password_check == null || name == null || firstname == null)
         {
-            System.out.println("champ manquant" + email + " " +password+ " "+password_check+ " "+name+ " "+firstname);
+            request.setAttribute("loginError", "Veuillez remplir tous les champs");
             return;
         }
 
         if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"))
         {
+            request.setAttribute("loginError", "Veuillez rentrer une adresse mail valide (exemple@domain.com)");
             request.setAttribute("emailMatchesFail", true);
             return;
         }
 
         if (!password.equals(password_check)) {
+            request.setAttribute("loginError", "Les mots de passes ne correspondent pas");
             request.setAttribute("pwdCheckFailed", true);
             return;
         }
 
 
-        User user = userDAO.createAccount(email, BCrypt.hashpw(password, BCrypt.gensalt()), name, firstname);
+        User user = userDAO.createAccount(email, password, name, firstname);
         if(user != null){
-            System.out.println("gg t'as crée un compte");
             request.getSession().setAttribute("loggedUser", user);
-            response.sendRedirect( request.getContextPath() );
+            this.redirect("/");
         }
         else
-            request.setAttribute("alreadyCreated", true);
+            request.setAttribute("loginError", "Cette adresse mail a déjà un compte associé veuillez vous connecter");
 
 
     }

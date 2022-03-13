@@ -5,6 +5,7 @@ import com.pearmarket.app.beans.DAOFactory;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public abstract class Controller {
@@ -14,6 +15,7 @@ public abstract class Controller {
     private Boolean whiteNavBar = false;
 
     private Boolean isRendered = false;
+    private String redirectLink;
 
     protected final HttpServletRequest request;
     protected final HttpServletResponse response;
@@ -26,14 +28,25 @@ public abstract class Controller {
         this.daoFactory = DAOFactory.getInstance();
     }
 
+    protected void redirect(String link) throws ServletException, ErrorManager, IOException {
+        redirectLink = request.getContextPath() + link;
+    }
+
     public abstract void process() throws ServletException, IOException, ErrorManager;
 
     protected void render() throws IOException, ServletException {
-        if (!jspLink.isEmpty() && !isRendered)
+        if (redirectLink != null) {
+            response.sendRedirect(redirectLink);
+        }
+        else if (!jspLink.isEmpty() && !isRendered)
         {
             request.setCharacterEncoding("UTF-8");
 
-            request.setAttribute("title", "Pear Market - " + title);
+            if (title != null)
+                request.setAttribute("title", title + " - Pear Market");
+            else
+                request.setAttribute("title", "Pear Market");
+
             request.setAttribute("styleFiles", styleFiles);
             request.setAttribute("whiteNavBar", whiteNavBar);
 
@@ -44,6 +57,17 @@ public abstract class Controller {
         }
     }
 
+
+    protected int parseInt(String str) throws ErrorManager {
+        int id = -1;
+        try {
+            id = Integer.parseInt(str);
+        } catch (NumberFormatException e) {
+            throw new ErrorManager(ErrorManager.ErrorTypes.INVALID_PARAMETER);
+        }
+
+        return id;
+    }
 
     /** Getters & Setters **/
 

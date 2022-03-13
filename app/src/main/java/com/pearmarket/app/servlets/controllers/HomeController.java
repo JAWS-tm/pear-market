@@ -4,6 +4,7 @@ import com.pearmarket.app.beans.CategoryDAO;
 import com.pearmarket.app.beans.DAOFactory;
 import com.pearmarket.app.beans.ProductDAO;
 import com.pearmarket.app.servlets.Controller;
+import com.pearmarket.app.servlets.ErrorManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,12 +27,15 @@ public class HomeController extends Controller {
     }
 
     @Override
-    public void process() {
-
-
-
+    public void process() throws ServletException, ErrorManager, IOException {
         request.setAttribute("productsList", productDAO.getProducts());
         request.setAttribute("categories", categoryDAO.getCategories());
 
+
+        String id = request.getParameter("id");
+        if (id != null && id.equals("disconnect")) {
+            request.getSession().setAttribute("loggedUser", null);
+            redirect("/");
+        }
     }
 }

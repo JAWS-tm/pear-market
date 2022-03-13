@@ -22,14 +22,16 @@
 				${product.description}
 			</p>
 			<div class="add_product">
-				<input class="quantity" type="number" value="1" min="1" max="99" />
-				<a class="red-button" href="">Ajouter au panier</a>
+				<form action="" method="post">
+					<input class="quantity" type="number" value="1" min="1" max="99" name="quantity"/>
+					<input type="submit" class="red-button" value="Ajouter au panier" name="add-product"/>
+				</form>
 			</div>
 
 			<div class="more_meta">
 				<span>
 					Categorie:
-					<a href="">${product.category.name}</a>
+					<a href="add-to-cart">${product.category.name}</a>
 				</span>
 			</div>
 		</div>

@@ -88,23 +88,8 @@
             </nav>
         </header>
 
-        <c:choose>
-            <c:when test="${hasError}">
-                <div class="error-404">
-                    <div class="error-message">
-                        <span>Produit non trouvé</span>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, mollitia.</p>
-                    </div>
-                    <div class="error-img">
-                        <img src="${pageContext.request.contextPath}/assets/img/error-404.jpg" alt="">
-                    </div>
-                </div>
-            </c:when>
 
-            <c:otherwise>
-                <c:import url="${pageContent}" />
-            </c:otherwise>
-        </c:choose>
+        <c:import url="${pageContent}" />
 
     </div>
 

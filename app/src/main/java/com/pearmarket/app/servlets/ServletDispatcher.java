@@ -1,5 +1,7 @@
 package com.pearmarket.app.servlets;
 
+import com.pearmarket.app.beans.elements.Cart;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -19,12 +21,15 @@ public class ServletDispatcher extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        String id = request.getParameter("link");
 
+        if (request.getSession().getAttribute("cart") == null)
+            request.getSession().setAttribute("cart", new Cart());
+
+
+        String id = request.getParameter("link");
         if (id == null || id.equals(""))
             id = "home";
         request.setAttribute("pageId", id);
-
 
         try {
             Controller controller;
