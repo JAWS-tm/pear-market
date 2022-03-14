@@ -103,6 +103,25 @@ public class ProductDAOMariaDB implements ProductDAO {
     }
 
     @Override
+    public void addProduct(Product product) {
+        try (Connection connection = daoFactory.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(
+                    "INSERT INTO products(category_id, name, image, description, price, quantity)" +
+                            "VALUES(?, ?, ?, ?, ?, ?);"
+            );
+            stmt.setInt(1, product.getCategory().getId());
+            stmt.setString(2, product.getName());
+            stmt.setString(3, product.getImageSrc());
+            stmt.setString(4, product.getDescription());
+            stmt.setFloat(5, product.getPrice());
+            stmt.setInt(6, product.getQuantity());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void updateQuantity(int newQuantity, int productId) {
         try (Connection connection = daoFactory.getConnection()) {
             PreparedStatement stmt = connection.prepareStatement(
@@ -115,6 +134,24 @@ public class ProductDAOMariaDB implements ProductDAO {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void updateProduct(Product product) {
+        try (Connection connection = daoFactory.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(
+                    "UPDATE products SET name =?, price=?, quantity=?, description=?, image=? WHERE id=?;"
+            );
+            stmt.setString(1, product.getName());
+            stmt.setFloat(2, product.getPrice());
+            stmt.setInt(3, product.getQuantity());
+            stmt.setString(4, product.getDescription());
+            stmt.setString(5, product.getImageSrc());
+            stmt.setInt(6, product.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void deleteProduct(int productId) {

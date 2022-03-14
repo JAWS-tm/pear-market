@@ -14,5 +14,11 @@
     min-width: 400px;
 }
 
+.edit-product-form textarea{
+    resize: vertical;
+    min-height: 100px;
+}
 
-
+#save{
+    margin: 20px auto;
+}

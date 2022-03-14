@@ -2,7 +2,10 @@ package com.pearmarket.app.servlets.controllers;
 
 import com.pearmarket.app.beans.DAOFactory;
 import com.pearmarket.app.beans.ProductDAO;
+import com.pearmarket.app.beans.UserDAO;
+import com.pearmarket.app.beans.elements.User;
 import com.pearmarket.app.servlets.Controller;
+import com.pearmarket.app.servlets.ErrorManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,14 +28,17 @@ public class AccountController extends Controller {
     }
 
     @Override
-    public void process() {
+    public void process() throws ServletException, ErrorManager, IOException {
         if (request.getSession().getAttribute("loggedUser") == null) {
-            System.out.println("pas connecté");
-            //return;
+            redirect("/sign-in");
+        }
+        else {
+            User user = (User) request.getSession().getAttribute("loggedUser");
+            request.setAttribute("user", user);
         }
 
 
-            String id = request.getParameter("id");
+        String id = request.getParameter("id");
 
         if (id != null) {
             switch (id) {
@@ -55,6 +61,7 @@ public class AccountController extends Controller {
 
         request.setAttribute("products", productDAO.getProducts());
 
+        //request.setAttribute("users", );
 
 
     }

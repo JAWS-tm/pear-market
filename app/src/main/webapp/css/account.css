@@ -114,10 +114,10 @@ input[type="number"]{
 
 /**************** black list *************/
 
-.black-list-container tr{
+.users-list-container tr{
     grid-template-columns: 25% 25% 25% 25%;
 }
 
-.black-list-container a{
+.users-list-container a{
     text-align: left;
 }

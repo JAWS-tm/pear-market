@@ -6,7 +6,7 @@
 		<h1>Mon compte</h1>
 		<h2>S'inscrire</h2>
 
-		<form class="form" action="" method="POST" class="form-account">
+		<form class="form-account form" action="" method="POST">
 			<c:if test="${loginError != null}">
 				<p class="error-message">${loginError}</p>
 			</c:if>

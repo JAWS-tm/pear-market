@@ -1,3 +1,4 @@
+<jsp:useBean id="user" scope="request" type="com.pearmarket.app.beans.elements.User"/>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -16,19 +17,19 @@
             <div class="tab-content active" id="set-account">
                 <div class="customer-info-container" id="customer-info-firstname">
                     <span>Nom : </span>
-                    <span class="text-modif">Dumartin</span>
+                    <span class="text-modif">${user.name}</span>
                 </div>
                 <div class="customer-info-container" id="customer-info-name">
                     <span>Prénom : </span>
-                    <span class="text-modif">Hugo</span>
+                    <span class="text-modif">${user.firstname}</span>
                 </div>
                 <div class="customer-info-container" id="customer-info-email">
                     <span>email : </span>
-                    <span class="text-modif">Hugo.dumartin@reseau.eseo.fr</span>
+                    <span class="text-modif">${user.email}</span>
                 </div>
                 <div class="customer-info-container" id="customer-info-adresse">
                     <span>adresse : </span>
-                    <span class="text-modif">8 rue jean charles de ses morts</span>
+                    <span class="text-modif">${user.address == null ? "Vous n'avez pas encore renseigné d'adresse." :user.address }</span>
                 </div>
 
                 <a href="#">Modifier</a>
@@ -92,33 +93,27 @@
                                     </div>
                                 </form>
                             </td>
-                            <td><div><a href="${pageContext.request.contextPath}/account/delete/${product.id}">Supprimer</a>  <a href="#">Modifier</a></div></td>
+                            <td><div><a href="${pageContext.request.contextPath}/account/delete/${product.id}">Supprimer</a>
+                                <a href="${pageContext.request.contextPath}/edit-product/${product.id}">Modifier</a></div></td>
                         </tr>
                         </c:forEach>
-                        <%--<tr>
-                            <td>89259</td>
-                            <td>Iphone 14</td>
-                            <td>Smartphone</td>
-                            <td><input type="number" value="2" min="0"></td>
-                            <td><div><a href="#">Supprimer</a>  <a href="#">Modifier</a></div></td>
-                        </tr>--%>
                     </table>
 
                     <a href="#" class="red-button">Ajouter un produit</a>
                 </section>
             </div>
 
-            <div class="tab-content" id="black-list">
-                <section class="black-list-container">
-                    <h2>Gestion de la liste noire :</h2>
+            <div class="tab-content" id="users-list">
+                <section class="users-list-container">
+                    <h2>Gestion de la liste utilisateurs :</h2>
                     <table>
                         <tr class="tr-head">
-                            <th id="black-list-id-thead">Identifiant</th>
-                            <th id="black-list-firstname-thead">Nom</th>
-                            <th id="black-list-name-thead">Prénom</th>
-                            <th id="black-list-action-thead">Action</th>
+                            <th id="users-list-id-thead">Identifiant</th>
+                            <th id="users-list-firstname-thead">Nom</th>
+                            <th id="users-list-name-thead">Prénom</th>
+                            <th id="users-list-action-thead">Action</th>
                         </tr>
-
+                        <c:forEach var="" items="${}"></c:forEach>
                         <tr>
                             <td>36772</td>
                             <td>Dumartin</td>
