@@ -1,7 +1,8 @@
-package com.pearmarket.app.beans.elements;
+package com.pearmarket.app.utils;
 
 import com.pearmarket.app.beans.DAOFactory;
 import com.pearmarket.app.beans.ProductDAO;
+import com.pearmarket.app.beans.elements.Product;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ public class Cart implements Serializable {
     private final HashMap<Integer, Integer> products;
     private HashMap<Product, Integer> computedProducts;
     private boolean cartHasChange = true;
+    private String discountCode;
     private final ProductDAO productDAO;
 
     public Cart() {
@@ -83,5 +85,13 @@ public class Cart implements Serializable {
             total += entry.getKey().getPrice() * entry.getValue();
         }
         return total;
+    }
+
+    public String getDiscountCode() {
+        return discountCode;
+    }
+
+    public void setDiscountCode(String discountCode) {
+        this.discountCode = discountCode;
     }
 }

@@ -2,12 +2,11 @@ package com.pearmarket.app.servlets.controllers;
 
 import com.pearmarket.app.beans.DAOFactory;
 import com.pearmarket.app.beans.ProductDAO;
-import com.pearmarket.app.beans.elements.Cart;
+import com.pearmarket.app.utils.Cart;
 import com.pearmarket.app.servlets.Controller;
-import com.pearmarket.app.servlets.ErrorManager;
+import com.pearmarket.app.utils.ErrorManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class CartController extends Controller {
     ProductDAO productDAO;

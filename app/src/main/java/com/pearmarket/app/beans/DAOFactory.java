@@ -71,4 +71,14 @@ public class DAOFactory {
                 return null;
         }
     }
+
+    public OrderDAO getOrderDAO(DBType type) {
+        switch (type) {
+            case MariaDB:
+                setParamsMariaDB("jdbc:mariadb://localhost:3306/projet_shop", "root", "");
+                return new OrderDAOMariaDB(this);
+            default:
+                return null;
+        }
+    }
 }

@@ -4,7 +4,7 @@ import com.pearmarket.app.beans.DAOFactory;
 import com.pearmarket.app.beans.UserDAO;
 import com.pearmarket.app.beans.elements.User;
 import com.pearmarket.app.servlets.Controller;
-import com.pearmarket.app.servlets.ErrorManager;
+import com.pearmarket.app.utils.ErrorManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

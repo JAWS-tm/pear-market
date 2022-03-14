@@ -1,4 +1,6 @@
-package com.pearmarket.app.servlets;
+package com.pearmarket.app.utils;
+
+import com.pearmarket.app.servlets.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

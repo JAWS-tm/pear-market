@@ -8,3 +8,9 @@ toggleBtn.addEventListener("click", (e) => {
 		windowCoupon.classList.toggle("active");
 	}
 });
+
+document.getElementById("paiement-btn").addEventListener("click", (e) => {
+	e.preventDefault();
+
+	document.getElementById("details-form").submit();
+})

@@ -1,4 +1,4 @@
-package com.pearmarket.app.servlets;
+package com.pearmarket.app.utils;
 
 public class ErrorManager extends Exception{
     public enum ErrorTypes {

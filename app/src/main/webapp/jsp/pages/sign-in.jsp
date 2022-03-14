@@ -14,7 +14,7 @@
 
 		<form action="" method="post" class="form form-account">
 			<c:if test="${loginError != null}">
-				<p class="error-message">${loginError}</p>
+				<p class="error-banner">${loginError}</p>
 			</c:if>
 
 			<label for="id">Adresse email</label>

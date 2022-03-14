@@ -428,3 +428,10 @@ footer ul {
 	display: inline-block;
 }
 
+
+
+
+.error-banner {
+	color: rgba(255,20,0,0.77);
+	margin-bottom: 10px;
+}

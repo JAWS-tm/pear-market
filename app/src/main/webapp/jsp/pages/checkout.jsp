@@ -23,8 +23,11 @@
         </div>
 
         <div class="paiement-checkout">
-            <form action="" class="form delivery-details">
+            <form action="" method="post" id="details-form" class="form delivery-details">
                 <h2>Informations de livraison</h2>
+                <c:if test="${formError != null}">
+                    <p class="error-banner">${formError}</p>
+                </c:if>
                 <div class="name-row">
                     <div class="name-elem">
                         <label for="last-name">Nom</label>
@@ -53,7 +56,7 @@
                 <input type="text" name="city" id="city" placeholder="ex: Angers" required/>
 
                 <label for="phone">Numéro de téléphone *</label>
-                <input type="text" name="phone" id="phone" placeholder="ex: 0786228635" required/>
+                <input type="text" name="phone" id="phone" placeholder="ex: 0786228635" required class="${phoneMatchesFail ? "input-fail" : null}" value="${sessionScope.loggedUser.phone}"/>
 
                 <label for="email">Adresse email</label>
                 <input type="text" id="email" placeholder="ex: dupond.martin@gmail.com" required readonly value="${sessionScope.loggedUser.email}"/>

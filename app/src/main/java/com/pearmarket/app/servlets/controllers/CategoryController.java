@@ -5,7 +5,7 @@ import com.pearmarket.app.beans.DAOFactory;
 import com.pearmarket.app.beans.ProductDAO;
 import com.pearmarket.app.beans.elements.Category;
 import com.pearmarket.app.servlets.Controller;
-import com.pearmarket.app.servlets.ErrorManager;
+import com.pearmarket.app.utils.ErrorManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

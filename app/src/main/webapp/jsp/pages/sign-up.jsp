@@ -8,7 +8,7 @@
 
 		<form class="form-account form" action="" method="POST">
 			<c:if test="${loginError != null}">
-				<p class="error-message">${loginError}</p>
+				<p class="error-banner">${loginError}</p>
 			</c:if>
 
 			<div class="name-row">

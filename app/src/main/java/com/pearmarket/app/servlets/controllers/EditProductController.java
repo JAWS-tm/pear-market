@@ -6,14 +6,9 @@ import com.pearmarket.app.beans.ProductDAO;
 import com.pearmarket.app.beans.elements.Category;
 import com.pearmarket.app.beans.elements.Product;
 import com.pearmarket.app.servlets.Controller;
-import com.pearmarket.app.servlets.ErrorManager;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-import java.io.File;
-import java.io.IOException;
 
 public class EditProductController extends Controller {
 
@@ -39,7 +34,6 @@ public class EditProductController extends Controller {
 
 
 
-        request.setAttribute("categories", categoryDAO.getCategories());
 
         if (request.getMethod().equals("POST")){
 
@@ -53,6 +47,14 @@ public class EditProductController extends Controller {
             String productDescription = request.getParameter("productDescription");
             String productImage = request.getParameter("productImage");
 
+
+            System.out.println(productName);
+            System.out.println(productCategory);
+            System.out.println(productPrice);
+            System.out.println(productQuantity);
+
+            System.out.println(productImage);
+
             if (productName != null || productCategory != null || productPrice != null || productQuantity != null) {
                 newCategorie.setId(Integer.parseInt(productCategory));
                 product.setCategory(newCategorie);
@@ -62,6 +64,9 @@ public class EditProductController extends Controller {
                 product.setPrice(Float.parseFloat(productPrice));
                 product.setQuantity(Integer.parseInt(productQuantity));
                 product.setDescription(productDescription);
+                if (productImage != null) {
+                    product.setImageSrc(productImage);
+                    //Part imageFile = request.getPart(productImage); // "file" ?
 
 
 
@@ -79,6 +84,8 @@ public class EditProductController extends Controller {
                 System.out.println("il manque un champ lors de la mise à jour d'un produit");
         }
 
+
+        request.setAttribute("categories", categoryDAO.getCategories());
 
         if (productId != null) {
             request.setAttribute("product", productDAO.getProductById(Integer.parseInt(productId)));

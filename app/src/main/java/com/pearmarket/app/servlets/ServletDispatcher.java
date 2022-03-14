@@ -1,6 +1,8 @@
 package com.pearmarket.app.servlets;
 
-import com.pearmarket.app.beans.elements.Cart;
+import com.pearmarket.app.utils.Cart;
+import com.pearmarket.app.utils.ErrorController;
+import com.pearmarket.app.utils.ErrorManager;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
