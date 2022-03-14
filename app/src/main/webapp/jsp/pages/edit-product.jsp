@@ -8,7 +8,7 @@
 	<section class="edit-product-container">
 		<h1 class="page-title">${param["id"] == null? "Ajouter" : "Modifier"} un produit </h1>
 		<div class="edit-product">
-			<form method="POST" class="edit-product-form form" enctype="multipart/form-data">
+			<form method="POST" class="edit-product-form form">
 
 				<label for="productName">Nom du produit</label>
 				<input type="text" name="productName" id="productName" value="${product.name}" placeholder="ex: iphone 13" required />

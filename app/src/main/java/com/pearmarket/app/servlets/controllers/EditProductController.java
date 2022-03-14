@@ -33,7 +33,7 @@ public class EditProductController extends Controller {
     }
 
     @Override
-    public void process() {
+    public void process() throws ServletException, IOException {
 
         String productId = request.getParameter("id");
 
@@ -62,11 +62,7 @@ public class EditProductController extends Controller {
                 product.setPrice(Float.parseFloat(productPrice));
                 product.setQuantity(Integer.parseInt(productQuantity));
                 product.setDescription(productDescription);
-                if (productImage != null) {
-                    product.setImageSrc(request.getParameter(productImage));
-                    Part imageFile = request.getPart(productImage); // "file" ?
 
-                }
 
 
                 if (request.getParameter("add") != null) {
@@ -77,6 +73,7 @@ public class EditProductController extends Controller {
                     productDAO.updateProduct(product);
                     System.out.println("on edit un produit");
                 }
+                redirect("/account");
             }
             else
                 System.out.println("il manque un champ lors de la mise à jour d'un produit");

@@ -28,7 +28,7 @@
                         <tr class="cart-row" data-product-id="${row.key.id}">
                             <td>
                                 <div class="cart-product-container">
-                                    <i class="fa-solid fa-xmark delete-btn"></i>
+                                    <i class="fa-solid fa-xmark cross-delete-btn delete-btn"></i>
                                     <img src="${pageContext.request.contextPath}/assets/img/uploaded/products/${row.key.imageSrc}" alt="" />
                                     <h3>${row.key.name}</h3>
                                 </div>

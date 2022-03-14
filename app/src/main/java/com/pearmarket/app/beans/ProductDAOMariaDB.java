@@ -147,6 +147,7 @@ public class ProductDAOMariaDB implements ProductDAO {
             stmt.setString(4, product.getDescription());
             stmt.setString(5, product.getImageSrc());
             stmt.setInt(6, product.getId());
+            stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

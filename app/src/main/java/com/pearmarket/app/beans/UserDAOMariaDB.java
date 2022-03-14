@@ -21,7 +21,7 @@ public class UserDAOMariaDB implements UserDAO {
         try (
                 Connection connection = daoFactory.getConnection();
                 Statement stmt = connection.createStatement();
-                ResultSet result = stmt.executeQuery("SELECT email, name, firstname, is_admin FROM users")
+                ResultSet result = stmt.executeQuery("SELECT email, name, firstname, is_admin, is_blocked FROM users")
         ) {
             while (result.next()) {
                 User user = new User();
@@ -100,6 +100,19 @@ public class UserDAOMariaDB implements UserDAO {
         }
 
         return newUser;
+    }
+
+    @Override
+    public void deleteAccount(String userEmail) {
+        try (Connection connection = daoFactory.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(
+                    "DELETE FROM users WHERE email=?;"
+            );
+            stmt.setString(1, userEmail);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     // TODO: statement builder pour regrouper les requêtes en une seule et permettre une flexibilité

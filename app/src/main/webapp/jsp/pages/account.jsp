@@ -1,4 +1,4 @@
-<jsp:useBean id="user" scope="request" type="com.pearmarket.app.beans.elements.User"/>
+<jsp:useBean id="users" scope="request" type="java.util.ArrayList"/>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -10,7 +10,7 @@
             <li class="tab active" data-tab-name="set-account">Gérer compte</li>
             <li class="tab" data-tab-name="orders">Mes commandes</li>
             <li class="tab" data-tab-name="products">Gérer les produits</li>
-            <li class="tab" data-tab-name="black-list">Liste noire</li>
+            <li class="tab" data-tab-name="users-list">Liste utilisateurs</li>
         </ul>
         <div class="tabs-content-list">
 
@@ -105,30 +105,31 @@
 
             <div class="tab-content" id="users-list">
                 <section class="users-list-container">
-                    <h2>Gestion de la liste utilisateurs :</h2>
+                    <h2>Gestion de la liste d'utilisateurs :</h2>
                     <table>
                         <tr class="tr-head">
-                            <th id="users-list-id-thead">Identifiant</th>
+                            <th id="users-list-id-thead">E-mail</th>
                             <th id="users-list-firstname-thead">Nom</th>
                             <th id="users-list-name-thead">Prénom</th>
                             <th id="users-list-action-thead">Action</th>
                         </tr>
-                        <c:forEach var="" items="${}"></c:forEach>
+                        <c:forEach var="user" items="${users}">
                         <tr>
-                            <td>36772</td>
-                            <td>Dumartin</td>
-                            <td>Hugo</td>
-                            <td><a href="#">Débloquer</a></td>
+                            <td>${user.email}</td>
+                            <td>${user.name}</td>
+                            <td>${user.firstname}</td>
+                            <td><div class="action-buttons"><a href="#">${user.admin == true ?"Supprimer admin" : "Mettre admin"}</a>  <a href="#">${user.blocked == true ?"Débloquer" : "Bloquer"}</a> </div>
+                                <form method="POST" action="${pageContext.request.contextPath}/account/deleteUser">
+                                    <input type="hidden" name="deleteUser" value="${user.email}">
+                                    <div>
+                                        <input class="applyChange cross-account z-index" type="submit" name="deleteUser" value="">
+                                        <i class="fa-solid fa-xmark cross-delete-btn cross-account"></i>
+                                    </div>
+                                </form>
+                            </td>
                         </tr>
-
-                        <tr>
-                            <td>12098</td>
-                            <td>Dempt</td>
-                            <td>jules</td>
-                            <td><a href="#">Débloquer</a></td>
-                        </tr>
+                        </c:forEach>
                     </table>
-                    <a href="#" class="red-button">Ajouter à la liste</a>
                 </section>
             </div>
 

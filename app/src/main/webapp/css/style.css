@@ -78,6 +78,20 @@ a {
 	opacity: 0.9;
 }
 
+.cross-delete-btn {
+	border: 1px solid rgba(0, 0, 0, 0.4);
+	color: rgba(0, 0, 0, 0.4);
+	padding: 2px 5px;
+	margin: 4px;
+	border-radius: 100px;
+	cursor: pointer;
+	transition: 0.2s;
+}
+.cross-delete-btn:hover {
+	border: 1px solid rgba(0, 0, 0, 0.7);
+	color: rgba(0, 0, 0, 0.7);
+}
+
 .square-div {
 	width: 100%;
 	position: relative;

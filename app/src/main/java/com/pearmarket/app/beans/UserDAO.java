@@ -11,6 +11,7 @@ public interface UserDAO {
     User tryConnect(String email, String password);
 
     User createAccount(String email, String password, String name, String firstname);
+    void deleteAccount(String userEmail);
 
     void changeAddress(String userEmail, String address);
     void changePhone(String userEmail, String phone);

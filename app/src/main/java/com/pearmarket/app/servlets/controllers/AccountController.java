@@ -7,12 +7,15 @@ import com.pearmarket.app.beans.elements.User;
 import com.pearmarket.app.servlets.Controller;
 import com.pearmarket.app.servlets.ErrorManager;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public class AccountController extends Controller {
 
     final ProductDAO productDAO;
+    final UserDAO userDAO;
     public AccountController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
 
@@ -23,17 +26,17 @@ public class AccountController extends Controller {
         this.setWhiteNavBar(true);
 
         productDAO = daoFactory.getProductDAO(DAOFactory.DBType.MariaDB);
+        userDAO = daoFactory.getUserDAO(DAOFactory.DBType.MariaDB);
     }
 
     @Override
-    public void process() throws ServletException, ErrorManager, IOException {
+    public void process() throws ServletException, IOException {
+        User user = getLoggedUser();
         if (getLoggedUser() == null) {
             redirect("/sign-in");
+            return;
         }
-        else {
-            User user = (User) request.getSession().getAttribute("loggedUser");
-            request.setAttribute("user", user);
-        }
+        request.setAttribute("user", user);
 
 
         String id = request.getParameter("id");
@@ -53,13 +56,16 @@ public class AccountController extends Controller {
                     int deleteProductId = Integer.parseInt(request.getParameter("data"));
                     productDAO.deleteProduct(deleteProductId);
                     break;
+
+                case "deleteUser":
+                    String userEmail = request.getParameter("deleteUser");
+                    userDAO.deleteAccount(userEmail);
+                    break;
             }
         }
 
         request.setAttribute("products", productDAO.getProducts());
 
-        //request.setAttribute("users", );
-
-
+        request.setAttribute("users", userDAO.getUsers());
     }
 }

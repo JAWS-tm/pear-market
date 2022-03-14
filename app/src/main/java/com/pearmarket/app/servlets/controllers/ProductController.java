@@ -45,5 +45,7 @@ public class ProductController extends Controller {
 
             System.out.println(cart.getComputedProducts());
         }
+
+
     }
 }
