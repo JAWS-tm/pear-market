@@ -15,9 +15,11 @@
     <c:forEach var="fileName" items="${styleFiles}" >
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/${fileName}.css" />
     </c:forEach>
+    <link rel="icon" type="image/jpg" href="${pageContext.request.contextPath}/assets/img/logo.png" />
 
     <script src="https://kit.fontawesome.com/1e6afd82c6.js" crossorigin="anonymous"></script>
-    <link rel="icon" type="image/jpg" href="assets/img/logo.png" />
+    <script>const ctx = "${pageContext.request.contextPath}"</script>
+
 </head>
 <body>
     <div class="container">

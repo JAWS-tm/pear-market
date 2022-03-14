@@ -125,7 +125,7 @@ public class ProductDAOMariaDB implements ProductDAO {
     public void updateQuantity(int newQuantity, int productId) {
         try (Connection connection = daoFactory.getConnection()) {
             PreparedStatement stmt = connection.prepareStatement(
-                    "UPDATE products SET quantity=? WHERE id=?;"
+                "UPDATE products SET quantity=? WHERE id=?;"
             );
             stmt.setInt(1, newQuantity);
             stmt.setInt(2, productId);
@@ -157,7 +157,7 @@ public class ProductDAOMariaDB implements ProductDAO {
     public void deleteProduct(int productId) {
         try (Connection connection = daoFactory.getConnection()) {
             PreparedStatement stmt = connection.prepareStatement(
-                    "DELETE FROM products WHERE id = ?;"
+                "DELETE FROM products WHERE id = ?;"
             );
             stmt.setInt(1, productId);
             stmt.executeUpdate();

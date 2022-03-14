@@ -9,7 +9,7 @@ public class User implements Serializable {
     private String address;
     private String phone;
     private Boolean isAdmin;
-
+    private Boolean isBlocked;
 
     public String getName() {
         return name;
@@ -49,6 +49,14 @@ public class User implements Serializable {
 
     public void setAdmin(Boolean admin) {
         isAdmin = admin;
+    }
+
+    public Boolean getBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(Boolean blocked) {
+        isBlocked = blocked;
     }
 
     public String getPhone() {

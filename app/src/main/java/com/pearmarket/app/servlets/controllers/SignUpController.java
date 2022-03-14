@@ -5,14 +5,11 @@ import com.pearmarket.app.beans.UserDAO;
 import com.pearmarket.app.beans.elements.User;
 import com.pearmarket.app.servlets.Controller;
 import com.pearmarket.app.servlets.ErrorManager;
-import org.mindrot.jbcrypt.BCrypt;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.net.HttpCookie;
 
 public class SignUpController extends Controller {
     final UserDAO userDAO;
@@ -31,15 +28,16 @@ public class SignUpController extends Controller {
 
     @Override
     public void process() throws IOException, ServletException, ErrorManager {
-        if (request.getSession().getAttribute("loggedUser") != null)
+        if (getLoggedUser() != null) {
             this.redirect("/");
+            return;
+        }
 
         if (request.getMethod().equals("POST"))
             processSignUp();
-
     }
 
-    private void processSignUp() throws IOException, ServletException, ErrorManager {
+    private void processSignUp() throws IOException, ServletException {
         String email, password, password_check, name, firstname, address;
         email = request.getParameter("email");
         password = request.getParameter("password");
@@ -48,7 +46,6 @@ public class SignUpController extends Controller {
         firstname = request.getParameter("firstname");
 
         // For keep input filled
-        //request.setAttribute("formFilled", true);
         request.setAttribute("email", email);
         request.setAttribute("password", password);
         request.setAttribute("password_check", password_check);
@@ -78,12 +75,13 @@ public class SignUpController extends Controller {
 
         User user = userDAO.createAccount(email, password, name, firstname);
         if(user != null){
-            request.getSession().setAttribute("loggedUser", user);
+            setLoggedUser(user);
+
             this.redirect("/");
+            return;
         }
         else
             request.setAttribute("loginError", "Cette adresse mail a déjà un compte associé veuillez vous connecter");
-
 
     }
 }

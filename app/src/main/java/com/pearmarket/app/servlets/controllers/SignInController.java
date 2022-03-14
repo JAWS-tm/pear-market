@@ -7,7 +7,6 @@ import com.pearmarket.app.servlets.Controller;
 import com.pearmarket.app.servlets.ErrorManager;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -29,14 +28,16 @@ public class SignInController extends Controller {
 
     @Override
     public void process() throws IOException, ServletException, ErrorManager {
-        if (request.getSession().getAttribute("loggedUser") != null)
+        if (getLoggedUser() != null) {
             this.redirect("/");
+            return;
+        }
 
         if (request.getMethod().equals("POST"))
             processSignIn();
     }
 
-    public void processSignIn() throws ServletException, ErrorManager, IOException {
+    public void processSignIn() throws ServletException, IOException {
         String email, password, rememberMe;
         email = request.getParameter("email");
         password = request.getParameter("password");
@@ -59,7 +60,8 @@ public class SignInController extends Controller {
 
         User user;
         if ((user = userDAO.tryConnect(email, password)) != null) {
-            request.getSession().setAttribute("loggedUser", user);
+            setLoggedUser(user);
+
             if (rememberMe != null)
             {
                 // Créer un id de connexion unique chiffré dans un bdd et check
@@ -67,10 +69,11 @@ public class SignInController extends Controller {
             }
 
             this.redirect("/");
+            return;
         }
-        else{
+        else
             request.setAttribute("loginError", "Impossible de se connecter à ce compte, vérifiez vos identifiants.");
 
-        }
+
     }
 }

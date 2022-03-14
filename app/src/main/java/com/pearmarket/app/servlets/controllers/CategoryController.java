@@ -7,10 +7,8 @@ import com.pearmarket.app.beans.elements.Category;
 import com.pearmarket.app.servlets.Controller;
 import com.pearmarket.app.servlets.ErrorManager;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class CategoryController extends Controller {
     final ProductDAO productDAO;

@@ -367,7 +367,7 @@ footer ul {
 .forget-coupon p,
 .forget-coupon a {
 	margin: 0 2px;
-	font-size: 0.8rem;
+	font-size: 0.9rem;
 	transition: 0.2s;
 }
 .forget-coupon i {
@@ -379,3 +379,38 @@ footer ul {
 .forget-coupon a:hover{
 	color: var(--primary-color);
 }
+
+.forget-coupon.error {
+	border-color: var(--secondary-color);
+}
+
+
+	/****** Input Number With Validation Btn ******/
+.applyChange-container{
+	position: relative;
+	height: 100%;
+	margin: 11px 0px 0px 10px;
+	display: none;
+}
+.applyChange{
+	width: 20px;
+	height: 100%;
+	border: none;
+	background: transparent;
+}
+.applyChange:hover{
+	cursor: pointer;
+}
+
+.applyChange-container i{
+	position: absolute;
+	font-size: 1.2rem;
+	color: rgba(0,0,0,0.7);
+	left: 0;
+	top: 0;
+	z-index: -100;
+}
+.isVisible{
+	display: inline-block;
+}
+

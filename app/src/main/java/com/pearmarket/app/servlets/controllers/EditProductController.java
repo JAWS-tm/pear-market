@@ -33,7 +33,7 @@ public class EditProductController extends Controller {
     }
 
     @Override
-    public void process() throws ServletException, IOException, ErrorManager {
+    public void process() {
 
         String productId = request.getParameter("id");
 

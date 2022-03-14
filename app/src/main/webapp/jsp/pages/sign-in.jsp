@@ -12,7 +12,7 @@
 			<a href="${pageContext.request.contextPath}/sign-up" id="coupon-toggle">S'inscrire</a>
 		</div>
 
-		<form action="" method="post" class="form-account form">
+		<form action="" method="post" class="form form-account">
 			<c:if test="${loginError != null}">
 				<p class="error-message">${loginError}</p>
 			</c:if>

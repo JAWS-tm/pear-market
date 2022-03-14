@@ -8,7 +8,7 @@ public class ErrorManager extends Exception{
         ERROR_404
     }
 
-    private ErrorTypes type;
+    private final ErrorTypes type;
     private String title;
     private String description;
     public ErrorManager(ErrorTypes type) {

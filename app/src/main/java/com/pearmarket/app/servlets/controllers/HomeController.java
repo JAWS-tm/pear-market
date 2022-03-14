@@ -27,7 +27,7 @@ public class HomeController extends Controller {
     }
 
     @Override
-    public void process() throws ServletException, ErrorManager, IOException {
+    public void process() throws ServletException, IOException {
         request.setAttribute("productsList", productDAO.getProducts());
         request.setAttribute("categories", categoryDAO.getCategories());
 
@@ -36,6 +36,7 @@ public class HomeController extends Controller {
         if (id != null && id.equals("disconnect")) {
             request.getSession().setAttribute("loggedUser", null);
             redirect("/");
+            return;
         }
     }
 }

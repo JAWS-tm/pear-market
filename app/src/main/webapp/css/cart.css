@@ -61,11 +61,24 @@ td h3 {
 	border-radius: 100px;
 	cursor: pointer;
 	transition: 0.2s;
-
 }
 .cart-product-container i:hover {
 	border: 1px solid rgba(0, 0, 0, 0.7);
 	color: rgba(0, 0, 0, 0.7);
+}
+
+.change-quantity-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.newQuantity {
+	width: 50px;
+}
+
+.applyChange i {
+	z-index: 0;
 }
 
 .cart-product-container h3 {
@@ -124,4 +137,12 @@ td h3 {
 .cart-total-flex-container a {
 	margin: 20px auto;
 	width: auto;
+}
+
+.forget-coupon {
+	margin-bottom: 20px;
+}
+
+.invisible {
+	display: none;
 }

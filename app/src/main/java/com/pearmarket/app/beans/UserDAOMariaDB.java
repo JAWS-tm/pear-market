@@ -3,10 +3,8 @@ package com.pearmarket.app.beans;
 import com.pearmarket.app.beans.elements.User;
 import org.mindrot.jbcrypt.BCrypt;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class UserDAOMariaDB implements UserDAO {
     private final DAOFactory daoFactory;
@@ -15,6 +13,32 @@ public class UserDAOMariaDB implements UserDAO {
         this.daoFactory = daoFactory;
     }
 
+
+    @Override
+    public ArrayList<User> getUsers() {
+        ArrayList<User> users = new ArrayList<>();
+
+        try (
+                Connection connection = daoFactory.getConnection();
+                Statement stmt = connection.createStatement();
+                ResultSet result = stmt.executeQuery("SELECT email, name, firstname, is_admin FROM users")
+        ) {
+            while (result.next()) {
+                User user = new User();
+                user.setEmail(result.getString("email"));
+                user.setName(result.getString("name"));
+                user.setFirstname(result.getString("firstname"));
+                user.setAdmin(result.getBoolean("is_admin"));
+                user.setBlocked(result.getBoolean("is_blocked"));
+
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
 
     @Override
     public User getUser(int id) {
@@ -76,5 +100,34 @@ public class UserDAOMariaDB implements UserDAO {
         }
 
         return newUser;
+    }
+
+    // TODO: statement builder pour regrouper les requêtes en une seule et permettre une flexibilité
+    @Override
+    public void changeAddress(String userEmail, String address) {
+        try (Connection connection = daoFactory.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(
+                    "UPDATE users SET address=? WHERE email=?;"
+            );
+            stmt.setString(1, address);
+            stmt.setString(2, userEmail);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void changePhone(String userEmail, String phone) {
+        try (Connection connection = daoFactory.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(
+                    "UPDATE users SET phone=? WHERE email=?;"
+            );
+            stmt.setString(1, phone);
+            stmt.setString(2, userEmail);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

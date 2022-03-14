@@ -63,16 +63,17 @@
 	color: rgba(31, 30, 30, 0.719);
 }
 
-#text-nom-produit span{
+.item-price span{
 	font-weight: 200;
 	color: rgba(0, 0, 0, 0.795);
 }
-#wrap-product-nb{
+
+.wrap-product-nb{
 	display: flex;
 	align-items: center;
 }
-#wrap-product-nb span{
-	margin-right: 10px;
+.wrap-product-nb span{
+	margin-right: 15px;
 }
 
 .mode-paiement-container{

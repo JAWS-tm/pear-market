@@ -1,48 +1,89 @@
+function showError() {
+    document.querySelector(".forget-coupon.error").classList.remove("invisible")
+}
 
-function sendPost(url, data, callbackFn) {
+function removeError() {
+    document.querySelector(".forget-coupon.error").classList.add("invisible")
+}
+
+function sendPost(url, paramData, successCallbackFn, failCallbackFn) {
     fetch(ctx + url, {
         method: "POST",headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: new URLSearchParams(data)
-    }).then(res => callbackFn(res));
+        body: new URLSearchParams(paramData)
+    })
+        .then(res => {
+            res.text().then((data) => {
+                if (res.status === 200) {
+                    removeError();
+                    successCallbackFn(data);
+                } else {
+                    showError();
+                    failCallbackFn(data);
+                }
+            })
+        })
 }
+
+
 
 const cartRow = document.getElementsByClassName("cart-row");
 
-for(let row of cartRow) {
-    let deleteBtn = row.getElementsByClassName("delete-btn");
-    deleteBtn.addEventListener("click", () =>{
-        sendPost("/cart/delete", {
-                productId: deleteBtn.getAttribute("data-product-id")
-            },
-            (res) => {
-                deleteBtn.parentElement.parentElement.parentElement.remove();
-            }
-        )
-    })
+function removeRow(row) {
+    row.remove();
 
-
+    if (cartRow.length === 0){
+        document.getElementById("no-products").classList.remove("invisible");
+        document.getElementById("cart-product-list").classList.add("invisible");
+    }
 }
 
+function updatePrice() {
+    let total = 0;
+    for(let row of cartRow) {
+        total += parseFloat(row.querySelector(".row-total").innerHTML);
+    }
+    document.getElementById("total-price").innerHTML = total.toFixed(2)+"€";
+}
 
+for(let row of cartRow) {
+    let deleteBtn = row.querySelector(".delete-btn");
+    deleteBtn.addEventListener("click", () =>{
+        sendPost("/cart/delete", {
+                productId: row.getAttribute("data-product-id")
+            },
+            (data) => {
+                removeRow(row);
+                updatePrice();
+            },
+            (data) => {
+            }
+        );
+    })
 
-//
-// function ajaxPost(url, data, callback) {
-//     var xmlDoc = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
-//
-//     xmlDoc.open('POST', url, true);
-//     xmlDoc.setRequestHeader("Content-type", "application/json");
-//
-//     xmlDoc.onreadystatechange = function() {
-//         if (xmlDoc.readyState === 4 && xmlDoc.status === 200) {
-//             callback(xmlDoc);
-//         }
-//     }
-//
-//     xmlDoc.send(data);
-// }
-//
-// ajaxPost(ctx+"/cart", JSON.stringify(data), (data)=>{
-//     console.log(data);
-// })
+    let quantityInput = row.querySelector(".newQuantity");
+    let quantityBtn = row.querySelector(".changeQuantity");
+    quantityBtn.addEventListener("click", () => {
+        sendPost("/cart/changeQuantity", {
+                productId: row.getAttribute("data-product-id"),
+                quantity: quantityInput.value
+            }, (data) => {
+
+                if (parseInt(quantityInput.value) === 0)
+                    removeRow(row);
+
+                row.querySelector(".applyChange-container").classList.remove("isVisible");
+                quantityInput.setAttribute("last-value", quantityInput.value)
+
+                let totalCol = row.querySelector(".row-total");
+                totalCol.innerHTML = ((parseInt(totalCol.getAttribute("item-price"))) * parseInt(quantityInput.value)).toFixed(2) + "€";
+
+                updatePrice();
+            }, (data) => {
+                row.querySelector(".applyChange-container").classList.remove("isVisible");
+                quantityInput.value = quantityInput.getAttribute("last-value");
+            }
+        );
+    })
+}

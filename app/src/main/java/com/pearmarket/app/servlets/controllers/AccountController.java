@@ -7,10 +7,8 @@ import com.pearmarket.app.beans.elements.User;
 import com.pearmarket.app.servlets.Controller;
 import com.pearmarket.app.servlets.ErrorManager;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class AccountController extends Controller {
 
@@ -29,7 +27,7 @@ public class AccountController extends Controller {
 
     @Override
     public void process() throws ServletException, ErrorManager, IOException {
-        if (request.getSession().getAttribute("loggedUser") == null) {
+        if (getLoggedUser() == null) {
             redirect("/sign-in");
         }
         else {
@@ -54,7 +52,6 @@ public class AccountController extends Controller {
                 case "delete":
                     int deleteProductId = Integer.parseInt(request.getParameter("data"));
                     productDAO.deleteProduct(deleteProductId);
-                    System.out.println("coucou on est a delete");
                     break;
             }
         }

@@ -2,10 +2,8 @@ package com.pearmarket.app.servlets.controllers;
 
 import com.pearmarket.app.servlets.Controller;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class StoreController extends Controller {
     public StoreController(HttpServletRequest request, HttpServletResponse response) {

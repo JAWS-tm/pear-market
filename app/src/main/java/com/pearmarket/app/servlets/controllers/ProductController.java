@@ -7,10 +7,8 @@ import com.pearmarket.app.beans.elements.Product;
 import com.pearmarket.app.servlets.Controller;
 import com.pearmarket.app.servlets.ErrorManager;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class ProductController extends Controller {
     private final ProductDAO productDAO;

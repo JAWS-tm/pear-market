@@ -10,9 +10,6 @@
 			<c:if test="${loginError != null}">
 				<p class="error-message">${loginError}</p>
 			</c:if>
-			<c:if test="${alreadyCreated}">
-				<p class="error-message"></p>
-			</c:if>
 
 			<div class="name-row">
 				<div class="name-elem">

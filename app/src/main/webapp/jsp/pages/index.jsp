@@ -20,7 +20,7 @@
 		<i class="fa-solid fa-box"></i>
 		<div class="content">
 			<h3>Livraison gratuite</h3>
-			<p>Livraison gratuite dès 50€ de commande</p>
+			<p>Livraison gratuite dès 200€ de commande</p>
 		</div>
 	</div>
 	<div class="about-products">

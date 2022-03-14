@@ -1,11 +1,11 @@
 package com.pearmarket.app.servlets;
 
 import com.pearmarket.app.beans.DAOFactory;
+import com.pearmarket.app.beans.elements.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public abstract class Controller {
@@ -28,18 +28,15 @@ public abstract class Controller {
         this.daoFactory = DAOFactory.getInstance();
     }
 
-    protected void redirect(String link) throws ServletException, ErrorManager, IOException {
-        redirectLink = request.getContextPath() + link;
-    }
-
     public abstract void process() throws ServletException, IOException, ErrorManager;
 
     protected void render() throws IOException, ServletException {
+        if (isRendered)
+            return;
+
         if (redirectLink != null) {
             response.sendRedirect(redirectLink);
-        }
-        else if (!jspLink.isEmpty() && !isRendered)
-        {
+        } else if (!jspLink.isEmpty()) {
             request.setCharacterEncoding("UTF-8");
 
             if (title != null)
@@ -52,9 +49,36 @@ public abstract class Controller {
 
             request.setAttribute("pageContent", jspLink);
             request.getRequestDispatcher("/jsp/layout.jsp").forward(request, response);
-
-            isRendered = true;
         }
+        isRendered = true;
+    }
+
+
+
+    protected void redirect(String link) throws ServletException, IOException {
+        redirectLink = request.getContextPath() + link;
+        render();
+    }
+
+    protected void setRequestedLink(String link) {
+        request.getSession().setAttribute("requestedLink", link);
+    }
+
+    protected String getRequestedLink() {
+        return (String) request.getSession().getAttribute("requestedLink");
+    }
+
+    protected void setLoggedUser(User user) throws ServletException, IOException {
+        request.getSession().setAttribute("loggedUser", user);
+
+        if (this.getRequestedLink() != null) {
+            this.redirect(this.getRequestedLink());
+            this.setRequestedLink(null);
+        }
+    }
+
+    protected User getLoggedUser() {
+        return (User) request.getSession().getAttribute("loggedUser");
     }
 
 
