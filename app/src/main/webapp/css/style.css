@@ -95,6 +95,7 @@ a {
 .square-div {
 	width: 100%;
 	position: relative;
+	border-radius: 10px;
 }
 
 /* make square div */

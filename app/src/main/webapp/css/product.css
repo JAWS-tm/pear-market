@@ -63,7 +63,12 @@
 .more_meta span {
 	color: var(--text-light);
 }
-
+.more_meta p{
+	margin-top: 20px;
+}
+#stock{
+	color: rgb(21, 182, 21);
+}
 .more_meta a {
 	transition: color 0.3s ease-in-out;
 }

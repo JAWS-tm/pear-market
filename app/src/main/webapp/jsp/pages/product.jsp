@@ -51,6 +51,9 @@
 					Categorie:
 					<a href="${pageContext.request.contextPath}/category/${product.category.id}">${product.category.name}</a>
 				</span>
+				<c:if test="${product.quantity>0}">
+				<p><span id="stock">Stock: </span>${product.quantity} ${product.quantity == 1 ? "exemplaire" : "exemplaires"}</p>
+				</c:if>
 			</div>
 		</div>
 	</div>

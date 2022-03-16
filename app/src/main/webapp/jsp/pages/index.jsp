@@ -38,19 +38,21 @@
 
 		<c:forEach var="i" begin="0" end="${(categories.size() < 3 ? categories.size() : 3) - 1}">
 			<c:set var="category" value="${categories.get(i)}"/>
-			<div class="card-categories">
-				<div class="square-div category-image">
-					<div class="square-content">
-						<img src="${pageContext.request.contextPath}/assets/img/uploaded/categories/${category.imageSrc}" alt="" />
+			<a href="${pageContext.request.contextPath}/category/${category.id}">
+				<div class="card-categories">
+					<div class="square-div category-image">
+						<div class="square-content">
+							<img src="${pageContext.request.contextPath}/assets/img/uploaded/categories/${category.imageSrc}" alt="" />
+						</div>
+					</div>
+
+					<div>
+						<h2>${category.name}</h2>
+						<p>${category.description}</p>
+						<a class="view-more-btn" href="${pageContext.request.contextPath}/category/${category.id}">Voir plus</a>
 					</div>
 				</div>
-
-				<div>
-					<h2>${category.name}</h2>
-					<p>${category.description}</p>
-					<a class="view-more-btn" href="${pageContext.request.contextPath}/category/${category.id}">Voir plus</a>
-				</div>
-			</div>
+			</a>
 		</c:forEach>
 
 	</div>
