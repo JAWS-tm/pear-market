@@ -11,10 +11,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 
 public class InvoiceController extends Controller {
-    OrderDAO orderDAO;
+    final OrderDAO orderDAO;
 
     public InvoiceController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);

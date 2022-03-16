@@ -1,10 +1,10 @@
-<jsp:useBean id="title" scope="request" type="java.lang.String"/>
+
 <jsp:useBean id="whiteNavBar" scope="request" type="java.lang.Boolean"/>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <jsp:useBean id="categories" scope="request" type="java.util.ArrayList"/>
-
+<jsp:useBean id="title" scope="request" type="java.lang.String"/>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -24,7 +24,9 @@
 
 </head>
 <body>
-    <c:if test="${hasLayout}">
+    <jsp:useBean id="hasLayout" scope="request" type="java.lang.Boolean"/>
+    <c:if test="${hasLayout}"><jsp:useBean id="pageId" scope="request" type="java.lang.String"/>
+
     <div class="container">
         <header>
             <nav class="nav-bar ${whiteNavBar ? "white-background" : null}">

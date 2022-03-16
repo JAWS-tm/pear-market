@@ -5,9 +5,7 @@ import com.pearmarket.app.beans.elements.Product;
 import com.pearmarket.app.beans.elements.User;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -227,13 +225,13 @@ public class OrderDAOMariaDB implements OrderDAO {
         // Probablement pas ouf niveau DAO...
         ProductDAO productDAO = daoFactory.getProductDAO(DAOFactory.DBType.MariaDB);
 
-        String sql = "INSERT INTO content_orders(order_id, product_id, quantity) VALUES ";
-
+        StringBuilder sqlBuilder = new StringBuilder("INSERT INTO content_orders(order_id, product_id, quantity) VALUES ");
         for(Map.Entry<Product, Integer> entry : products.entrySet()) {
-            sql += "(" + orderId + "," + entry.getKey().getId() + "," + entry.getValue() + "),";;
+            sqlBuilder.append("(").append(orderId).append(",").append(entry.getKey().getId()).append(",").append(entry.getValue()).append("),");
 
             productDAO.decrementQuantity(entry.getKey().getId(), entry.getValue());
         }
+        String sql = sqlBuilder.toString();
 
         sql = sql.substring(0, sql.length() - 1);
 

@@ -34,7 +34,6 @@ public class CategoryController extends Controller {
             throw new ErrorManager(ErrorManager.ErrorTypes.INVALID_PARAMETER);
         }
 
-
         Category cat = categoryDAO.getCategory(categoryId);
         if (cat == null)
             throw new ErrorManager(ErrorManager.ErrorTypes.NULL_OBJECT);

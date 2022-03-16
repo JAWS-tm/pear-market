@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class SignInController extends Controller {
-    UserDAO userDAO;
+    final UserDAO userDAO;
 
     public SignInController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
@@ -27,7 +27,7 @@ public class SignInController extends Controller {
     }
 
     @Override
-    public void process() throws IOException, ServletException, ErrorManager {
+    public void process() throws IOException, ServletException {
         if (getLoggedUser() != null) {
             this.redirect("/");
             return;

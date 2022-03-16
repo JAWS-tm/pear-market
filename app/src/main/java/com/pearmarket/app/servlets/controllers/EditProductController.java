@@ -1,6 +1,5 @@
 package com.pearmarket.app.servlets.controllers;
 
-import com.pearmarket.app.beans.CategoryDAO;
 import com.pearmarket.app.beans.DAOFactory;
 import com.pearmarket.app.beans.ProductDAO;
 import com.pearmarket.app.beans.elements.Category;
@@ -8,7 +7,6 @@ import com.pearmarket.app.beans.elements.Product;
 import com.pearmarket.app.servlets.Controller;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -126,12 +124,12 @@ public class EditProductController extends Controller {
         File folder = new File(request.getServletContext().getRealPath("/assets/img/uploaded/products"));
         File[] listOfFiles = folder.listFiles();
 
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                System.out.println("File " + listOfFiles[i].getName());
-                filesName.add(listOfFiles[i].getName());
-            } else if (listOfFiles[i].isDirectory()) {
-                System.out.println("Directory " + listOfFiles[i].getName());
+        for (File listOfFile : listOfFiles) {
+            if (listOfFile.isFile()) {
+                System.out.println("File " + listOfFile.getName());
+                filesName.add(listOfFile.getName());
+            } else if (listOfFile.isDirectory()) {
+                System.out.println("Directory " + listOfFile.getName());
             }
         }
         return filesName;

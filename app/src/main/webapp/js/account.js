@@ -13,6 +13,7 @@ for (const btn of toggleAdminButtons) {
     btn.addEventListener("click", (e) => {
         e.preventDefault();
 
+        // noinspection JSUnusedLocalSymbols
         sendPost("/account",
             {
                 action: "toggleAdmin",
@@ -35,6 +36,7 @@ for (const btn of toggleBlockedBtns) {
     btn.addEventListener("click", (e) => {
         e.preventDefault();
 
+        // noinspection JSUnusedLocalSymbols
         sendPost("/account",
             {
                 action: "toggleBlocked",
@@ -57,7 +59,9 @@ const selectStates = document.getElementsByClassName("select-state");
 
 for (const select of selectStates) {
     select.lastSelected = select.value;
+    // noinspection JSUnusedLocalSymbols
     select.addEventListener("change", (e) => {
+        // noinspection JSUnusedLocalSymbols
         sendPost("/account",
             {
                 action: "changeOrderState",

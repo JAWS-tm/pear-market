@@ -51,13 +51,13 @@ public class Order {
      * @return la chaine générée
      */
     public String getContentResume() {
-        String resume = "";
+        StringBuilder resume = new StringBuilder();
         boolean firstProduct = true;
         for(Map.Entry<Product, Integer> entry : content.entrySet()) {
-            resume += (!firstProduct ? ", ": "") +entry.getKey().getName() ;
+            resume.append(!firstProduct ? ", " : "").append(entry.getKey().getName());
             firstProduct = false;
         }
-        return resume;
+        return resume.toString();
     }
 
     /**

@@ -46,7 +46,7 @@
 
                             <td>
                                 <div class="change-quantity-container">
-                                    <input type="number" name="newQuantity" class="newQuantity" value="${row.value}" min="0" last-value="${row.value}">
+                                    <input type="number" name="newQuantity" class="newQuantity" value="${row.value}" min="0" data-last-value="${row.value}">
                                     <div class="applyChange-container">
                                         <button class="applyChange changeQuantity" type="submit" name="applyChange" value="">
                                             <i class="fa-solid fa-check"></i>
@@ -57,7 +57,7 @@
                             </td>
                             <fmt:setLocale value='en-US'/>
                             <fmt:formatNumber var="itemTotalPrice" type="number" minFractionDigits="2" maxFractionDigits="2" value="${row.key.price * row.value}" />
-                            <td class="row-total" item-price="${row.key.price}">${fn:replace(itemTotalPrice, ",", " ")}€</td>
+                            <td class="row-total" data-item-price="${row.key.price}">${fn:replace(itemTotalPrice, ",", " ")}€</td>
 
                             <c:set var="cartTotal" value="${cartTotal + row.key.price * row.value}"/>
                         </tr>

@@ -36,6 +36,7 @@
 	<div class="card-categories-container">
 
 
+		<jsp:useBean id="categories" scope="request" type="java.util.ArrayList"/>
 		<c:forEach var="i" begin="0" end="${(categories.size() < 3 ? categories.size() : 3) - 1}">
 			<c:set var="category" value="${categories.get(i)}"/>
 			<a href="${pageContext.request.contextPath}/category/${category.id}">

@@ -9,6 +9,7 @@
 <section class="products-list left-align">
 	<h2>Produits en Vedette</h2>
 	<div class="products-container ">
+		<jsp:useBean id="popularProducts" scope="request" type="java.util.List"/>
 		<c:forEach var="product" items="${popularProducts}" >
 			<div class="item-container ${product.quantity <= 0 ? "out-of-stock" : null}">
 				<!--<span class="on-sale">20%</span>-->

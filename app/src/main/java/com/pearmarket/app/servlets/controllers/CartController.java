@@ -9,10 +9,9 @@ import com.pearmarket.app.utils.ErrorManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class CartController extends Controller {
-    ProductDAO productDAO;
+    final ProductDAO productDAO;
 
     public CartController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
@@ -27,7 +26,7 @@ public class CartController extends Controller {
     }
 
     @Override
-    public void process() throws ErrorManager, IOException {
+    public void process() throws ErrorManager {
         Cart cart = (Cart) request.getSession().getAttribute("cart");
 
         request.setAttribute("cartProducts", cart.getComputedProducts());

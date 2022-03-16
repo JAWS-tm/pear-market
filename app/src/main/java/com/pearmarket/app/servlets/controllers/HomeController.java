@@ -1,6 +1,5 @@
 package com.pearmarket.app.servlets.controllers;
 
-import com.pearmarket.app.beans.CategoryDAO;
 import com.pearmarket.app.beans.DAOFactory;
 import com.pearmarket.app.beans.ProductDAO;
 import com.pearmarket.app.servlets.Controller;
@@ -26,7 +25,6 @@ public class HomeController extends Controller {
     @Override
     public void process() throws ServletException, IOException {
         request.setAttribute("productsList", productDAO.getProducts());
-
 
         String id = request.getParameter("id");
         if (id != null && id.equals("disconnect")) {

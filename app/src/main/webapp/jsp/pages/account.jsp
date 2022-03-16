@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <c:if test="${loggedUser.admin}">
     <jsp:useBean id="users" scope="request" type="java.util.ArrayList"/>
 </c:if>
@@ -69,11 +70,11 @@
                             <th id="order-state-thead">Statut</th>
                         </tr>
 
+                        <jsp:useBean id="orders" scope="request" type="java.util.ArrayList"/>
                         <c:forEach items="${orders}" var="order">
                             <tr>
                                 <td><a href="${pageContext.request.contextPath}/invoice/${order.id}" target="_blank">${order.id}</a></td>
 
-                                <jsp:useBean id="order" class="com.pearmarket.app.beans.elements.Order"></jsp:useBean>
                                 <td>${order.formattedDate}</td>
                                 <td>${order.getContentResume()}</td>
                                 <fmt:setLocale value='en-US'/>
@@ -107,6 +108,7 @@
                                 <th id="gestion-product-action-thead">Action</th>
                             </tr>
 
+                            <jsp:useBean id="products" scope="request" type="java.util.ArrayList"/>
                             <c:forEach var="product" items="${products}">
                                 <tr>
                                     <td>${product.id}</td>
@@ -181,6 +183,7 @@
                                 <th>Statut</th>
                             </tr>
 
+                            <jsp:useBean id="allOrders" scope="request" type="java.util.ArrayList"/>
                             <c:forEach items="${allOrders}" var="order">
                                 <tr>
                                     <td><a href="${pageContext.request.contextPath}/invoice/${order.id}" target="_blank">${order.id}</a></td>

@@ -13,7 +13,7 @@ import java.io.IOException;
  * Il n'est pas dans le package "controllers" car il est géré indépendamment du lien, il ne possède pas de page/lien attribuée
  */
 public class ErrorController extends Controller {
-    final ErrorManager errorManager;
+    private final ErrorManager errorManager;
 
     public ErrorController(HttpServletRequest request, HttpServletResponse response, ErrorManager eManager) {
         super(request, response);

@@ -83,7 +83,7 @@ public class DAOFactory {
      * @param type type à charger
      * @return le gestionnaire
      */
-    public CategoryDAO getCategoryDAO(DBType type) {
+        public CategoryDAO getCategoryDAO(DBType type) {
         switch (type) {
             case MariaDB:
                 setParamsMariaDB("jdbc:mariadb://localhost:3306/projet_shop", "root", "");

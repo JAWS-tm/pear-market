@@ -99,7 +99,7 @@ public class ServletDispatcher extends HttpServlet {
         String[] parts = s.split("-");
         StringBuilder camelCaseString = new StringBuilder();
         for (String part : parts){
-            camelCaseString.append(toProperCase(part));
+            camelCaseString.append(toCamelCase(part));
         }
         return "com.pearmarket.app.servlets.controllers." + camelCaseString + "Controller";
     }
@@ -109,7 +109,7 @@ public class ServletDispatcher extends HttpServlet {
      * @param s
      * @return chaine en CamelCase
      */
-    static String toProperCase(String s) {
+    static String toCamelCase(String s) {
         return s.substring(0, 1).toUpperCase() +
                 s.substring(1).toLowerCase();
     }

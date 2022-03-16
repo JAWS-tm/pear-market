@@ -5,7 +5,6 @@ import com.pearmarket.app.beans.ProductDAO;
 import com.pearmarket.app.beans.elements.Product;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -15,15 +14,6 @@ import java.util.Map;
  *  - Le panier est stocké en session
  */
 public class Cart implements Serializable {
-//    private class CartRow {
-//        protected int productId;
-//        protected int quantity;
-//
-//        public CartRow(int productId, int quantity) {
-//            this.productId = productId;
-//            this.quantity = quantity;
-//        }
-//    }
 
     /**
      * products est utilisé pour le stockage et la gestion du panier

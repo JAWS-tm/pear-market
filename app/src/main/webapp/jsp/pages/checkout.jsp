@@ -2,13 +2,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<jsp:useBean id="cart" scope="request" type="java.util.LinkedHashMap"/>
 
 <section class="content-area">
     <section class="checkout-container">
         <h1 class="page-title">Vérifications</h1>
 
         <c:choose>
-            <c:when test="${checkoutValidationMsg}"><jsp:useBean id="order" scope="request" type="com.pearmarket.app.beans.elements.Order"/>
+            <c:when test="${checkoutValidationMsg}">
 
                 <p>Merci, votre commande à été validé. Nous la préparons au plus vite</p>
 
@@ -36,6 +37,7 @@
                 <a class="red-button" target="_blank" href="${pageContext.request.contextPath}/invoice/${order.id}">Voir la facture</a>
             </c:when>
             <c:otherwise>
+
                 <div class="forget-coupon">
                     <i class="fa-solid fa-circle-info"></i>
                     <p>Vous avez un coupon?</p>
@@ -74,7 +76,7 @@
                         <label for="country-region">Pays/Région *</label>
                         <select name="country-region" id="country-region">
                             <option value="France" ${(param['country-region'] == "France" || addressParts[0] == "France") ? "selected" : null}>France</option>
-                            <option value="Angleterre" ${(param['country-region'] == Angleterre || addressParts[0] == "Angleterre") ? "selected" : null}>Angleterre</option>
+                            <option value="Angleterre" ${(param['country-region'] == "Angleterre" || addressParts[0] == "Angleterre") ? "selected" : null}>Angleterre</option>
                         </select>
 
                         <label for="address">Adresse *</label>
@@ -103,8 +105,6 @@
                         </div>
 
                         <c:set var="cartTotal" scope="request" value="0"/>
-
-                        <jsp:useBean id="cart" scope="request" type="java.util.LinkedHashMap"/>
                         <c:forEach var="row" items="${cart}">
                             <div class="checkout-paiement-recap item-price">
                                 <div class="wrap-product-nb">

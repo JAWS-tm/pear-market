@@ -55,16 +55,16 @@ for(let row of cartRow) {
                     removeRow(row);
 
                 row.querySelector(".applyChange-container").classList.remove("isVisible");
-                quantityInput.setAttribute("last-value", quantityInput.value)
+                quantityInput.setAttribute("data-last-value", quantityInput.value)
 
                 let totalCol = row.querySelector(".row-total");
-                totalCol.innerHTML = ((parseInt(totalCol.getAttribute("item-price"))) * parseInt(quantityInput.value)).toFixed(2) + "€";
+                totalCol.innerHTML = ((parseInt(totalCol.getAttribute("data-item-price"))) * parseInt(quantityInput.value)).toFixed(2) + "€";
 
                 updatePrice();
             }, (data) => {
                 showError();
                 row.querySelector(".applyChange-container").classList.remove("isVisible");
-                quantityInput.value = quantityInput.getAttribute("last-value");
+                quantityInput.value = quantityInput.getAttribute("data-last-value");
             }
         );
     })

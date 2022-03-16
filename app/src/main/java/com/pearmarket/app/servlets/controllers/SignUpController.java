@@ -27,7 +27,7 @@ public class SignUpController extends Controller {
     }
 
     @Override
-    public void process() throws IOException, ServletException, ErrorManager {
+    public void process() throws IOException, ServletException {
         if (getLoggedUser() != null) {
             this.redirect("/");
             return;

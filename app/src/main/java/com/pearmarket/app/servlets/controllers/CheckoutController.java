@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class CheckoutController extends Controller {
-    UserDAO userDAO;
-    OrderDAO orderDAO;
+    final UserDAO userDAO;
+    final OrderDAO orderDAO;
 
     public CheckoutController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
