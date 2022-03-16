@@ -15,12 +15,22 @@ public class ProductDAOMariaDB implements ProductDAO {
 
     @Override
     public ArrayList<Product> getProducts() {
+        return getProducts(false);
+    }
+
+    @Override
+    public ArrayList<Product> getProducts(boolean distinct) {
         ArrayList<Product> productsList = new ArrayList<>();
 
         try (
                 Connection connection = daoFactory.getConnection();
                 Statement statement = connection.createStatement();
-                ResultSet result = statement.executeQuery("SELECT products.*, categories.name as catName FROM products, categories WHERE products.category_id = categories.id;")
+                ResultSet result = statement.executeQuery(
+                        "SELECT products.*, categories.name as catName " +
+                                "FROM products, categories " +
+                                "WHERE products.category_id = categories.id " +
+                                (distinct ? " GROUP BY products.category_id;" : ";")
+                        )
         ) {
             while (result.next()) {
                 Product product = new Product();
@@ -43,6 +53,7 @@ public class ProductDAOMariaDB implements ProductDAO {
         }
         return productsList;
     }
+
 
     @Override
     public ArrayList<Product> getProductsByCategory(int categoryId) {

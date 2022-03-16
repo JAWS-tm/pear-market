@@ -44,7 +44,7 @@
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="${pageContext.request.contextPath}/category/1">Téléphones</a>
+                                    <a href="${pageContext.request.contextPath}/category/1">Smartphones</a>
                                 </li>
                                 <li>
                                     <a href="${pageContext.request.contextPath}/category/2">Ordinateurs</a>

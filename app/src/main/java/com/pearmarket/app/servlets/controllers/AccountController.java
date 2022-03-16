@@ -61,7 +61,6 @@ public class AccountController extends Controller {
                     break;
             }
         }
-
         request.setAttribute("products", productDAO.getProducts());
 
         request.setAttribute("users", userDAO.getUsers());
