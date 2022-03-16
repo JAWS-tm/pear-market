@@ -33,7 +33,7 @@ public class CartController extends Controller {
         request.setAttribute("cartProducts", cart.getComputedProducts());
 
 
-        if (request.getMethod().equals("POST")) {
+        if (request.getMethod().equals("POST")) { // requêtes envoyées via le js
             String action = request.getParameter("id");
 
             switch (action) {
@@ -54,7 +54,7 @@ public class CartController extends Controller {
                         if (!cart.changeQuantity(productId, quantity) )
                             response.setStatus(400);
                     }else
-                        response.setStatus(400);
+                        response.setStatus(400); // pour gérer l'erreur en js
 
                     break;
             }

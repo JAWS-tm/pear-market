@@ -35,7 +35,9 @@
 <section class="home-categories">
 	<div class="card-categories-container">
 
-		<c:forEach var="category" items="${categories}">
+
+		<c:forEach var="i" begin="0" end="${(categories.size() < 3 ? categories.size() : 3) - 1}">
+			<c:set var="category" value="${categories.get(i)}"/>
 			<div class="card-categories">
 				<div class="square-div category-image">
 					<div class="square-content">

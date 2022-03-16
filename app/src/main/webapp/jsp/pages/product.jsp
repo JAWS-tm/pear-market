@@ -62,7 +62,7 @@
 		<div class="tabs-content-list">
 			<div class="tab-content" id="description">
 				${product.description}
-				${product.attributes}
+<%--				${product.attributes}--%>
 			</div>
 			<div class="tab-content" id="comments">
 				<div class="rewiews-container">

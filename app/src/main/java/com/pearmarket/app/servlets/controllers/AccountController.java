@@ -56,7 +56,13 @@ public class AccountController extends Controller {
         request.setAttribute("orders", orderDAO.getUserOrders(user.getEmail()));
     }
 
-    private void processGet(User user) throws IOException {
+    /**
+     * Gère les requêtes get
+     * @param user utilisateur connecté
+     * @throws IOException
+     * @throws ServletException
+     */
+    private void processGet(User user) throws IOException, ServletException {
         if (!user.getAdmin()){
             response.setStatus(400);
             return;
@@ -73,12 +79,18 @@ public class AccountController extends Controller {
                 productDAO.deleteProduct(deleteProductId);
 
                 request.setAttribute("selectedTab", "admin-products");
+                redirect("/account");
                 break;
 
         }
     }
 
+    /**
+     * Gère les requêtes post
+     * @param user utilisateur connecté
+     */
     private void processPost(User user) {
+
         if (!user.getAdmin()){
             response.setStatus(400);
             return;
@@ -92,14 +104,13 @@ public class AccountController extends Controller {
 
         switch (action) {
             case "changeQuantity":
-                if (request.getMethod().equals("POST")) {
-                    int newQuantity = Integer.parseInt(request.getParameter("newQuantity"));
-                    int productId = Integer.parseInt(request.getParameter("productId"));
+                int newQuantity = Integer.parseInt(request.getParameter("newQuantity"));
+                int productId = Integer.parseInt(request.getParameter("productId"));
 
-                    productDAO.updateQuantity(newQuantity, productId);
+                productDAO.updateQuantity(newQuantity, productId);
 
-                    request.setAttribute("selectedTab", "admin-products");
-                }
+                request.setAttribute("selectedTab", "admin-products");
+
                 break;
 
             case "deleteUser":

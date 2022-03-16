@@ -37,6 +37,11 @@ public class SignUpController extends Controller {
             processSignUp();
     }
 
+    /**
+     * Gère et vérifie le formulaire et créer le compte de l'utilisateur si tous les champs sont bons
+     * @throws IOException
+     * @throws ServletException
+     */
     private void processSignUp() throws IOException, ServletException {
         String email, password, password_check, name, firstname, address;
         email = request.getParameter("email");

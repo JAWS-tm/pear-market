@@ -37,13 +37,18 @@ public class SignInController extends Controller {
             processSignIn();
     }
 
+    /**
+     * Gère la connexion de l'utilisateur
+     * Communique avec le DAO pour vérifier la connexion
+     * @throws ServletException
+     * @throws IOException
+     */
     public void processSignIn() throws ServletException, IOException {
         String email, password, rememberMe;
         email = request.getParameter("email");
         password = request.getParameter("password");
         rememberMe = request.getParameter("remember-account");
 
-        System.out.println(request.getParameter("remember-account"));
 
         if (email == null || password == null)
         {
@@ -64,7 +69,7 @@ public class SignInController extends Controller {
 
             if (rememberMe != null)
             {
-                // Créer un id de connexion unique chiffré dans un bdd et check
+                // Créer un id de connexion unique chiffré dans une bdd et check le cookie lors des requêtes
                 // Cookie connexion = new Cookie("permanentConnexion", user.getEmail());
             }
 

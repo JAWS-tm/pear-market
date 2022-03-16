@@ -80,11 +80,13 @@ public class ServletDispatcher extends HttpServlet {
             ErrorController errorPage = new ErrorController(request, response, e);
 
             errorPage.process();
-        } catch (Exception e) {
-            ErrorController errorPage = new ErrorController(request, response, new ErrorManager(ErrorManager.ErrorTypes.UNKNOWN_ERROR));
-
-            errorPage.process();
         }
+//        // a commenter si on veut voir la stacktrace de l'erreur
+//        catch (Exception e) {
+//            ErrorController errorPage = new ErrorController(request, response, new ErrorManager(ErrorManager.ErrorTypes.UNKNOWN_ERROR));
+//
+//            errorPage.process();
+//        }
     }
 
     /**

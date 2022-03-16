@@ -2,6 +2,9 @@ package com.pearmarket.app.beans.elements;
 
 import java.io.Serializable;
 
+/**
+ * JavaBeans Category
+ */
 public class Category implements Serializable {
     private int id;
     private String name;

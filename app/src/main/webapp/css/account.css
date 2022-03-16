@@ -61,7 +61,7 @@ table tr{
     margin: 10px 0;
 }
 .orders-container tr, .orders-container table {
-    grid-template-columns: 10% 20% 40% 15% 15%;
+    grid-template-columns: 10% 20% 35% 15% 20%;
 
 }
 

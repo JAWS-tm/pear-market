@@ -73,21 +73,21 @@
 
                         <label for="country-region">Pays/Région *</label>
                         <select name="country-region" id="country-region">
-                            <option value="France" ${addressParts[0] == "France" ? "selected" : null}>France</option>
-                            <option value="Angleterre" ${addressParts[0] == "Angleterre" ? "selected" : null}>Angleterre</option>
+                            <option value="France" ${(param['country-region'] == "France" || addressParts[0] == "France") ? "selected" : null}>France</option>
+                            <option value="Angleterre" ${(param['country-region'] == Angleterre || addressParts[0] == "Angleterre") ? "selected" : null}>Angleterre</option>
                         </select>
 
                         <label for="address">Adresse *</label>
-                        <input type="text" name="address" id="address" placeholder="Numéro et nom de rue" required value="${addressParts[0]}"/>
+                        <input type="text" name="address" id="address" placeholder="Numéro et nom de rue" required value="${param.address != null ? param.address : addressParts[0]}"/>
 
                         <label for="zip-code">Code postal *</label>
-                        <input type="text" name="zip-code" id="zip-code" placeholder="ex: 49000" required value="${addressParts[2]}"/>
+                        <input type="text" name="zip-code" id="zip-code" placeholder="ex: 49000" required value="${param['zip-code'] != null ? param['zip-code'] : addressParts[2]}"/>
 
                         <label for="city">Ville *</label>
-                        <input type="text" name="city" id="city" placeholder="ex: Angers" required value="${addressParts[1]}"/>
+                        <input type="text" name="city" id="city" placeholder="ex: Angers" required value="${param.city != null ? param.city : addressParts[1]}"/>
 
                         <label for="phone">Numéro de téléphone *</label>
-                        <input type="text" name="phone" id="phone" placeholder="ex: 0786228635" required class="${phoneMatchesFail ? "input-fail" : null}" value="${sessionScope.loggedUser.phone}"/>
+                        <input type="text" name="phone" id="phone" placeholder="ex: 0786228635" required class="${phoneMatchesFail ? "input-fail" : null}" value="${param.phone != null ? param.phone : loggedUser.phone}"/>
 
                         <label for="email">Adresse email</label>
                         <input type="text" id="email" placeholder="ex: dupond.martin@gmail.com" required readonly value="${sessionScope.loggedUser.email}"/>

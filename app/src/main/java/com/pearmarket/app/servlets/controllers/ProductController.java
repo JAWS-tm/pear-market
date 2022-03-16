@@ -50,7 +50,6 @@ public class ProductController extends Controller {
             } else
                 request.setAttribute("cartResponse", "Le produit n'est plus en stock !");
 
-
         }
     }
 }

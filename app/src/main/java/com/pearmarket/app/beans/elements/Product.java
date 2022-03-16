@@ -3,6 +3,9 @@ package com.pearmarket.app.beans.elements;
 import java.io.Serializable;
 import java.util.Locale;
 
+/**
+ * JavaBeans d'un produit
+ */
 public class Product implements Serializable {
     private int id;
     private Category category;
@@ -71,6 +74,9 @@ public class Product implements Serializable {
         return price;
     }
 
+    /**
+     * @return Le prix formaté (xx.xx€)
+     */
     public String getFormattedPrice() {
         return String.format(Locale.ENGLISH ,"%.2f", price);
     }

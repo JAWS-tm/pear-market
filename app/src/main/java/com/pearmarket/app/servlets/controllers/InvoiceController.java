@@ -51,7 +51,5 @@ public class InvoiceController extends Controller {
         this.setTitle("Facture #"+orderId);
         request.setAttribute("order", order);
 
-
-
     }
 }

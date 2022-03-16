@@ -2,6 +2,9 @@ package com.pearmarket.app.beans.elements;
 
 import java.io.Serializable;
 
+/**
+ * JavaBeans d'un utilisateur
+ */
 public class User implements Serializable {
     private String name;
     private String firstname;
@@ -39,6 +42,10 @@ public class User implements Serializable {
         return address;
     }
 
+    /**
+     * Split l'adresse et l'affiche avec des espaces entre chaques "champs"
+     * @return la chaine générée
+     */
     public String getFormattedAddress() {
         return address.replaceAll("\\\\", " ");
     }

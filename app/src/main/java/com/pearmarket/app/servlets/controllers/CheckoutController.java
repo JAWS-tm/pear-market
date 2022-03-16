@@ -62,6 +62,7 @@ public class CheckoutController extends Controller {
 
         if (request.getMethod().equals("POST")){
             if(handleForm(user)) {
+                // Converti le panier en commande
                 if (!cart.allProductsInStock()) {
                     request.setAttribute("formError", "Un ou plusieurs objets ne sont plus en stock, veuillez les retirer du panier.");
                 } else {
@@ -83,6 +84,12 @@ public class CheckoutController extends Controller {
         }
     }
 
+    /**
+     * Gère le formulaire, vérifie les champs et les met à jour dans la base de donnée.
+     * Renseigne le message d'erreur dans l'attribut "formError"
+     * @param user l'utilisateur connecté
+     * @return si le formulaire est complet et valide
+     */
     private boolean handleForm(User user) {
         String country, address, zipCode, city, phone;
 

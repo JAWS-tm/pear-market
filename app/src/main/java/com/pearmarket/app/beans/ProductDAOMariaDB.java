@@ -15,18 +15,13 @@ public class ProductDAOMariaDB implements ProductDAO {
 
     @Override
     public ArrayList<Product> getProducts() {
-        return getProducts(false);
-    }
-
-    @Override
-    public ArrayList<Product> getProducts(boolean distinct) {
         ArrayList<Product> productsList = new ArrayList<>();
 
         Connection connection = null;
         try {
             connection = daoFactory.getConnection();
             Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT products.*, categories.name as catName FROM products, categories WHERE products.category_id = categories.id ORDER BY products.quantity = 0 ASC ;");
+            ResultSet result = statement.executeQuery("SELECT products.*, categories.name as catName FROM products, categories WHERE products.category_id = categories.id && products.active = 1 ORDER BY products.quantity = 0 ASC ;");
 
             while (result.next()) {
                 productsList.add(fillProduct(result));
@@ -70,6 +65,7 @@ public class ProductDAOMariaDB implements ProductDAO {
                             "FROM content_orders co " +
                                 "INNER JOIN products p on co.product_id = p.id " +
                                 "INNER JOIN categories c on p.category_id = c.id " +
+                            "WHERE p.active = 1 " +
                             "GROUP BY product_id " +
                             "ORDER BY SUM(co.quantity) DESC"
             );
@@ -102,7 +98,7 @@ public class ProductDAOMariaDB implements ProductDAO {
             PreparedStatement stmt = connection.prepareStatement(
                     "SELECT products.id, products.category_id, products.name, products.price, products.image, products.quantity, products.attributes, categories.name as catName " +
                             "FROM products, categories " +
-                            "WHERE products.category_id = ? && products.category_id = categories.id " +
+                            "WHERE products.category_id = ? && products.category_id = categories.id && products.active = 1 " +
                             "ORDER BY products.quantity = 0 ASC, id ASC " +
                             (limit > 0 ? "LIMIT " + limit : "")
             );
@@ -141,7 +137,7 @@ public class ProductDAOMariaDB implements ProductDAO {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT products.id, products.category_id, products.name, products.description, products.quantity, products.price, products.image, products.attributes, categories.name as catName " +
                             "FROM products, categories " +
-                            "WHERE category_id = categories.id && products.id = ?"
+                            "WHERE category_id = categories.id && products.id = ? && products.active = 1"
             );
             statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
@@ -250,7 +246,7 @@ public class ProductDAOMariaDB implements ProductDAO {
         try {
             connection = daoFactory.getConnection();
             PreparedStatement stmt = connection.prepareStatement(
-                "DELETE FROM products WHERE id = ?;"
+                "UPDATE products SET active=0 WHERE id = ?;" // for keep all infos for the invoices
             );
             stmt.setInt(1, productId);
             stmt.executeUpdate();

@@ -22,7 +22,6 @@ public class EditProductController extends Controller {
 
         this.setJspLink("/jsp/pages/edit-product.jsp");
 
-        this.setTitle("Modifier un produit");
         this.setStyleFiles(new String[]{"edit-product", "responsive"});
         this.setWhiteNavBar(true);
 
@@ -42,10 +41,19 @@ public class EditProductController extends Controller {
             handleForm(productId);
 
 
-        if (productId != null)
+        if (productId != null) {
             request.setAttribute("product", productDAO.getProductById(Integer.parseInt(productId)));
+            this.setTitle("Modifier le produit #"+productId);
+        } else
+            this.setTitle("Ajouter un produit");
     }
 
+    /**
+     * Gère formulaire et envoi les modifications sur la bdd
+     * @param productId l'id du produit a modifier si c'est une update
+     * @throws ServletException
+     * @throws IOException
+     */
     private void handleForm(String productId) throws ServletException, IOException {
         Product product = fillBean();
         if (product != null) {
@@ -59,6 +67,10 @@ public class EditProductController extends Controller {
         }
     }
 
+    /**
+     * Rempli l'objet et vérifie l'entrée de l'utilisateur
+     * @return l'objet produit rempli avec les données
+     */
     private Product fillBean() {
         Product product = null;
 
@@ -77,17 +89,10 @@ public class EditProductController extends Controller {
             return null;
         }
 
-        System.out.println(name);
-        System.out.println(category);
-        System.out.println(description);
-        System.out.println(image);
-        System.out.println(price);
-        System.out.println(quantity);
-
         // TODO : champs en number ou gestion erreur !!
         if (
                 (name != null && !name.isEmpty()) &&
-                (category != 0) &&
+                (category > 0) &&
                 (price > 0) &&
                 (quantity >= 0) &&
                 (description != null && !description.isEmpty()) &&

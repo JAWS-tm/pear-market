@@ -8,6 +8,9 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * JavaBean d'une commande
+ */
 public class Order {
     /**
      * content: id de produit en key et les quantité en value
@@ -31,6 +34,10 @@ public class Order {
         this.date = new Timestamp(new Date().getTime());
     }
 
+    /**
+     * Calcul le total de tous les produits
+     * @return le total
+     */
     public float getTotal() {
         float total = 0;
         for(Map.Entry<Product, Integer> entry : content.entrySet()) {
@@ -39,6 +46,10 @@ public class Order {
         return total;
     }
 
+    /**
+     * Créer une chaine qui contient le nom de chaque produits dans la commande (ex: Iphone, Samsung)
+     * @return la chaine générée
+     */
     public String getContentResume() {
         String resume = "";
         boolean firstProduct = true;
@@ -49,6 +60,9 @@ public class Order {
         return resume;
     }
 
+    /**
+     * @return les produits contenus dans la commande
+     */
     public LinkedHashMap<Product, Integer> getContent() {
         return content;
     }
@@ -73,6 +87,10 @@ public class Order {
         this.date = date;
     }
 
+    /**
+     * Génère une date en string
+     * @return la chaine
+     */
     public String getFormattedDate() {
         return new SimpleDateFormat("dd/MM/yyyy - HH:mm").format(date);
     }
