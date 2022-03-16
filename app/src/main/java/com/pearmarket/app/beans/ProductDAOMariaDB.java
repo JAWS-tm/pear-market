@@ -67,7 +67,8 @@ public class ProductDAOMariaDB implements ProductDAO {
                                 "INNER JOIN categories c on p.category_id = c.id " +
                             "WHERE p.active = 1 " +
                             "GROUP BY product_id " +
-                            "ORDER BY SUM(co.quantity) DESC"
+                            "ORDER BY SUM(co.quantity) DESC " +
+                            "LIMIT 6"
             );
 
             while (result.next()) {
