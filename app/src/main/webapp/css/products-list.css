@@ -51,8 +51,8 @@
 
 
 .img-card img {
-	/*width: 80%;*/
-	height: 80%;
+	max-width: 80%;
+	max-height: 80%;
 	object-fit: cover;
 }
 

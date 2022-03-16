@@ -315,7 +315,6 @@ footer {
 .information-description {
 	margin: 20px auto;
 	max-width: 90%;
-	color: rgba(249, 249, 249, 0.61);
 }
 
 .grid-information {
@@ -324,7 +323,11 @@ footer {
 	gap: 10px;
 }
 
-footer a {
+footer a,
+footer p{
+	color: rgba(249, 249, 249, 0.61);
+}
+.footer-a{
 	color: rgb(248, 239, 239);
 	border: 1px solid #ccc;
 	border-radius: 100%;
@@ -335,7 +338,7 @@ footer a {
 	align-items: center;
 	transition: 0.3s;
 }
-footer a:hover {
+.footer-a:hover {
 	color: var(--colorDarkTexte);
 	background-color: white;
 }
@@ -347,6 +350,10 @@ footer ul {
 	margin: 50px auto 0;
 }
 
+.navigation-footer{
+	display: flex;
+	flex-direction: column;
+}
 /*** Other ****/
 .breadcrumb-links {
 	font-size: 0.85rem;

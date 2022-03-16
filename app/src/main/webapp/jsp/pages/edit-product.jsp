@@ -34,9 +34,17 @@
 				<label for="productDescription">Description</label>
 				<textarea id="productDescription" name="description" placeholder="ex: magnifique produit">${param.description != null ? param.description : (product != null ? product.description : null)}</textarea>
 
-				<label for="productImage">Image <span class="small-info">(stockée dans assets/img/uploaded/products)</span></label>
-				<input type="text" name="image" id="productImage" value="${param.image != null ? param.image : (product != null ? product.imageSrc : null)}" placeholder="phone.png">
+<%--				<label for="productImage">Image <span class="small-info">(stockée dans uploaded/products)</span></label>--%>
+<%--				<input type="text" name="image" id="productImage" value="${product != null ? product.imageSrc : null}" placeholder="phone.png">--%>
 <%--			Pas le temps pour le moment de gérer les multipart	<input type="file" name="image" id="productImage" value="${product != null ? product.imageSrc : null}" accept="image/png"/>--%>
+
+				<label for="productImage">Images disponibles (mettre dans le fichier uploaded/products pour en ajouter)</label>
+				<select name="image" id="productImage" required>
+					<option>Sélectionnez</option>
+					<c:forEach var="image" items="${availableImages}">
+						<option value="${image}" ${product != null ? (product.imageSrc == image ? "selected" : null) : null}>${image}</option>
+					</c:forEach>
+				</select>
 
 				<input type="submit" name="${param["id"] == null? "add" : "update"}" id="save" value="Enregistrer" class="red-button">
 			</form>

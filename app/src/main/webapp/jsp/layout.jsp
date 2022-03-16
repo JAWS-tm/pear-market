@@ -98,47 +98,57 @@
 
     <footer>
         <div class="grid-information">
-            <h2 class="information-title">Information</h2>
-            <h2 class="information-title">Information</h2>
-            <h2 class="information-title">Information</h2>
+            <h2 class="information-title">Coordonnées</h2>
+            <h2 class="information-title">Navigation</h2>
+            <h2 class="information-title">Qui sommes-nous</h2>
 
-            <p class="information-description">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus dolor, provident molestias minus
-                maxime ullam libero illo atque cumque nam?
-            </p>
-            <p class="information-description">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Asperiores deserunt officia recusandae a
-                voluptate nulla molestias minus quibusdam facere minima!
-            </p>
-            <p class="information-description">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquid ex quas dolorum dolore illum vitae
-                voluptatibus ad possimus cupiditate nisi.
-            </p>
+            <div class="information-description">
+                <p>
+                    Pear Market <br>
+                    <a class="maps-link" href="https://www.google.com/maps/place/Apple+Champs-Élysées/@48.8724212,2.2990295,17z/data=!3m1!4b1!4m5!3m4!1s0x47e66fe5296f0f4b:0xc33d115f0e33b9d2!8m2!3d48.8724177!4d2.3012182" target="_blank">
+                        114 Av. des Champs-Élysées, 75008 Paris<br></a>
+                    France<br>
+                </p>
+
+            </div>
+
+            <div class="information-description navigation-footer">
+                <a href="${pageContext.request.contextPath}/home">Accueil</a>
+                <a href="${pageContext.request.contextPath}/store">magasin</a>
+                <a href="${pageContext.request.contextPath}/account">Mon compte</a>
+            </div>
+
+            <div class="information-description">
+                <p>
+                    Petite startup française qui se lance dans le commerce de produits de dernières technologies. <br>
+
+                </p>
+            </div>
         </div>
 
         <ul>
             <li>
-                <a href="#" target="_blank">
+                <a class="footer-a" href="#" target="_blank">
                     <i class="fab fa-twitter"></i>
                 </a>
             </li>
             <li>
-                <a href="#" target="_blank">
+                <a class="footer-a" href="#" target="_blank">
                     <i class="fab fa-facebook-f"></i>
                 </a>
             </li>
             <li>
-                <a href="#" target="_blank">
+                <a class="footer-a" href="#" target="_blank">
                     <i class="fab fa-instagram"></i>
                 </a>
             </li>
             <li>
-                <a href="#" target="_blank">
+                <a class="footer-a" href="#" target="_blank">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
             </li>
             <li>
-                <a href="mailto:contact@pear-shop.fr">
+                <a class="footer-a" href="mailto:contact@pear-shop.fr">
                     <i class="far fa-envelope"></i>
                 </a>
             </li>

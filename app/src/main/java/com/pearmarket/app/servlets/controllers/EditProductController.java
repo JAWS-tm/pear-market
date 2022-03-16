@@ -11,7 +11,9 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class EditProductController extends Controller {
 
@@ -35,6 +37,8 @@ public class EditProductController extends Controller {
             return;
         }
 
+
+        request.setAttribute("availableImages", getImageFile());
 
         String productId = request.getParameter("id");
         if (request.getMethod().equals("POST"))
@@ -114,5 +118,22 @@ public class EditProductController extends Controller {
 
 
         return product;
+    }
+
+    private ArrayList<String> getImageFile(){
+        ArrayList<String> filesName = new ArrayList<>();
+
+        File folder = new File(request.getServletContext().getRealPath("/assets/img/uploaded/products"));
+        File[] listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                System.out.println("File " + listOfFiles[i].getName());
+                filesName.add(listOfFiles[i].getName());
+            } else if (listOfFiles[i].isDirectory()) {
+                System.out.println("Directory " + listOfFiles[i].getName());
+            }
+        }
+        return filesName;
     }
 }
