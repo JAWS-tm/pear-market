@@ -2,6 +2,8 @@ const tabsBtn = document.getElementsByClassName("tab");
 
 let selectedTab = document.querySelector(".tabs-list .active");
 
+document.getElementById(selectedTab.getAttribute("data-tab-name")).classList.add("active");
+
 for (let i = 0; i < tabsBtn.length; i++) {
 	const tab = tabsBtn[i];
 

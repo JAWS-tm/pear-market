@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public interface UserDAO {
     ArrayList<User> getUsers();
 
-    User getUser(int id);
+    User getUser(String email);
     User tryConnect(String email, String password);
 
     User createAccount(String email, String password, String name, String firstname);
@@ -15,4 +15,6 @@ public interface UserDAO {
 
     void changeAddress(String userEmail, String address);
     void changePhone(String userEmail, String phone);
+    void toggleAdmin(String userEmail);
+    void toggleBlocked(String userEmail);
 }

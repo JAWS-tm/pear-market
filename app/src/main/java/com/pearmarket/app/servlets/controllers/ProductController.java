@@ -18,7 +18,7 @@ public class ProductController extends Controller {
 
         this.setJspLink("/jsp/pages/product.jsp");
 
-        this.setTitle("Produit");
+
         this.setStyleFiles(new String[] {"product","responsive"});
         this.setWhiteNavBar(true);
 
@@ -27,25 +27,30 @@ public class ProductController extends Controller {
 
     @Override
     public void process() throws ErrorManager {
-        int id = parseInt(request.getParameter("id"));
+        int id = parseIntParam(request.getParameter("id"));
 
         Product product = productDAO.getProductById(id);
         if (product == null)
             throw new ErrorManager(ErrorManager.ErrorTypes.NULL_OBJECT);
 
+
+        this.setTitle(product.getName());
         request.setAttribute("product", product);
+        request.setAttribute("relatedProducts", productDAO.getProductsByCategory(product.getCategory().getId(), 4 ));
 
 
         if (request.getMethod().equals("POST") && request.getParameter("add-product") != null) {
-            System.out.println("receive");
-            int quantity = parseInt(request.getParameter("quantity"));
+            int quantity = parseIntParam(request.getParameter("quantity"));
 
-            Cart cart = (Cart) request.getSession().getAttribute("cart");
-            cart.addProduct(id, quantity);
+            if (product.getQuantity() - quantity >= 0) {
+                Cart cart = (Cart) request.getSession().getAttribute("cart");
+                cart.addProduct(id, quantity);
 
-            System.out.println(cart.getComputedProducts());
+                request.setAttribute("cartResponse", "\""+product.getName()+ "\" x" + quantity + " ajouté au panier" );
+            } else
+                request.setAttribute("cartResponse", "Le produit n'est plus en stock !");
+
+
         }
-
-
     }
 }

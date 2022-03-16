@@ -3,6 +3,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<jsp:useBean id="categories" scope="request" type="java.util.ArrayList"/>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -22,6 +24,7 @@
 
 </head>
 <body>
+    <c:if test="${hasLayout}">
     <div class="container">
         <header>
             <nav class="nav-bar ${whiteNavBar ? "white-background" : null}">
@@ -43,15 +46,11 @@
                                 <i class="fa-solid fa-chevron-down"></i>
                             </a>
                             <ul class="sub-menu">
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/category/1">Smartphones</a>
-                                </li>
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/category/2">Ordinateurs</a>
-                                </li>
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/category/3">Télévisions</a>
-                                </li>
+                                <c:forEach var="category" items="${categories}">
+                                    <li>
+                                        <a href="${pageContext.request.contextPath}/category/${category.id}">${category.name}</a>
+                                    </li>
+                                </c:forEach>
                             </ul>
                         </li>
 
@@ -89,10 +88,12 @@
                 </div>
             </nav>
         </header>
+    </c:if>
 
 
         <c:import url="${pageContent}" />
 
+    <c:if test="${hasLayout}">
     </div>
 
     <footer>
@@ -143,5 +144,6 @@
             </li>
         </ul>
     </footer>
+    </c:if>
 </body>
 </html>

@@ -22,48 +22,89 @@ public class ProductDAOMariaDB implements ProductDAO {
     public ArrayList<Product> getProducts(boolean distinct) {
         ArrayList<Product> productsList = new ArrayList<>();
 
-        try (
-                Connection connection = daoFactory.getConnection();
-                Statement statement = connection.createStatement();
-                ResultSet result = statement.executeQuery(
-                        "SELECT products.*, categories.name as catName " +
-                                "FROM products, categories " +
-                                "WHERE products.category_id = categories.id " +
-                                (distinct ? " GROUP BY products.category_id;" : ";")
-                        )
-        ) {
+        Connection connection = null;
+        try {
+            connection = daoFactory.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT products.*, categories.name as catName FROM products, categories WHERE products.category_id = categories.id ORDER BY products.quantity = 0 ASC ;");
+
             while (result.next()) {
-                Product product = new Product();
-                product.setId(result.getInt("id"));
-                product.setName(result.getString("name"));
-                product.setImageSrc(result.getString("image"));
-                product.setPrice(result.getInt("price"));
-                product.setQuantity(result.getInt("quantity"));
-                product.setAttributes(result.getString("attributes"));
-
-                Category cat = new Category();
-                cat.setId(result.getInt("category_id"));
-                cat.setName(result.getString("catName"));
-                product.setCategory(cat);
-
-                productsList.add(product);
+                productsList.add(fillProduct(result));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
         }
+
+        return productsList;
+    }
+
+    private Product fillProduct(ResultSet result) throws SQLException {
+        Product product = new Product();
+        product.setId(result.getInt("id"));
+        product.setName(result.getString("name"));
+        product.setImageSrc(result.getString("image"));
+        product.setPrice(result.getInt("price"));
+        product.setQuantity(result.getInt("quantity"));
+        product.setAttributes(result.getString("attributes"));
+
+        Category cat = new Category();
+        cat.setId(result.getInt("category_id"));
+        cat.setName(result.getString("catName"));
+        product.setCategory(cat);
+
+        return product;
+    }
+
+    @Override
+    public ArrayList<Product> getMostPopular() {
+        ArrayList<Product> productsList = new ArrayList<>();
+
+        Connection connection = null;
+        try {
+            connection = daoFactory.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(
+                    "SELECT p.*, c.name as catName, SUM(co.quantity) AS totalQuantity " +
+                            "FROM content_orders co " +
+                                "INNER JOIN products p on co.product_id = p.id " +
+                                "INNER JOIN categories c on p.category_id = c.id " +
+                            "GROUP BY product_id " +
+                            "ORDER BY SUM(co.quantity) DESC"
+            );
+
+            while (result.next()) {
+                productsList.add(fillProduct(result));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
+        }
+
         return productsList;
     }
 
 
     @Override
     public ArrayList<Product> getProductsByCategory(int categoryId) {
+        return getProductsByCategory(categoryId, 0);
+    }
+
+    @Override
+    public ArrayList<Product> getProductsByCategory(int categoryId, int limit) {
         ArrayList<Product> products = new ArrayList<>();
 
-        try (Connection connection = daoFactory.getConnection()) {
+        Connection connection = null;
+        try {
+            connection = daoFactory.getConnection();
             PreparedStatement stmt = connection.prepareStatement(
-                    "SELECT products.id, products.category_id, products.name, products.price, products.image, products.attributes, categories.name as catName " +
+                    "SELECT products.id, products.category_id, products.name, products.price, products.image, products.quantity, products.attributes, categories.name as catName " +
                             "FROM products, categories " +
-                            "WHERE products.category_id = ? && products.category_id = categories.id"
+                            "WHERE products.category_id = ? && products.category_id = categories.id " +
+                            "ORDER BY products.quantity = 0 ASC, id ASC " +
+                            (limit > 0 ? "LIMIT " + limit : "")
             );
             stmt.setInt(1, categoryId);
             ResultSet result = stmt.executeQuery();
@@ -76,22 +117,27 @@ public class ProductDAOMariaDB implements ProductDAO {
                 product.setPrice(result.getInt("price"));
                 product.setImageSrc(result.getString("image"));
                 product.setAttributes(result.getString("attributes"));
+                product.setQuantity(result.getInt("quantity"));
 
                 products.add(product);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
         }
 
         return products;
     }
 
     @Override
-    public Product getProductById(final int id) {
+    public Product getProductById(int id) {
         Product product = null;
 
-        try (Connection connection = daoFactory.getConnection()) {
+        Connection connection = null;
+        try {
+            connection = daoFactory.getConnection();
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT products.id, products.category_id, products.name, products.description, products.quantity, products.price, products.image, products.attributes, categories.name as catName " +
                             "FROM products, categories " +
@@ -108,6 +154,8 @@ public class ProductDAOMariaDB implements ProductDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
         }
 
         return product;
@@ -115,7 +163,9 @@ public class ProductDAOMariaDB implements ProductDAO {
 
     @Override
     public void addProduct(Product product) {
-        try (Connection connection = daoFactory.getConnection()) {
+        Connection connection = null;
+        try {
+            connection = daoFactory.getConnection();
             PreparedStatement stmt = connection.prepareStatement(
                     "INSERT INTO products(category_id, name, image, description, price, quantity)" +
                             "VALUES(?, ?, ?, ?, ?, ?);"
@@ -129,12 +179,16 @@ public class ProductDAOMariaDB implements ProductDAO {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
         }
     }
 
     @Override
     public void updateQuantity(int newQuantity, int productId) {
-        try (Connection connection = daoFactory.getConnection()) {
+        Connection connection = null;
+        try {
+            connection = daoFactory.getConnection();
             PreparedStatement stmt = connection.prepareStatement(
                 "UPDATE products SET quantity=? WHERE id=?;"
             );
@@ -143,31 +197,58 @@ public class ProductDAOMariaDB implements ProductDAO {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
+        }
+    }
+
+    @Override
+    public void decrementQuantity(int productId, int quantity) {
+        Connection connection = null;
+        try {
+            connection = daoFactory.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(
+                    "UPDATE products SET quantity=quantity-? WHERE id=? AND quantity>0;"
+            );
+            stmt.setInt(1, quantity);
+            stmt.setInt(2, productId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
         }
     }
 
     @Override
     public void updateProduct(Product product) {
-        try (Connection connection = daoFactory.getConnection()) {
+        Connection connection = null;
+        try {
+            connection = daoFactory.getConnection();
             PreparedStatement stmt = connection.prepareStatement(
-                    "UPDATE products SET name =?, price=?, quantity=?, description=?, image=? WHERE id=?;"
+                    "UPDATE products SET name =?, category_id= ?, price=?, quantity=?, description=?, image=? WHERE id=?;"
             );
             stmt.setString(1, product.getName());
-            stmt.setFloat(2, product.getPrice());
-            stmt.setInt(3, product.getQuantity());
-            stmt.setString(4, product.getDescription());
-            stmt.setString(5, product.getImageSrc());
-            stmt.setInt(6, product.getId());
+            stmt.setInt(2, product.getCategory().getId());
+            stmt.setFloat(3, product.getPrice());
+            stmt.setInt(4, product.getQuantity());
+            stmt.setString(5, product.getDescription());
+            stmt.setString(6, product.getImageSrc());
+            stmt.setInt(7, product.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
         }
     }
 
 
     @Override
     public void deleteProduct(int productId) {
-        try (Connection connection = daoFactory.getConnection()) {
+        Connection connection = null;
+        try {
+            connection = daoFactory.getConnection();
             PreparedStatement stmt = connection.prepareStatement(
                 "DELETE FROM products WHERE id = ?;"
             );
@@ -175,6 +256,8 @@ public class ProductDAOMariaDB implements ProductDAO {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
         }
     }
 }

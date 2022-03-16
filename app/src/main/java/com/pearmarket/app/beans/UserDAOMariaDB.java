@@ -18,11 +18,12 @@ public class UserDAOMariaDB implements UserDAO {
     public ArrayList<User> getUsers() {
         ArrayList<User> users = new ArrayList<>();
 
-        try (
-                Connection connection = daoFactory.getConnection();
-                Statement stmt = connection.createStatement();
-                ResultSet result = stmt.executeQuery("SELECT email, name, firstname, is_admin, is_blocked FROM users")
-        ) {
+        Connection connection = null;
+        try {
+            connection = daoFactory.getConnection();
+            Statement stmt = connection.createStatement();
+            ResultSet result = stmt.executeQuery("SELECT email, name, firstname, is_admin, is_blocked FROM users");
+
             while (result.next()) {
                 User user = new User();
                 user.setEmail(result.getString("email"));
@@ -35,24 +36,55 @@ public class UserDAOMariaDB implements UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
         }
 
         return users;
     }
 
     @Override
-    public User getUser(int id) {
-        return null;
+    public User getUser(String email) {
+        User user = null;
+
+        Connection connection = null;
+        try {
+            connection = daoFactory.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(
+                    "SELECT email, name, firstname, address, is_admin, is_blocked, phone FROM users WHERE email=?"
+            );
+
+            stmt.setString(1, email);
+            ResultSet res = stmt.executeQuery();
+
+            if (res.first()) {
+                user = new User();
+                user.setFirstname(res.getString("firstname"));
+                user.setName(res.getString("name"));
+                user.setEmail(res.getString("email"));
+                user.setAddress(res.getString("address"));
+                user.setPhone(res.getString("phone"));
+                user.setAdmin(res.getBoolean("is_admin"));
+                user.setBlocked(res.getBoolean("is_blocked"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
+        }
+
+        return user;
     }
 
     @Override
     public User tryConnect(String email, String password) {
         User user = null;
 
-        try (
-                Connection connection = daoFactory.getConnection();
-                PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE email = ?")
-        ) {
+        Connection connection = null;
+        try {
+            connection = daoFactory.getConnection();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE email = ?");
+
             stmt.setString(1, email);
             ResultSet result = stmt.executeQuery();
 
@@ -67,6 +99,8 @@ public class UserDAOMariaDB implements UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
         }
 
         return user;
@@ -76,13 +110,14 @@ public class UserDAOMariaDB implements UserDAO {
     public User createAccount(String email, String password, String name, String firstname) {
         User newUser = null;
 
-        try (
-            Connection connection = daoFactory.getConnection();
+        Connection connection = null;
+        try {
+            connection = daoFactory.getConnection();
             PreparedStatement stmt = connection.prepareStatement(
                     "INSERT INTO users(email, password, name, firstname) " +
                             "VALUES (?, ?, ?, ?)"
-            )
-        ) {
+            );
+
             stmt.setString(1, email);
             stmt.setString(2, BCrypt.hashpw(password, BCrypt.gensalt()));
             stmt.setString(3, name);
@@ -97,6 +132,8 @@ public class UserDAOMariaDB implements UserDAO {
 
         } catch (SQLException e) {
             e.printStackTrace(); // error code 1062 si duplicate entry
+        } finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
         }
 
         return newUser;
@@ -104,7 +141,9 @@ public class UserDAOMariaDB implements UserDAO {
 
     @Override
     public void deleteAccount(String userEmail) {
-        try (Connection connection = daoFactory.getConnection()) {
+        Connection connection= null;
+        try {
+            connection = daoFactory.getConnection();
             PreparedStatement stmt = connection.prepareStatement(
                     "DELETE FROM users WHERE email=?;"
             );
@@ -112,13 +151,18 @@ public class UserDAOMariaDB implements UserDAO {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
         }
     }
 
     // TODO: statement builder pour regrouper les requêtes en une seule et permettre une flexibilité
     @Override
     public void changeAddress(String userEmail, String address) {
-        try (Connection connection = daoFactory.getConnection()) {
+        Connection connection = null;
+        try {
+            connection = daoFactory.getConnection();
+
             PreparedStatement stmt = connection.prepareStatement(
                     "UPDATE users SET address=? WHERE email=?;"
             );
@@ -127,12 +171,17 @@ public class UserDAOMariaDB implements UserDAO {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
         }
     }
 
     @Override
     public void changePhone(String userEmail, String phone) {
-        try (Connection connection = daoFactory.getConnection()) {
+        Connection connection = null;
+        try {
+            connection = daoFactory.getConnection();
+
             PreparedStatement stmt = connection.prepareStatement(
                     "UPDATE users SET phone=? WHERE email=?;"
             );
@@ -141,6 +190,44 @@ public class UserDAOMariaDB implements UserDAO {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
+        }
+    }
+
+    @Override
+    public void toggleAdmin(String userEmail) {
+        Connection connection = null;
+        try {
+            connection = daoFactory.getConnection();
+
+            PreparedStatement stmt = connection.prepareStatement(
+                    "UPDATE users SET is_admin=!is_admin WHERE email=?;"
+            );
+            stmt.setString(1, userEmail);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
+        }
+    }
+
+    @Override
+    public void toggleBlocked(String userEmail) {
+        Connection connection = null;
+        try {
+            connection = daoFactory.getConnection();
+
+            PreparedStatement stmt = connection.prepareStatement(
+                    "UPDATE users SET is_blocked=!is_blocked WHERE email=?;"
+            );
+            stmt.setString(1, userEmail);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
         }
     }
 }

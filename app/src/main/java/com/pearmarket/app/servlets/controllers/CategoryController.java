@@ -18,7 +18,6 @@ public class CategoryController extends Controller {
         super(request, response);
 
         this.setJspLink("/jsp/pages/category.jsp");
-        this.setTitle("Catégorie");
         this.setStyleFiles(new String[] {"category","responsive"});
         this.setWhiteNavBar(true);
 
@@ -40,6 +39,7 @@ public class CategoryController extends Controller {
         if (cat == null)
             throw new ErrorManager(ErrorManager.ErrorTypes.NULL_OBJECT);
 
+        this.setTitle(cat.getName());
         request.setAttribute("category", cat);
         this.setTitle(cat.getName());
 

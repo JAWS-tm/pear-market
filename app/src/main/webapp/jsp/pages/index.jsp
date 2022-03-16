@@ -35,7 +35,6 @@
 <section class="home-categories">
 	<div class="card-categories-container">
 
-		<jsp:useBean id="categories" scope="request" type="java.util.ArrayList"/>
 		<c:forEach var="category" items="${categories}">
 			<div class="card-categories">
 				<div class="square-div category-image">
@@ -63,7 +62,7 @@
 
 		<jsp:useBean id="productsList" scope="request" type="java.util.ArrayList"/>
 		<c:forEach var="product" items="${productsList}">
-			<div class="item-container">
+			<div class="item-container ${product.quantity <= 0 ? "out-of-stock" : null}">
 				<!--<span class="on-sale">20%</span>-->
 
 				<a href="${pageContext.request.contextPath}/product/${product.id}">

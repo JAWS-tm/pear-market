@@ -1,5 +1,8 @@
 package com.pearmarket.app.utils;
 
+/**
+ * Exception qui permet de gérer des erreurs personnalisées
+ */
 public class ErrorManager extends Exception{
     public enum ErrorTypes {
         INVALID_PARAMETER,
@@ -11,6 +14,11 @@ public class ErrorManager extends Exception{
     private final ErrorTypes type;
     private String title;
     private String description;
+
+    /**
+     * Initialise la classe et renseigne les champs en fonction de l'erreur
+     * @param type type de l'erreur
+     */
     public ErrorManager(ErrorTypes type) {
         this.type = type;
 

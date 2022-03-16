@@ -6,28 +6,6 @@ function removeError() {
     document.querySelector(".forget-coupon.error").classList.add("invisible")
 }
 
-function sendPost(url, paramData, successCallbackFn, failCallbackFn) {
-    fetch(ctx + url, {
-        method: "POST",headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: new URLSearchParams(paramData)
-    })
-        .then(res => {
-            res.text().then((data) => {
-                if (res.status === 200) {
-                    removeError();
-                    successCallbackFn(data);
-                } else {
-                    showError();
-                    failCallbackFn(data);
-                }
-            })
-        })
-}
-
-
-
 const cartRow = document.getElementsByClassName("cart-row");
 
 function removeRow(row) {
@@ -56,8 +34,10 @@ for(let row of cartRow) {
             (data) => {
                 removeRow(row);
                 updatePrice();
+                removeError();
             },
             (data) => {
+                showError();
             }
         );
     })
@@ -69,6 +49,7 @@ for(let row of cartRow) {
                 productId: row.getAttribute("data-product-id"),
                 quantity: quantityInput.value
             }, (data) => {
+                removeError();
 
                 if (parseInt(quantityInput.value) === 0)
                     removeRow(row);
@@ -81,6 +62,7 @@ for(let row of cartRow) {
 
                 updatePrice();
             }, (data) => {
+                showError();
                 row.querySelector(".applyChange-container").classList.remove("isVisible");
                 quantityInput.value = quantityInput.getAttribute("last-value");
             }

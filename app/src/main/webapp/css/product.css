@@ -202,3 +202,28 @@
 	resize: vertical;
 	margin-bottom: 10px;
 }
+
+
+#cart-response {
+	margin-bottom: 25px;
+}
+
+#cart-response {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+#cart-response div {
+	display: flex;
+	align-items: center;
+}
+
+#cart-response .red-button {
+	font-size: .8rem;
+}
+
+span.no-stock {
+	margin: 10px 0;
+	color: var(--secondary-color);
+}

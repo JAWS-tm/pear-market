@@ -3,6 +3,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <section class="content-area">
+	<c:if test="${cartResponse != null}">
+		<div class="forget-coupon" id="cart-response">
+			<div>
+				<i class="fa-solid fa-circle-info"></i>
+				<p>${cartResponse}</p>
+			</div>
+
+			<a class="red-button" href="${pageContext.request.contextPath}/cart">Voir le panier</a>
+		</div>
+	</c:if>
+
 	<div class="product-flex">
 		<div class="square-div img-container">
 			<div class="square-content">
@@ -22,16 +33,23 @@
 				${product.description}
 			</p>
 			<div class="add_product">
-				<form action="" method="post">
-					<input class="quantity" type="number" value="1" min="1" max="99" name="quantity"/>
-					<input type="submit" class="red-button" value="Ajouter au panier" name="add-product"/>
-				</form>
+				<c:choose>
+					<c:when test="${product.quantity > 0}">
+						<form action="" method="post">
+							<input class="quantity" type="number" value="1" min="1" max="99" name="quantity"/>
+							<input type="submit" class="red-button" value="Ajouter au panier" name="add-product"/>
+						</form>
+					</c:when>
+					<c:otherwise>
+						<span class="no-stock">Le produit n'est plus en stock</span>
+					</c:otherwise>
+				</c:choose>
 			</div>
 
 			<div class="more_meta">
 				<span>
 					Categorie:
-					<a href="add-to-cart">${product.category.name}</a>
+					<a href="${pageContext.request.contextPath}/category/${product.category.id}">${product.category.name}</a>
 				</span>
 			</div>
 		</div>
@@ -42,7 +60,7 @@
 			<li class="tab" data-tab-name="comments">Commentaires (0)</li>
 		</ul>
 		<div class="tabs-content-list">
-			<div class="tab-content active" id="description">
+			<div class="tab-content" id="description">
 				${product.description}
 				${product.attributes}
 			</div>
@@ -78,32 +96,28 @@
 		<section class="related-products products-list left-align">
 			<h2>Produits similaires</h2>
 			<div class="products-container">
-				<div class="item-container">
-					<a href="">
-						<div class="img-item-container">
-							<img src="assets/img/phone.png" alt="" />
-						</div>
-					</a>
+				<jsp:useBean id="relatedProducts" scope="request" type="java.util.ArrayList"/>
+				<c:forEach var="rProduct" items="${relatedProducts}">
+					<div class="item-container ${rProduct.quantity <= 0 ? "out-of-stock" : null}">
+						<!--<span class="on-sale">20%</span>-->
 
-					<span class="categorie-item">Téléphone</span>
-					<a href="">
-						<span class="name-item">Iphone 12</span>
-					</a>
-					<span class="price-item">55€</span>
-				</div>
-				<div class="item-container">
-					<a href="">
-						<div class="img-item-container">
-							<img src="assets/img/phone.png" alt="" />
-						</div>
-					</a>
+						<a href="${pageContext.request.contextPath}/product/${rProduct.id}">
+							<div class="square-div img-card">
+								<div class="square-content">
+									<img src="${pageContext.request.contextPath}/assets/img/uploaded/products/${rProduct.imageSrc}" alt="" />
+								</div>
+							</div>
+						</a>
 
-					<span class="categorie-item">Téléphone</span>
-					<a href="">
-						<span class="name-item">Iphone 12</span>
-					</a>
-					<span class="price-item">55€</span>
-				</div>
+						<a href="${pageContext.request.contextPath}/category/${rProduct.category.id}">
+							<span class="categorie-item">${rProduct.category.name}</span>
+						</a>
+						<a href="${pageContext.request.contextPath}/product/${rProduct.id}">
+							<span class="name-item">${rProduct.name}</span>
+						</a>
+						<span class="price-item">${rProduct.getFormattedPrice()}€</span>
+					</div>
+				</c:forEach>
 			</div>
 		</section>
 	</div>

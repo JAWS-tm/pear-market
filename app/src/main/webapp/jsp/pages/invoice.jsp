@@ -1,9 +1,13 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<jsp:useBean id="order" scope="request" type="com.pearmarket.app.beans.elements.Order"/>
 
 <div class="invoice-content">
     <header>
         <h1>Facture</h1>
         <div class="logo-container">
-            <img src="/assets/img/logo.png" alt="">
+            <img src="${pageContext.request.contextPath}/assets/img/logo.png" alt="">
             <h2>Pear Market</h2>
         </div>
     </header>
@@ -12,22 +16,21 @@
         <div class="grid-invoice">
             <div class="customer">
                 <h3>Client:</h3>
-                <span>Hugo Dumartin</span>
-                <p>8 rue pommée 49610 Soulaines sur aubance</p>
-                <span>France</span>
+                <span>${order.customer.name} ${order.customer.firstname}</span>
+                <p>${fn:replace(order.customer.address, "\\", ", ")}</p>
             </div>
 
             <div class="seller">
                 <h3>Vendeur:</h3>
                 <span>Pear Market</span>
-                <p>231 rue des champs Elises 78000 Paris</p>
+                <p>231 rue des Champs-Élysées 78000 Paris</p>
                 <span>France</span>
             </div>
 
             <div class="info-delivery">
                 <h3>Livraison:</h3>
-                <p>231 rue des champs Elises 78000 Paris</p>
-                <span>France</span>
+                <p>${fn:replace(order.customer.address, "\\", ", ")}</p>
+                <p>Prix : ${order.shippingFees == 0 ? "Offert" : order.shippingFees}</p>
             </div>
 
             <div class="info-invoice-container">
@@ -35,12 +38,12 @@
                 <div class="info-invoice-left">
                     <span>Date de commande:</span>
                     <span>Numéro de commande:</span>
-                    <span>Autre infos ?</span>
+                    <span>Code promo :</span>
                 </div>
                 <div class="info-invoice-right">
-                    <span>14/03/2022</span>
-                    <span>17821271</span>
-                    <span>Autre infos ?</span>
+                    <span>${order.formattedDate}</span>
+                    <span>#${order.id}</span>
+                    <span>${order.discountCode == null ? "Aucun" : order.shippingFees}</span>
                 </div>
             </div>
         </div>
@@ -55,21 +58,30 @@
                 <th id="cart-subtotal-thead">Total</th>
             </tr>
 
-            <tr>
-                <td><span>Nom</span></td>
-                <td>prix</td>
-                <td>
-                    <span>1</span>
-                </td>
-                <td>prix total</td>
-            </tr>
-
+            <c:forEach var="row" items="${order.content}">
+                <tr>
+                    <td>${row.key.name}</td>
+                    <td>${row.key.formattedPrice}€</td>
+                    <td>x${row.value}</td>
+                    <fmt:setLocale value='en-US'/>
+                    <fmt:formatNumber var="itemTotalPrice" type="number" minFractionDigits="2" maxFractionDigits="2" value="${row.key.price * row.value}" />
+                    <td>${fn:replace(itemTotalPrice, ",", " ")}€</td>
+                </tr>
+            </c:forEach>
         </table>
     </section>
 
     <section class="recap-paiement">
-        <p>Montant de la Facture:       29.99€</p>
-        <p>Payé</p>
+        <fmt:setLocale value='en-US'/>
+        <fmt:formatNumber var="orderTotal" type="number" minFractionDigits="2" maxFractionDigits="2" value="${order.total}" />
+        <p>Montant de la Facture: ${fn:replace(orderTotal, ",", " ")}€</p>
+        <p>
+            <c:choose>
+                <c:when test="${order.state == 1}">Préparation en cours</c:when>
+                <c:when test="${order.state == 2}">Livraison en cours</c:when>
+                <c:when test="${order.state == 3}">Terminée</c:when>
+            </c:choose>
+        </p>
         <div class="moyen-paiement">
             <p>Moyen de paiement : Carte bancaire</p>
             <p>Numéro de carte: *************1792</p>

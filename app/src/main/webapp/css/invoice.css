@@ -1,4 +1,4 @@
-@import url(/css/cart.css);
+@import url(cart.css);
 @import url(style.css);
 
 body{
@@ -11,7 +11,8 @@ span{
 }
 .invoice-content{
     background: white;
-    width: 700px;
+    min-width: 700px;
+    max-width: 700px;
     padding: 20px 40px;
 }
 
@@ -40,7 +41,7 @@ h2{
 .grid-invoice{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 50px;
+    gap: 30px;
 }
 
 .customer,

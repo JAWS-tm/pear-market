@@ -39,6 +39,10 @@ public class User implements Serializable {
         return address;
     }
 
+    public String getFormattedAddress() {
+        return address.replaceAll("\\\\", " ");
+    }
+
     public void setAddress(String address) {
         this.address = address;
     }

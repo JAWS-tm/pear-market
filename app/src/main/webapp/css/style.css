@@ -435,3 +435,11 @@ footer ul {
 	color: rgba(255,20,0,0.77);
 	margin-bottom: 10px;
 }
+
+
+
+
+.small-info {
+	font-size: .75rem;
+	color: #c9c9c9;
+}

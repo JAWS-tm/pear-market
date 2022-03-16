@@ -15,18 +15,22 @@ public class CategoryDAOMariaDB implements CategoryDAO{
     @Override
     public ArrayList<Category> getCategories() {
         ArrayList<Category> categories = new ArrayList<>();
+        Connection connection = null;
 
-        try (
-            Connection connection = daoFactory.getConnection();
+        try {
+            connection = daoFactory.getConnection();
             Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM categories;")
-        ) {
+            ResultSet result = statement.executeQuery("SELECT * FROM categories;");
+
             while (result.next())
             {
                 categories.add(new Category(result.getInt("id"), result.getString("name"), result.getString("description"), result.getString("image")));
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
         }
 
         return categories;
@@ -36,7 +40,9 @@ public class CategoryDAOMariaDB implements CategoryDAO{
     public Category getCategory(int id) {
         Category category = null;
 
-        try (Connection connection = daoFactory.getConnection()) {
+        Connection connection = null;
+        try {
+            connection = daoFactory.getConnection();
             PreparedStatement stmt = connection.prepareStatement(
                     "SELECT * FROM categories WHERE id = ?"
             );
@@ -45,14 +51,16 @@ public class CategoryDAOMariaDB implements CategoryDAO{
 
             if (result.first()){
                 category = new Category(
-                        result.getInt("id"),
-                        result.getString("name"),
-                        result.getString("description"),
-                        result.getString("image")
+                    result.getInt("id"),
+                    result.getString("name"),
+                    result.getString("description"),
+                    result.getString("image")
                 );
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
         }
 
         return category;

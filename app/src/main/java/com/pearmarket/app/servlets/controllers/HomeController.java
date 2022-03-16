@@ -13,7 +13,6 @@ import java.io.IOException;
 public class HomeController extends Controller {
 
     private final ProductDAO productDAO;
-    private final CategoryDAO categoryDAO;
 
     public HomeController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
@@ -22,13 +21,11 @@ public class HomeController extends Controller {
         this.setStyleFiles(new String[] {"home","responsive"});
 
         productDAO = daoFactory.getProductDAO(DAOFactory.DBType.MariaDB);
-        categoryDAO = daoFactory.getCategoryDAO(DAOFactory.DBType.MariaDB);
     }
 
     @Override
     public void process() throws ServletException, IOException {
         request.setAttribute("productsList", productDAO.getProducts());
-        request.setAttribute("categories", categoryDAO.getCategories());
 
 
         String id = request.getParameter("id");

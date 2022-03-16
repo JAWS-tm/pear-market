@@ -1,36 +1,42 @@
-
-<jsp:useBean id="product" scope="request" type="com.pearmarket.app.beans.elements.Product"/>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<c:if test="${product != null}">
+	<jsp:useBean id="product" scope="request" type="com.pearmarket.app.beans.elements.Product"/>
+</c:if>
 
 <section class="content-area">
 	<section class="edit-product-container">
 		<h1 class="page-title">${param["id"] == null? "Ajouter" : "Modifier"} un produit </h1>
 		<div class="edit-product">
-			<form method="POST" class="edit-product-form form">
+			<form method="POST" class="edit-product-form form" >
+				<c:if test="${formError != null}">
+					<p class="error-banner">${formError}</p>
+				</c:if>
 
 				<label for="productName">Nom du produit</label>
-				<input type="text" name="productName" id="productName" value="${product.name}" placeholder="ex: iphone 13" required />
+				<input type="text" name="name" id="productName" value="${product != null ? product.name : null}" placeholder="ex: iphone 13" required />
 
 				<label for="productCategory">Catégorie</label>
-				<select name="productCategory" id="productCategory" required>
+				<select name="category" id="productCategory" required>
+					<option>Sélectionnez</option>
 					<c:forEach var="category" items="${categories}">
-					<option value="${category.id}">${category.name}</option>
+					<option value="${category.id}" ${product != null ? (product.category.id == category.id ? "selected" : null) : null}>${category.name}</option>
 					</c:forEach>
 				</select>
 
 				<label for="productPrice">Prix</label>
-				<input type="text" name="productPrice" id="productPrice" value="${product.price}" placeholder="ex: 29.99" required />
+				<input type="text" name="price" id="productPrice" value="${product != null ? product.price : null}" placeholder="ex: 29.99" required />
 
 				<label for="productQuantity">Quantité</label>
-				<input type="text" name="productQuantity" id="productQuantity" value="${product.quantity}" placeholder="ex: 19" required />
+				<input type="text" name="quantity" id="productQuantity" value="${product != null ? product.quantity : null}" placeholder="ex: 19" required />
 
 				<label for="productDescription">Description</label>
-				<textarea id="productDescription" name="productDescription" placeholder="ex: magnifique produit">${product.description}</textarea>
+				<textarea id="productDescription" name="description" placeholder="ex: magnifique produit">${product != null ? product.description : null}</textarea>
 
-				<label for="productImage">Image</label>
-				<input type="file" name="productImage" id="productImage" value="${product.imageSrc}" accept="image/png"/>
+				<label for="productImage">Image <span class="small-info">(stockée dans uploaded/products)</span></label>
+				<input type="text" name="image" id="productImage" value="${product != null ? product.imageSrc : null}" placeholder="phone.png">
+<%--			Pas le temps pour le moment de gérer les multipart	<input type="file" name="image" id="productImage" value="${product != null ? product.imageSrc : null}" accept="image/png"/>--%>
 
 				<input type="submit" name="${param["id"] == null? "add" : "update"}" id="save" value="Enregistrer" class="red-button">
 			</form>

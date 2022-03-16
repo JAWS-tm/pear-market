@@ -7,12 +7,20 @@
 	<section class="cart-container">
 		<h1>Panier</h1>
 
+        <c:if test="${loggedUser.blocked}">
+            <div class="forget-coupon error">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <p>Votre compte est actuellement bloqué, les commandes sont donc désactivées.</p>
+            </div>
+        </c:if>
+
+
         <div class="forget-coupon error invisible">
             <i class="fa-solid fa-circle-exclamation"></i>
             <p>Une erreur s'est produite lors de la modification du panier. Veuillez reessayer</p>
         </div>
 
-        <jsp:useBean id="cartProducts" scope="request" type="java.util.HashMap"/>
+        <jsp:useBean id="cartProducts" scope="request" type="java.util.LinkedHashMap"/>
         <c:if test="${not empty cartProducts}">
             <c:set var="cartTotal" scope="request" value="0"/>
             <div id="cart-product-list">
@@ -96,6 +104,6 @@
 	</section>
 </section>
 
-
+<script src="${pageContext.request.contextPath}/js/request.js"></script>
 <script src="${pageContext.request.contextPath}/js/cart.js"></script>
 <script src="${pageContext.request.contextPath}/js/account.js"></script>

@@ -98,3 +98,33 @@
 	font-size: 0.8rem;
 
 }
+
+
+.paiement-recap {
+	display: flex;
+	margin: 20px 0;
+}
+
+.paiement-recap div {
+	display: flex;
+	flex-direction: column;
+}
+
+.paiement-recap div:not(:last-child) {
+	border-right: 2px dotted var(--separator-light);
+	padding-right: 15px;
+	margin-right: 20px;
+}
+
+.recap-text {
+	text-transform: uppercase;
+	font-weight: 300;
+	font-size: .75rem;
+	color: var(--text-light);
+}
+
+.recap-info {
+	font-weight: 600;
+	font-size: 1.1rem;
+	color: var(--text-color);
+}

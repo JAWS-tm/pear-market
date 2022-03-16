@@ -7,6 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Gère l'affichage d'une erreur
+ *
+ * Il n'est pas dans le package "controllers" car il est géré indépendamment du lien, il ne possède pas de page/lien attribuée
+ */
 public class ErrorController extends Controller {
     final ErrorManager errorManager;
 

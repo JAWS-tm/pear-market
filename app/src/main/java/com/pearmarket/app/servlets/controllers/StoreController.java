@@ -25,8 +25,6 @@ public class StoreController extends Controller {
 
     @Override
     public void process() {
-
-        request.setAttribute("products", productDAO.getProducts(true));
-
+        request.setAttribute("popularProducts", productDAO.getMostPopular());
     }
 }

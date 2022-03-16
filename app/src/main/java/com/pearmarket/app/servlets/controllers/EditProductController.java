@@ -7,90 +7,107 @@ import com.pearmarket.app.beans.elements.Category;
 import com.pearmarket.app.beans.elements.Product;
 import com.pearmarket.app.servlets.Controller;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public class EditProductController extends Controller {
 
     final ProductDAO productDAO;
-    final CategoryDAO categoryDAO;
-    public EditProductController(HttpServletRequest request, HttpServletResponse response){
+
+    public EditProductController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
 
         this.setJspLink("/jsp/pages/edit-product.jsp");
 
-        this.setTitle("edit product");
-        this.setStyleFiles(new String[] {"edit-product", "responsive"});
+        this.setTitle("Modifier un produit");
+        this.setStyleFiles(new String[]{"edit-product", "responsive"});
         this.setWhiteNavBar(true);
 
         productDAO = daoFactory.getProductDAO(DAOFactory.DBType.MariaDB);
-        categoryDAO = daoFactory.getCategoryDAO(DAOFactory.DBType.MariaDB);
     }
 
     @Override
     public void process() throws ServletException, IOException {
+        if (!getLoggedUser().getAdmin()) {
+            redirect("/");
+            return;
+        }
+
 
         String productId = request.getParameter("id");
+        if (request.getMethod().equals("POST"))
+            handleForm(productId);
 
 
+        if (productId != null)
+            request.setAttribute("product", productDAO.getProductById(Integer.parseInt(productId)));
+    }
 
-
-        if (request.getMethod().equals("POST")){
-
-            Product product = new Product();
-            Category newCategorie = new Category();
-
-            String productName = request.getParameter("productName");
-            String productCategory = request.getParameter("productCategory");
-            String productPrice = request.getParameter("productPrice");
-            String productQuantity = request.getParameter("productQuantity");
-            String productDescription = request.getParameter("productDescription");
-            String productImage = request.getParameter("productImage");
-
-
-            System.out.println(productName);
-            System.out.println(productCategory);
-            System.out.println(productPrice);
-            System.out.println(productQuantity);
-
-            System.out.println(productImage);
-
-            if (productName != null || productCategory != null || productPrice != null || productQuantity != null) {
-                newCategorie.setId(Integer.parseInt(productCategory));
-                product.setCategory(newCategorie);
-
+    private void handleForm(String productId) throws ServletException, IOException {
+        Product product = fillBean();
+        if (product != null) {
+            if (request.getParameter("add") != null) {
+                productDAO.addProduct(product);
+            } else if (request.getParameter("update") != null) {
                 product.setId(Integer.parseInt(productId));
-                product.setName(productName);
-                product.setPrice(Float.parseFloat(productPrice));
-                product.setQuantity(Integer.parseInt(productQuantity));
-                product.setDescription(productDescription);
-                if (productImage != null) {
-                    product.setImageSrc(productImage);
-                    //Part imageFile = request.getPart(productImage); // "file" ?
-
-
-
-                if (request.getParameter("add") != null) {
-                    productDAO.addProduct(product);
-                    System.out.println("on ajoute un produit");
-                }
-                else if (request.getParameter("update") != null) {
-                    productDAO.updateProduct(product);
-                    System.out.println("on edit un produit");
-                }
-                redirect("/account");
+                productDAO.updateProduct(product);
             }
-            else
-                System.out.println("il manque un champ lors de la mise à jour d'un produit");
+            redirect("/account");
+        }
+    }
+
+    private Product fillBean() {
+        Product product = null;
+
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        String image = request.getParameter("image");
+
+        int quantity, category;
+        float price;
+        try {
+            price = Float.parseFloat(request.getParameter("price"));
+            quantity = Integer.parseInt(request.getParameter("quantity"));
+            category = Integer.parseInt(request.getParameter("category"));
+        }catch (NumberFormatException e) {
+            request.setAttribute("formError", "Saisissez des nombre dans les cases prix et quantité");
+            return null;
         }
 
+        System.out.println(name);
+        System.out.println(category);
+        System.out.println(description);
+        System.out.println(image);
+        System.out.println(price);
+        System.out.println(quantity);
 
-        request.setAttribute("categories", categoryDAO.getCategories());
+        // TODO : champs en number ou gestion erreur !!
+        if (
+                (name != null && !name.isEmpty()) &&
+                (category != 0) &&
+                (price > 0) &&
+                (quantity >= 0) &&
+                (description != null && !description.isEmpty()) &&
+                (image != null && !image.isEmpty())
+        ) {
+            product = new Product();
+            product.setName(name);
+            product.setPrice(price);
+            product.setQuantity(quantity);
+            product.setDescription(description);
+            product.setImageSrc(image);
 
-        if (productId != null) {
-            request.setAttribute("product", productDAO.getProductById(Integer.parseInt(productId)));
+            Category newCategory = new Category();
+            newCategory.setId(category);
+            product.setCategory(newCategory);
         }
         else
-            request.setAttribute("product", new Product());
+            request.setAttribute("formError", "Veuillez remplir tous les champs !");
+
+
+        return product;
     }
 }

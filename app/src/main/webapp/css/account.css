@@ -7,7 +7,8 @@
 .content-area h2{
     margin-bottom: 10px;
     font-size: 1rem;
-    font-weight: 300;
+    font-weight: 400;
+    margin-top: 5px;
 }
 /**************** account *************/
 .customer-info-container{
@@ -19,7 +20,7 @@
     font-size: 1rem;
     font-weight: 400;
     margin: 10px;
-    width: 80px;
+    width: 110px;
 }
 span.text-modif{
     width: 300px;
@@ -32,6 +33,9 @@ span.text-modif{
     display: block;
     text-align: center;
     transition: all 0.2s;
+}
+.tabs-content-list table a {
+    text-align: left;
 }
 .tabs-content-list a:hover{
     font-weight: 500;
@@ -52,11 +56,15 @@ table{
 }
 table tr{
     display: grid;
-    grid-template-columns: 20% 20% 30% 15% 15%;
     border: 1px solid rgba(39, 39, 39, 0.164);
     border-radius: 5px;
     margin: 10px 0;
 }
+.orders-container tr, .orders-container table {
+    grid-template-columns: 10% 20% 40% 15% 15%;
+
+}
+
 table tr:hover{
     border: 1px solid rgba(39, 39, 39, 0.712);
 
@@ -79,7 +87,7 @@ input[type="number"]{
     align-items: center;
 }
 
-.gestion-products-container tr{
+.gestion-products-container tr, .gestion-products-container table{
     grid-template-columns: 15% 30% 20% 20% 15%;
 }
 
@@ -111,4 +119,40 @@ input[type="number"]{
     z-index: 1000;
     height: 20px;
     width: 20px;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: self-start;
+}
+
+.forget-coupon {
+    margin-bottom: 20px;
+}
+
+
+.manage-orders .tr-head, .manage-orders tr {
+    grid-template-columns: 10% 25% 25% 15% 25%;
+}
+
+.manage-orders select {
+    margin: 0;
+    padding: 5px;
+    font-size: .8rem;
+}
+
+
+
+
+select.value-3 {
+    background: #6fff5269
+}
+
+select.value-2 {
+    background: #fac84866;
+}
+
+select option {
+    background: white;
 }

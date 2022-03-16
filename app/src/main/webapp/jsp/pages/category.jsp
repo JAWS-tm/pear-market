@@ -26,8 +26,8 @@
 
 	<div class="products-container">
 
-		<c:forEach var="product" items="${products}">
-			<div class="item-container">
+		<c:forEach var="product" items="${products}" >
+			<div class="item-container ${product.quantity <= 0 ? "out-of-stock" : null}">
 				<!--<span class="on-sale">20%</span>-->
 				<a href="${pageContext.request.contextPath}/product/${product.id}">
 					<div class="square-div img-card">

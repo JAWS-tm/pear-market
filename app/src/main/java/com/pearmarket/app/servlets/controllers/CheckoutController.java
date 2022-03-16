@@ -38,10 +38,14 @@ public class CheckoutController extends Controller {
             this.redirect("/sign-in");
             return;
         }
+        if (user.getBlocked()) {
+            this.redirect("/cart");
+            return;
+        }
 
 
         Cart cart = (Cart) request.getSession().getAttribute("cart");
-        if (cart == null) {
+        if (cart == null || cart.getProducts().isEmpty()) {
             redirect("/cart");
             return;
         }
@@ -58,14 +62,23 @@ public class CheckoutController extends Controller {
 
         if (request.getMethod().equals("POST")){
             if(handleForm(user)) {
-                Order order = new Order(cart, user.getEmail(), shippingFees);
+                if (!cart.allProductsInStock()) {
+                    request.setAttribute("formError", "Un ou plusieurs objets ne sont plus en stock, veuillez les retirer du panier.");
+                } else {
+                    Order order = new Order(cart, user.getEmail(), shippingFees);
 
-                int orderId = orderDAO.createOrder(order);
-                if (orderId != -1)
-                    redirect("/invoice/"+orderId);
-                else
-                    request.setAttribute("formError", "Une erreur s'est produite lors de la création de la commande, veuillez-réessayer.");
+                    int orderId = orderDAO.createOrder(order);
+                    if (orderId != -1){
+                        request.getSession().setAttribute("cart", null);
+                        request.setAttribute("checkoutValidationMsg", true);
+                        order.setId(orderId);
+                        request.setAttribute("order", order);
+//                        redirect("/invoice/" + orderId);
+                    }
+                    else
+                        request.setAttribute("formError", "Une erreur s'est produite lors de la création de la commande, veuillez-réessayer.");
 
+                }
             }
         }
     }
@@ -104,7 +117,6 @@ public class CheckoutController extends Controller {
         userDAO.changePhone(user.getEmail(), phone);
         userDAO.changeAddress(user.getEmail(), fullAddress);
 
-        System.out.println("update user");
         return true;
 
     }
