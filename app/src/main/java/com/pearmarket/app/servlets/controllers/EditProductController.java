@@ -125,12 +125,8 @@ public class EditProductController extends Controller {
         File[] listOfFiles = folder.listFiles();
 
         for (File listOfFile : listOfFiles) {
-            if (listOfFile.isFile()) {
-                System.out.println("File " + listOfFile.getName());
+            if (listOfFile.isFile())
                 filesName.add(listOfFile.getName());
-            } else if (listOfFile.isDirectory()) {
-                System.out.println("Directory " + listOfFile.getName());
-            }
         }
         return filesName;
     }
