@@ -10,10 +10,19 @@ import java.sql.SQLException;
 public class DAOFactory {
     private static volatile DAOFactory instance = null;
     private String url;
-    private String user;
-    private String password;
+    private final String host;
+    private final String port;
+    private final String user;
+    private final String password;
+    private final String dbName;
 
-    private DAOFactory() {}
+    private DAOFactory() {
+        host = System.getenv("DB_HOST");
+        port = System.getenv("DB_PORT");
+        user = System.getenv("DB_USER");
+        password = System.getenv("DB_PASSWORD");
+        dbName = System.getenv("DB_NAME");
+    }
 
     /**
      * Récupère l'instance actuelle de DAOFactory ou en créer une
@@ -41,14 +50,9 @@ public class DAOFactory {
 
     /**
      * Défini les paramètres et charge le driver pour MariaDB
-     * @param url de la bdd
-     * @param user de connexion à la bdd
-     * @param password de connexion à la bdd
      */
-    public void setParamsMariaDB(String url, String user, String password) {
-        this.url = url;
-        this.user = user;
-        this.password = password;
+    public void loadDriverMariaDB() {
+        url = "jdbc:mariadb://" + host + ":" + port + "/" + dbName;
         try {
             Class.forName("org.mariadb.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -71,7 +75,7 @@ public class DAOFactory {
     public ProductDAO getProductDAO(DBType type) {
         switch (type) {
             case MariaDB:
-                setParamsMariaDB("jdbc:mariadb://localhost:3306/projet_shop", "root", "");
+                loadDriverMariaDB();
                 return new ProductDAOMariaDB(this);
             default:
                 return null;
@@ -86,7 +90,7 @@ public class DAOFactory {
         public CategoryDAO getCategoryDAO(DBType type) {
         switch (type) {
             case MariaDB:
-                setParamsMariaDB("jdbc:mariadb://localhost:3306/projet_shop", "root", "");
+                loadDriverMariaDB();
                 return new CategoryDAOMariaDB(this);
             default:
                 return null;
@@ -101,7 +105,7 @@ public class DAOFactory {
     public UserDAO getUserDAO(DBType type) {
         switch (type) {
             case MariaDB:
-                setParamsMariaDB("jdbc:mariadb://localhost:3306/projet_shop", "root", "");
+                loadDriverMariaDB();
                 return new UserDAOMariaDB(this);
             default:
                 return null;
@@ -116,7 +120,7 @@ public class DAOFactory {
     public OrderDAO getOrderDAO(DBType type) {
         switch (type) {
             case MariaDB:
-                setParamsMariaDB("jdbc:mariadb://localhost:3306/projet_shop", "root", "");
+                loadDriverMariaDB();
                 return new OrderDAOMariaDB(this);
             default:
                 return null;

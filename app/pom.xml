@@ -65,6 +65,7 @@
     </dependencies>
 
     <build>
+        <finalName>pear-market</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
