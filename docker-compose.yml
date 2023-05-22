@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   mariadb:
-    image: mariadb:10.6
+    image: mariadb
     restart: "always"
     ports:
       - 3306:3306
@@ -10,16 +10,16 @@ services:
       - database:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
       - MYSQL_PASSWORD=${DB_PASSWORD}
       - MYSQL_USER=${DB_USER}
       - MYSQL_DATABASE=${DB_NAME}
 
   adminer:
-    image: adminer
+    image: adminer:4.8.0-standalone
     restart: "always"
     ports:
-      - 8081:8080
+      - 8082:8080
 
   tomcat:
     build: .
